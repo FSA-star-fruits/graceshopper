@@ -2,6 +2,7 @@ const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
+const secrets = require('../../secrets.js')
 module.exports = router
 
 /**
@@ -19,7 +20,10 @@ module.exports = router
  */
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  console.log('Google client ID / secret not found. Skipping Google OAuth.')
+  console.log(
+    'Google client ID / secret not found. Using local file for Google OAuth.'
+  )
+  const googleConfig = {...secrets}
 } else {
   const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,
