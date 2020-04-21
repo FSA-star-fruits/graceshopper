@@ -1,52 +1,52 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const SingleCar = db.define('singlecar', {
+const Car = db.define('car', {
   Brand: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: false
   },
   Name: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: false
   },
   Image: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: false
   },
   Price: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: false
   },
   Year: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: false
   },
   Color: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: false
   },
   InteriorColor: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   EngineType: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   StockNo: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER
   },
   Transmission: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   Doors: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER
   },
   VIN: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   VehicleID: {
-    type: Sequelize.INTEGER,
-  },
+    type: Sequelize.INTEGER
+  }
 })
 
-module.exports = SingleCar
+module.exports = Car

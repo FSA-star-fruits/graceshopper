@@ -16,7 +16,8 @@ export class SingleCar extends Component {
     super(props)
   }
   componentDidMount() {
-    this.props.fetchSingleCar()
+    const carID = this.props.match.params.carID
+    this.props.fetchSingleCar(carID)
   }
   render() {
     const singleCar = this.props.singleCar
@@ -42,7 +43,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchSingleCar: () => dispatch(buildfetchSingleCarThunk())
+    fetchSingleCar: carID => dispatch(buildfetchSingleCarThunk(carID))
   }
 }
 

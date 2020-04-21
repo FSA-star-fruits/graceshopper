@@ -9,7 +9,7 @@ import singleCarReducer from './singleCar'
 const reducer = combineReducers({
   user: user,
   cars: cars,
-  singleCar: singleCarReducer,
+  singleCar: singleCarReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
@@ -19,3 +19,4 @@ const store = createStore(reducer, middleware)
 export default store
 export * from './user'
 export * from './singleCar'
+export * from './cars'

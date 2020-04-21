@@ -25,11 +25,11 @@ export class AllCars extends React.Component {
         {cars.map(car => {
           return (
             <div key={car.id}>
-              <Link to={`/car/${car.id}`}>
-                <img src={car.imageUrl} />
+              <Link to={`/cars/${car.id}`}>
+                <img src={car.Image} />
               </Link>
-              <Link to={`/car/${car.id}`}>
-                <p>{car.name}</p>
+              <Link to={`/cars/${car.id}`}>
+                <p>{car.Name}</p>
               </Link>
             </div>
           )
