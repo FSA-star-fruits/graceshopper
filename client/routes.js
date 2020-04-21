@@ -1,14 +1,20 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {Provider} from 'react-redux'
+import store from './store'
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Switch,
+  withRouter,
+} from 'react-router-dom'
+import AllCars from '../client/components/AllCars'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, SingleCar} from './components'
 import {me} from './store'
 import fetchSingleCar from './store/singleCar'
 
-/**
- * COMPONENT
- */
 class Routes extends Component {
   componentDidMount() {}
 
@@ -22,6 +28,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/home" component={UserHome} />
         <Route path="/singlecar" component={SingleCar} />
+        <Route exact path="/cars" component={AllCars} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -39,11 +46,11 @@ class Routes extends Component {
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
   }
 }
 
