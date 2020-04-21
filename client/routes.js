@@ -6,7 +6,7 @@ import {
   Link,
   Route,
   Switch,
-  withRouter,
+  withRouter
 } from 'react-router-dom'
 import AllCars from '../client/components/AllCars'
 import {connect} from 'react-redux'
@@ -27,7 +27,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/home" component={UserHome} />
-        <Route path="/singlecar" component={SingleCar} />
+        <Route path="/cars/:carID" component={SingleCar} />
         <Route exact path="/cars" component={AllCars} />
         {isLoggedIn && (
           <Switch>
@@ -46,11 +46,11 @@ class Routes extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
+const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id,
+    isLoggedIn: !!state.user.id
   }
 }
 
