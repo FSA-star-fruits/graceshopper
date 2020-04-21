@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Provider} from 'react-redux'
 import store from './store'
 import {
@@ -27,13 +27,13 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/home" component={UserHome} />
-        <Route path="/cars/:carID" component={SingleCar} />
         <Route exact path="/cars" component={AllCars} />
+        <Route exact path="/cars/:carID" component={SingleCar} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/singlecar" component={SingleCar} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
