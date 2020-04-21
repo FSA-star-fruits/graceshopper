@@ -1,15 +1,16 @@
 'use strict'
 
 const db = require('../server/db')
-const {Car} = require('../server/db/models/singlecar')
+const Car = require('../server/db/models/car')
+const {User} = require('../server/db/models/user')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'}),
+    // User.create({email: 'cody@email.com', password: '123'}),
+    // User.create({email: 'murphy@email.com', password: '123'}),
     // 'Toyota', 'Sequoia', 'http://dummyimage.com/223x165.bmp/dddddd/000000', 85156, 2012, 'Indigo', true
     Car.create({
       brand: 'Toyota',

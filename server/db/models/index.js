@@ -1,8 +1,8 @@
 const db = require('../db')
 const User = require('./user')
-const SingleCar = require('./singlecar')
 const Order = require('./order')
 const CartItem = require('./cartItem')
+const Car = require('./car')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -17,8 +17,8 @@ User.hasOne(Order)
 CartItem.belongsTo(Order)
 Order.hasMany(CartItem)
 
-SingleCar.belongsTo(CartItem)
-CartItem.hasOne(SingleCar)
+Car.belongsTo(CartItem)
+CartItem.hasOne(Car)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -28,8 +28,9 @@ CartItem.hasOne(SingleCar)
  */
 module.exports = {
   User,
-  SingleCar,
+
   Order,
   CartItem,
-  db
+  db,
+  Car
 }

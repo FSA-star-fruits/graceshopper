@@ -17,3 +17,4 @@ export {
   default as SingleCarSecondaryImage
 } from './singleCarContents/single-car-secondary-images'
 export {Login, Signup} from './auth-form'
+export {default as AllCars} from './AllCars'

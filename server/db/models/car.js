@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const SingleCar = db.define('singlecar', {
+const Car = db.define('car', {
   Brand: {
     type: Sequelize.STRING,
     allowNull: false
@@ -56,4 +56,4 @@ const SingleCar = db.define('singlecar', {
   }
 })
 
-module.exports = SingleCar
+module.exports = Car
