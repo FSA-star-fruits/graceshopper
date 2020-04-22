@@ -2,6 +2,7 @@ const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
+const secrets = require('../../secrets.js')
 module.exports = router
 
 /**
@@ -17,47 +18,47 @@ module.exports = router
  * process.env.GOOGLE_CLIENT_SECRET = 'your google client secret'
  * process.env.GOOGLE_CALLBACK = '/your/google/callback'
  */
-
+let googleConfig = {}
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  console.log('Google client ID / secret not found. Skipping Google OAuth.')
+  console.log(
+    'Google client ID / secret not found. Using local file for Google OAuth.'
+  )
+  googleConfig = {...secrets}
 } else {
-  const googleConfig = {
+  googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK
   }
-
-  const strategy = new GoogleStrategy(
-    googleConfig,
-    (token, refreshToken, profile, done) => {
-      const googleId = profile.id
-      const email = profile.emails[0].value
-      const imgUrl = profile.photos[0].value
-      const firstName = profile.name.givenName
-      const lastName = profile.name.familyName
-      const fullName = profile.displayName
-
-      User.findOrCreate({
-        where: {googleId},
-        defaults: {email, imgUrl, firstName, lastName, fullName}
-      })
-        .then(([user]) => done(null, user))
-        .catch(done)
-    }
-  )
-
-  passport.use(strategy)
-
-  router.get(
-    '/',
-    passport.authenticate('google', {scope: ['email', 'profile']})
-  )
-
-  router.get(
-    '/callback',
-    passport.authenticate('google', {
-      successRedirect: '/home',
-      failureRedirect: '/login'
-    })
-  )
 }
+
+const strategy = new GoogleStrategy(
+  googleConfig,
+  (token, refreshToken, profile, done) => {
+    const googleId = profile.id
+    const email = profile.emails[0].value
+    const imgUrl = profile.photos[0].value
+    const firstName = profile.name.givenName
+    const lastName = profile.name.familyName
+    const fullName = profile.displayName
+
+    User.findOrCreate({
+      where: {googleId},
+      defaults: {email, imgUrl, firstName, lastName, fullName}
+    })
+      .then(([user]) => done(null, user))
+      .catch(done)
+  }
+)
+
+passport.use(strategy)
+
+router.get('/', passport.authenticate('google', {scope: ['email', 'profile']}))
+
+router.get(
+  '/callback',
+  passport.authenticate('google', {
+    successRedirect: '/home',
+    failureRedirect: '/login'
+  })
+)
