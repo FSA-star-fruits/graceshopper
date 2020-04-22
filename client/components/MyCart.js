@@ -16,6 +16,7 @@ class MyCart extends Component {
 
   render() {
     const cartItems = this.props.cartItems
+    console.log('cartItems >>>', cartItems)
     if (cartItems.length === 0) {
       return <p>Your Cart Is Currently Empty.</p>
     }
@@ -24,8 +25,8 @@ class MyCart extends Component {
         <h2>Items in your cart: </h2>
         {cartItems.map((item, idx) => {
           return (
-            <div key={item.id}>
-              {idx}. {item.brand} {item.name}
+            <div key={item.car.id}>
+              {idx}. {item.car.Brand} {item.car.Name}
             </div>
           )
         })}

@@ -18,24 +18,16 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId/mycart', async (req, res, next) => {
   try {
-    const items = await Order.findAll({
+    const items = await CartItem.findAll({
       include: [
         {
-          model: User
+          model: Order
         },
         {
-          model: CartItem,
-          include: {
-            model: Car
-          }
+          model: Car
         }
-      ],
-      where: {
-        orderId: req.params.userId, // should work if userId === orderID
-        isCheckedOut: false
-      }
+      ]
     })
-
     res.json(items)
   } catch (err) {
     next(err)
