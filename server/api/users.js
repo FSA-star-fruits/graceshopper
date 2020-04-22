@@ -33,15 +33,14 @@ router.get('/:userId/mycart', async (req, res, next) => {
 })
 
 router.post('/:userId/mycart', async (req, res, next) => {
+  console.log(req.body)
   try {
-    // CartItem.create().then((cartitem) => {
-    //   Order.create().then((order) => {
-    //     cartitem.setOrder(order)
-    //   })
-    // })
-    //create cartItem
+    CartItem.create({
+      carId: req.body.carID,
+      orderId: req.body.userID
+    })
     Order.create({
-      userId: 1
+      userId: req.body.userID
     })
   } catch (err) {
     next(err)

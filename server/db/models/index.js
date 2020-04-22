@@ -14,11 +14,11 @@ const Car = require('./car')
 Order.belongsTo(User)
 User.hasOne(Order)
 
-CartItem.belongsTo(Order)
-Order.hasMany(CartItem)
+// CartItem.belongsTo(Order)
+// Order.hasMany(CartItem)
 
-Car.belongsTo(CartItem)
-CartItem.hasOne(Car)
+Car.belongsToMany(Order, {through: CartItem})
+Order.belongsToMany(Car, {through: CartItem})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
