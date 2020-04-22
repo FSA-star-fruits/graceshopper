@@ -23,7 +23,8 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.log(
     'Google client ID / secret not found. Using local file for Google OAuth.'
   )
-  googleConfig = {...secrets}
+
+  const googleConfig = {...secrets}
 } else {
   googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,

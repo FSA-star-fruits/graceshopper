@@ -46,6 +46,13 @@ const Car = db.define('car', {
   },
   VehicleID: {
     type: Sequelize.INTEGER
+  },
+  isSold: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    validate: {
+      notEmpty: true
+    }
   }
 })
 
