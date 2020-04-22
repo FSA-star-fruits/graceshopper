@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Order} = require('../db/models')
+const {User, Order, CartItem} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -26,6 +26,22 @@ router.get('/:userId/mycart', async (req, res, next) => {
         orderId: req.params.userId,
         isCheckedOut: false
       }
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/:userId/mycart', async (req, res, next) => {
+  try {
+    // CartItem.create().then((cartitem) => {
+    //   Order.create().then((order) => {
+    //     cartitem.setOrder(order)
+    //   })
+    // })
+    //create cartItem
+    Order.create({
+      userId: 1
     })
   } catch (err) {
     next(err)
