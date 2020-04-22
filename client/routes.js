@@ -30,14 +30,14 @@ class Routes extends Component {
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
 
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+        {/* {isLoggedIn && (
+          <Switch> */}
+        {/* Routes placed here are only available after logging in */}
+        {/* <Route path="/home" component={UserHome} />
           </Switch>
-        )}
+        )} */}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        {/* <Route component={Login} /> */}
       </Switch>
     )
   }
