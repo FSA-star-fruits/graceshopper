@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {gotCartItems} from '../store/cartItems'
 
 class MyCart extends Component {
   constructor() {
@@ -8,7 +9,9 @@ class MyCart extends Component {
   }
 
   componentDidMount() {
-    this.props.getCartItems()
+    const userID = this.props.match.params.userID
+    console.log('userID >>>', userID)
+    this.props.getCartItems(userID)
   }
 
   render() {
@@ -32,13 +35,15 @@ class MyCart extends Component {
 }
 
 const mapState = state => {
-  return (cartItems: state.cartItems)
+  return {
+    cartItems: state.cartItems
+  }
 }
 
 const mapDispatch = dispatch => {
   return {
-    getCartItems: () => {
-      dispatch(fetchCartItems())
+    getCartItems: userID => {
+      dispatch(gotCartItems(userID))
     }
   }
 }

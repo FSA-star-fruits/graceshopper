@@ -14,8 +14,8 @@ const Car = require('./car')
 Order.belongsTo(User)
 User.hasOne(Order)
 
+Order.hasOne(CartItem)
 CartItem.belongsTo(Order)
-Order.hasMany(CartItem)
 
 Car.belongsTo(CartItem)
 CartItem.hasOne(Car)

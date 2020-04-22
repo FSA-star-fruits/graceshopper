@@ -3,7 +3,7 @@ const db = require('../db')
 
 const CartItem = db.define('cartItem', {
   carId: {
-    type: Sequelize.STRING
+    type: Sequelize.INTEGER
   }
 })
 

@@ -4,15 +4,16 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import cars from './cars'
-import myCart from './myCart'
+import cartItems from './cartItems'
 import singleCarReducer from './singleCar'
 
 const reducer = combineReducers({
   user: user,
   cars: cars,
-  singleCar: singleCarReducer,
-  myCart
+  cartItems: cartItems,
+  singleCar: singleCarReducer
 })
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
@@ -22,4 +23,4 @@ export default store
 export * from './user'
 export * from './singleCar'
 export * from './cars'
-export * from './myCart'
+export * from './cartItems'
