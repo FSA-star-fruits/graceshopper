@@ -11,7 +11,7 @@ import {
 import AllCars from '../client/components/AllCars'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, SingleCar} from './components'
+import {Login, Signup, UserHome, SingleCar, MyCart} from './components'
 import {me} from './store'
 import fetchSingleCar from './store/singleCar'
 
@@ -27,6 +27,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/home" component={UserHome} />
+        <Route path="/mycart" component={MyCart} />
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
 
