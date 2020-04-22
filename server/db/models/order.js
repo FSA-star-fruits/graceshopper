@@ -2,9 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Order = db.define('order', {
-  cartItemId: {
-    type: Sequelize.STRING
-  },
+  //   orderId: {
+  //     type: Sequelize.INTEGER,
+  //     allowNull: false,
+  //   },
   purchaseDate: {
     type: Sequelize.DATE
   },
