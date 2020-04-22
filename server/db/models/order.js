@@ -3,8 +3,7 @@ const db = require('../db')
 
 const Order = db.define('order', {
   cartItemId: {
-    type: Sequelize.STRING,
-    allowNull: true
+    type: Sequelize.STRING
   },
   purchaseDate: {
     type: Sequelize.DATE
@@ -12,7 +11,7 @@ const Order = db.define('order', {
   isCheckedOut: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-    allowNull: true
+    allowNull: false
   }
 })
 

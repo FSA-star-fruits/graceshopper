@@ -28,7 +28,6 @@ CartItem.hasOne(Car)
  */
 module.exports = {
   User,
-
   Order,
   CartItem,
   db,
