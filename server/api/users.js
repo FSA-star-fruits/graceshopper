@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Order, CartItem} = require('../db/models')
+const {User, Order, CartItem, Car} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -18,15 +18,17 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId/mycart', async (req, res, next) => {
   try {
-    const items = await cartItems.findAll({
-      include: {
-        model: User
-      },
-      where: {
-        orderId: req.params.userId,
-        isCheckedOut: false
-      }
+    const items = await CartItem.findAll({
+      include: [
+        {
+          model: Order
+        },
+        {
+          model: Car
+        }
+      ]
     })
+    res.json(items)
   } catch (err) {
     next(err)
   }
@@ -35,11 +37,12 @@ router.get('/:userId/mycart', async (req, res, next) => {
 router.post('/:userId/mycart', async (req, res, next) => {
   console.log(req.body)
   try {
-    CartItem.create({
+    await CartItem.create({
       carId: req.body.carID,
-      orderId: req.body.userID
+      orderId: req.body.userID,
+      quantity: 1
     })
-    Order.create({
+    await Order.create({
       userId: req.body.userID
     })
   } catch (err) {
