@@ -2,17 +2,17 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Order = db.define('order', {
-  cartItemId: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
+  //   orderId: {
+  //     type: Sequelize.INTEGER,
+  //     allowNull: false,
+  //   },
   purchaseDate: {
     type: Sequelize.DATE
   },
   isCheckedOut: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-    allowNull: true
+    allowNull: false
   }
 })
 
