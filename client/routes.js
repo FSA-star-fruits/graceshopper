@@ -16,7 +16,9 @@ import {me} from './store'
 import fetchSingleCar from './store/singleCar'
 
 class Routes extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.loadInitialData()
+  }
 
   render() {
     const {isLoggedIn} = this.props
@@ -56,4 +58,22 @@ const mapState = state => {
   }
 }
 
-export default Routes
+const mapDispatch = dispatch => {
+  return {
+    loadInitialData() {
+      dispatch(me())
+    }
+  }
+}
+
+// The `withRouter` wrapper makes sure that updates are not blocked
+// when the url changes
+export default withRouter(connect(mapState, mapDispatch)(Routes))
+
+/**
+ * PROP TYPES
+ */
+Routes.propTypes = {
+  loadInitialData: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
+}
