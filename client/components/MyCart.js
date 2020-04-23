@@ -18,7 +18,7 @@ class MyCart extends Component {
     if (cartItems.length === 0) {
       return (
         <div>
-          <p>Your Cart Is Currently Empty.</p>
+          <h2>Your Cart Is Currently Empty.</h2>
         </div>
       )
     }
