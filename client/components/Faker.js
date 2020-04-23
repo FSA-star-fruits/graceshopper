@@ -110,19 +110,19 @@ export class Faker extends Component {
     event.preventDefault()
     const state = this.state
     const newCar = {
-      Brand: state.brand,
-      Name: state.name,
-      Image: state.image,
-      Price: state.price,
-      Year: state.year,
-      Color: state.color,
-      InteriorColor: state.interiorColor,
-      EngineType: state.engineType,
-      StockNo: state.stockNo,
-      Transmission: state.transmission,
-      Doors: state.doors,
-      VIN: state.vin,
-      VehicleId: state.vehicleId,
+      brand: state.brand,
+      name: state.name,
+      image: state.image,
+      price: state.price,
+      year: state.year,
+      color: state.color,
+      interiorColor: state.interiorColor,
+      engineType: state.engineType,
+      stockNo: state.stockNo,
+      transmission: state.transmission,
+      doors: state.doors,
+      vin: state.vin,
+      vehicleId: state.vehicleId,
       isSold: state.isSold,
       inventory: state.inventory
     }

@@ -26,10 +26,10 @@ export class AllCars extends React.Component {
           return (
             <div key={car.id}>
               <Link to={`/cars/${car.id}`}>
-                <img src={car.Image} />
+                <img src={car.image} />
               </Link>
               <Link to={`/cars/${car.id}`}>
-                <p>{car.Name}</p>
+                <p>{car.name}</p>
               </Link>
             </div>
           )
