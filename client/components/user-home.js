@@ -17,7 +17,6 @@ export const UserHome = props => {
       <p>MPG: Up to 21 city/ 28 Highway</p>
       <p>Horsepower: 246 to 296 hp</p>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQ57PaEpZbPxFjGe-3y2T-LevyR3AAfBab55eGD6ld7QlMHfd_&usqp=CAU" />
-      <AllCars />
     </div>
   )
 }

@@ -11,14 +11,14 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:carID', async (req, res, next) => {
+router.get('/:carId', async (req, res, next) => {
   try {
-    const id = req.params.carID
+    const id = req.params.carId
     const singleCar = await Car.findOne({
       where: {id: id}
     })
 
-    res.json(singleCar.dataValues)
+    res.json(singleCar)
   } catch (err) {
     next(err)
   }

@@ -8,22 +8,33 @@ import {SingleCarSecondaryImage} from './singleCarContents/single-car-secondary-
 
 import {buildfetchSingleCarThunk} from '../store'
 
+import {buildPostCartThunk} from '../store/addItem'
+
 /**
  * COMPONENT
  */
 export class SingleCar extends Component {
   constructor(props) {
     super(props)
+
+    this.handleAddToCart = this.handleAddToCart.bind(this)
   }
   componentDidMount() {
-    const carID = this.props.match.params.carID
-    this.props.fetchSingleCar(carID)
+    const carId = this.props.match.params.carId
+    this.props.fetchSingleCar(carId)
   }
+  handleAddToCart() {
+    const carId = 1
+    const userId = 1
+    this.props.postAddToCart(carId, userId)
+  }
+
   render() {
     const singleCar = this.props.singleCar
     console.log(this.props)
     return (
       <div id="single-car">
+        <button onClick={this.handleAddToCart}>ADD TO CART</button>
         <SingleCarHeader {...this.props} />
         <SingleCarMainView {...this.props} />
         <SingleCarSecondaryImage {...this.props} />
@@ -41,11 +52,10 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    fetchSingleCar: carID => dispatch(buildfetchSingleCarThunk(carID))
-  }
-}
+const mapDispatch = dispatch => ({
+  fetchSingleCar: carId => dispatch(buildfetchSingleCarThunk(carId)),
+  postAddToCart: (carId, userId) => dispatch(buildPostCartThunk(carId, userId))
+})
 
 export default connect(mapState, mapDispatch)(SingleCar)
 
