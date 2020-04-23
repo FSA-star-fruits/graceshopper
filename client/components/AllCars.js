@@ -27,8 +27,6 @@ export class AllCars extends React.Component {
             <div key={car.id}>
               <Link to={`/cars/${car.id}`}>
                 <img src={car.image} />
-              </Link>
-              <Link to={`/cars/${car.id}`}>
                 <p>{car.name}</p>
               </Link>
             </div>

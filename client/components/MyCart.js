@@ -28,7 +28,7 @@ class MyCart extends Component {
         {cartItems.map((item, idx) => {
           return (
             <div key={item.car.id}>
-              {idx + 1}. {item.car.Brand} {item.car.Name}
+              {idx}. {item.car.brand} {item.car.name}
             </div>
           )
         })}

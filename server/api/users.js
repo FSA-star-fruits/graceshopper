@@ -41,12 +41,12 @@ router.post('/:userId/mycart', async (req, res, next) => {
   console.log(req.body)
   try {
     await CartItem.create({
-      carId: req.body.carID,
-      orderId: req.body.userID,
+      carId: req.body.carId,
+      orderId: req.body.userId,
       quantity: 1
     })
     await Order.create({
-      userId: req.body.userID
+      userId: req.body.userId
     })
   } catch (err) {
     next(err)
