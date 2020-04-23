@@ -21,18 +21,15 @@ const addItem = item => ({
 /**
  * THUNK CREATORS
  */
-export const buildPostCartThunk = (carID, userID) => async dispatch => {
+export const buildPostCartThunk = (carId, userId) => async dispatch => {
   try {
     //CREATE CART ITEM
 
     //OBJECT
-    const cartObj = {carID, userID}
-
-    await axios.post(`/api/users/:${userID}/mycart`, cartObj)
-    //IF ORDER ADDS TO ORDER
-    //ELSE CREATE ORDER
-    //ADD TO USER ID
-    // dispatch(addItem(res.data))
+    const cartObj = {carId, userId}
+    if (userId !== undefined) {
+      await axios.post(`/api/users/:${userId}/mycart`, cartObj)
+    }
   } catch (err) {
     console.error(err)
   }

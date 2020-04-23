@@ -16,17 +16,19 @@ import {buildPostCartThunk} from '../store/addItem'
 export class SingleCar extends Component {
   constructor(props) {
     super(props)
-
+    const {user} = props
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
   componentDidMount() {
-    const carID = this.props.match.params.carID
-    this.props.fetchSingleCar(carID)
+    const carId = this.props.match.params.carID
+
+    this.props.fetchSingleCar(carId)
   }
   handleAddToCart() {
-    const carID = this.props.match.params.carID
-    const userID = 1
-    this.props.postAddToCart(carID, userID)
+    const carId = this.props.match.params.carID
+    const userId = this.props.user.id
+
+    this.props.postAddToCart(carId, userId)
   }
 
   render() {
@@ -48,20 +50,14 @@ export class SingleCar extends Component {
  */
 const mapState = state => {
   return {
-    singleCar: state.singleCar
+    singleCar: state.singleCar,
+    user: state.user
   }
 }
 
 const mapDispatch = dispatch => ({
-  fetchSingleCar: carID => dispatch(buildfetchSingleCarThunk(carID)),
-  postAddToCart: (carID, userID) => dispatch(buildPostCartThunk(carID, userID))
+  fetchSingleCar: carId => dispatch(buildfetchSingleCarThunk(carId)),
+  postAddToCart: (carId, userId) => dispatch(buildPostCartThunk(carId, userId))
 })
 
 export default connect(mapState, mapDispatch)(SingleCar)
-
-/**
- * PROP TYPES
- */
-// UserHome.propTypes = {
-//   email: PropTypes.string,
-// }

@@ -9,10 +9,10 @@ export const SingleCarHeader = props => {
     <div id="single-car-header">
       <span>
         <h1>
-          {singleCar.Brand} {singleCar.Name} {singleCar.Year}
+          {singleCar.brand} {singleCar.name} {singleCar.year}
         </h1>
         <p>miles driven</p>
-        <h3>{singleCar.Price}</h3>
+        <h3>{singleCar.price}</h3>
       </span>
     </div>
   )
