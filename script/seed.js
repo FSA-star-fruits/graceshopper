@@ -10,6 +10,7 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
+    User.create({email: 'john@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
@@ -50,25 +51,25 @@ async function seed() {
 
   console.log(`seeded ${cars.length} cars`)
 
-  const orders = await Promise.all([
-    Order.create({
-      purchaseDate: null,
-      isCheckedOut: false,
-      userId: 1
-    }),
-    Order.create({
-      purchaseDate: null,
-      isCheckedOut: false,
-      userId: 1
-    }),
-    Order.create({
-      purchaseDate: null,
-      isCheckedOut: false,
-      userId: 2
-    })
-  ])
+  // const orders = await Promise.all([
+  await Order.create({
+    purchaseDate: null,
+    isCheckedOut: false,
+    userId: 1
+  })
+  await Order.create({
+    purchaseDate: null,
+    isCheckedOut: false,
+    userId: 2
+  })
+  await Order.create({
+    purchaseDate: null,
+    isCheckedOut: false,
+    userId: 3
+  })
+  // ])
 
-  console.log(`seeded ${orders.length} orders`)
+  console.log(`seeded orders`)
 
   const cartItems = await Promise.all([
     CartItem.create({

@@ -19,6 +19,9 @@ router.get('/', async (req, res, next) => {
 router.get('/:userId/mycart', async (req, res, next) => {
   try {
     const items = await CartItem.findAll({
+      where: {
+        orderId: req.params.userId
+      },
       include: [
         {
           model: Order

@@ -14,7 +14,7 @@ class MyCart extends Component {
   }
 
   render() {
-    const cartItems = this.props.cartItems
+    const {cartItems} = this.props
     if (cartItems.length === 0) {
       return (
         <div>
