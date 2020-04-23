@@ -2,49 +2,49 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Car = db.define('car', {
-  Brand: {
+  brand: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  Name: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  Image: {
+  image: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  Price: {
+  price: {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  Year: {
+  year: {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  Color: {
+  color: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  InteriorColor: {
+  interiorColor: {
     type: Sequelize.STRING
   },
-  EngineType: {
+  engineType: {
     type: Sequelize.STRING
   },
-  StockNo: {
+  stockNo: {
     type: Sequelize.INTEGER
   },
-  Transmission: {
+  transmission: {
     type: Sequelize.STRING
   },
-  Doors: {
+  doors: {
     type: Sequelize.INTEGER
   },
-  VIN: {
+  vin: {
     type: Sequelize.STRING
   },
-  VehicleID: {
+  vehicleID: {
     type: Sequelize.INTEGER
   },
   isSold: {
