@@ -20,13 +20,13 @@ export class SingleCar extends Component {
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
   componentDidMount() {
-    const carID = this.props.match.params.carID
-    this.props.fetchSingleCar(carID)
+    const carId = this.props.match.params.carId
+    this.props.fetchSingleCar(carId)
   }
   handleAddToCart() {
-    const carID = 1
-    const userID = 1
-    this.props.postAddToCart(carID, userID)
+    const carId = 1
+    const userId = 1
+    this.props.postAddToCart(carId, userId)
   }
 
   render() {
@@ -53,8 +53,8 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  fetchSingleCar: carID => dispatch(buildfetchSingleCarThunk(carID)),
-  postAddToCart: (carID, userID) => dispatch(buildPostCartThunk(carID, userID))
+  fetchSingleCar: carId => dispatch(buildfetchSingleCarThunk(carId)),
+  postAddToCart: (carId, userId) => dispatch(buildPostCartThunk(carId, userId))
 })
 
 export default connect(mapState, mapDispatch)(SingleCar)

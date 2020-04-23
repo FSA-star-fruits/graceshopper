@@ -11,15 +11,15 @@ export const SingleCarDetails = props => {
       <table>
         <tr>
           <th>Engine Type</th>
-          <td>{singleCar.EngineType}</td>
+          <td>{singleCar.engineType}</td>
         </tr>
         <tr>
           <th>Interior Color</th>
-          <td>{singleCar.InteriorColor}</td>
+          <td>{singleCar.interiorColor}</td>
         </tr>
         <tr>
           <th>Stock Number</th>
-          <td>{singleCar.StockNo}</td>
+          <td>{singleCar.stockNo}</td>
         </tr>
         <tr>
           <th>Exterior Color</th>
@@ -27,19 +27,19 @@ export const SingleCarDetails = props => {
         </tr>
         <tr>
           <th>Transmission</th>
-          <td>{singleCar.Transmission}</td>
+          <td>{singleCar.transmission}</td>
         </tr>
         <tr>
           <th>Doors</th>
-          <td>{singleCar.Doors}</td>
+          <td>{singleCar.doors}</td>
         </tr>
         <tr>
           <th>VIN</th>
-          <td>{singleCar.VIN}</td>
+          <td>{singleCar.vin}</td>
         </tr>
         <tr>
           <th>VehicleID</th>
-          <td>{singleCar.VehicleID}</td>
+          <td>{singleCar.vehicleId}</td>
         </tr>
       </table>
     </div>

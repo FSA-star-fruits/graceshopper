@@ -44,7 +44,7 @@ const Car = db.define('car', {
   vin: {
     type: Sequelize.STRING
   },
-  vehicleID: {
+  vehicleId: {
     type: Sequelize.INTEGER
   },
   isSold: {
