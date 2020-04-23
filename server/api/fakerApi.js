@@ -6,40 +6,39 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
-    if (req.body.hasOwnProperty('Brand')) {
+    if (req.body.hasOwnProperty('brand')) {
       console.log('carBodyy: ', req.body)
       const {
-        Brand,
-        Name,
-        Image,
-        Price,
-        Year,
-        Color,
-        InteriorColor,
-        EngineType,
-        StockNo,
-        Transmission,
-        Doors,
-        VIN,
-        VehicleId,
+        brand,
+        name,
+        image,
+        price,
+        year,
+        color,
+        interiorColor,
+        engineType,
+        stockNo,
+        transmission,
+        doors,
+        vin,
+        vehicleId,
         isSold,
         inventory
       } = req.body
-      console.log('Brand: ', Brand, Name, Price, isSold)
       const newCar = await Car.create({
-        Brand,
-        Name,
-        Image,
-        Price,
-        Year,
-        Color,
-        InteriorColor,
-        EngineType,
-        StockNo,
-        Transmission,
-        Doors,
-        VIN,
-        VehicleId,
+        brand,
+        name,
+        image,
+        price,
+        year,
+        color,
+        interiorColor,
+        engineType,
+        stockNo,
+        transmission,
+        doors,
+        vin,
+        vehicleId,
         isSold,
         inventory
       })

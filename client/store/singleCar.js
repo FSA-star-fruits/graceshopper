@@ -18,9 +18,9 @@ const getSingleCar = car => ({type: GET_SINGLECAR, car})
 /**
  * THUNK CREATORS
  */
-export const buildfetchSingleCarThunk = carID => async dispatch => {
+export const buildfetchSingleCarThunk = carId => async dispatch => {
   try {
-    const res = await axios.get(`/api/cars/${carID}`)
+    const res = await axios.get(`/api/cars/${carId}`)
     dispatch(getSingleCar(res.data))
   } catch (err) {
     console.error(err)
