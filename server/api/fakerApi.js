@@ -6,7 +6,7 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
-    if (req.body.hasOwnProperty('Brand')) {
+    if (req.body.hasOwnProperty('brand')) {
       console.log('carBodyy: ', req.body)
       const {
         Brand,
