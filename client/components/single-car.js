@@ -24,7 +24,7 @@ export class SingleCar extends Component {
     this.props.fetchSingleCar(carID)
   }
   handleAddToCart() {
-    const carID = 1
+    const carID = this.props.match.params.carID
     const userID = 1
     this.props.postAddToCart(carID, userID)
   }

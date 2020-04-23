@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import {Provider} from 'react-redux'
-import store from './store'
 import {
   BrowserRouter as Router,
   Link,
@@ -13,8 +11,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, SingleCar, MyCart} from './components'
 import {me} from './store'
-import fetchSingleCar from './store/singleCar'
-import Faker from './components/Faker'
+
+// import Faker from './components/Faker'
 
 class Routes extends Component {
   componentDidMount() {
@@ -34,7 +32,7 @@ class Routes extends Component {
         <Route exact path="/users/:userID/mycart" component={MyCart} />
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
-        <Route exact path="/add" component={Faker} />
+        {/* <Route exact path="/add" component={Faker} /> */}
 
         {/* {isLoggedIn && (
           <Switch> */}
