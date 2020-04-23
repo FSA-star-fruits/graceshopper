@@ -69,3 +69,9 @@ export default function(state = defaultUser, action) {
       return state
   }
 }
+
+// for adding fake user
+export const postUser = newUser => async dispatch => {
+  // console.log('newUser: ', newUser)
+  await axios.post('/api/add', newUser)
+}

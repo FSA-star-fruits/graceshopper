@@ -42,7 +42,8 @@ const brand = () => {
 }
 
 const year = () => {
-  return +('20' + Math.floor(Math.random() * 20))
+  const num = Math.floor(Math.random() * 21)
+  return num < 10 ? +('200' + num) : +('20' + num)
 }
 
 const randomEngine = () => {
@@ -61,10 +62,10 @@ const numOfDoors = () => {
 }
 
 const randomNum = () => {
-  return Math.floor(Math.random() * 10)
+  return 1 + Math.floor(Math.random() * 10)
 }
 
-class Faker extends Component {
+export class Faker extends Component {
   constructor() {
     super()
     this.state = {
@@ -73,7 +74,7 @@ class Faker extends Component {
       brand: brand(),
       name: brand(),
       image: faker.image.animals(),
-      price: faker.commerce.price(),
+      price: 500 + Math.floor(faker.commerce.price()),
       year: year(),
       color: faker.commerce.color(),
       interiorColor: faker.commerce.color(),
@@ -109,19 +110,19 @@ class Faker extends Component {
     event.preventDefault()
     const state = this.state
     const newCar = {
-      brand: state.brand,
-      name: state.name,
-      image: state.image,
-      price: state.price,
-      year: state.year,
-      color: state.color,
-      interiorColor: state.interiorColor,
-      engineType: state.engineType,
-      stockNo: state.stockNo,
-      transmission: state.transmission,
-      doors: state.doors,
-      vin: state.vin,
-      vehicleId: state.vehicleId,
+      Brand: state.brand,
+      Name: state.name,
+      Image: state.image,
+      Price: state.price,
+      Year: state.year,
+      Color: state.color,
+      InteriorColor: state.interiorColor,
+      EngineType: state.engineType,
+      StockNo: state.stockNo,
+      Transmission: state.transmission,
+      Doors: state.doors,
+      VIN: state.vin,
+      VehicleId: state.vehicleId,
       isSold: state.isSold,
       inventory: state.inventory
     }
@@ -130,7 +131,7 @@ class Faker extends Component {
       brand: brand(),
       name: brand(),
       image: faker.image.animals(),
-      price: faker.commerce.price(),
+      price: 500 + Math.floor(faker.commerce.price()),
       year: year(),
       color: faker.commerce.color(),
       interiorColor: faker.commerce.color(),
@@ -174,7 +175,9 @@ class Faker extends Component {
           />
           <br />
 
-          <button type="submit">Add User</button>
+          <button style={{backgroundColor: 'yellow'}} type="submit">
+            Add User
+          </button>
         </form>
 
         {/* Submit for Car */}
@@ -314,8 +317,15 @@ class Faker extends Component {
           />
           <br />
 
-          <button type="submit">Add Car</button>
+          <button style={{backgroundColor: 'yellow'}} type="submit">
+            Add Car
+          </button>
         </form>
+
+        <h3>You need to npm install to use the faker libary</h3>
+        <p>You can edit any field</p>
+        <p>When you click add it will refresh with new info</p>
+        <p>Only one user/car is added when you click add</p>
       </div>
     )
   }
