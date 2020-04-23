@@ -41,3 +41,9 @@ export default function(state = [], action) {
       return state
   }
 }
+
+// for adding fake cars
+export const postCar = newCar => async dispatch => {
+  // console.log('newCar: ', newCar)
+  await axios.post('/api/add', newCar)
+}
