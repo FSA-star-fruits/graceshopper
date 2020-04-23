@@ -11,10 +11,9 @@ import {
 import AllCars from '../client/components/AllCars'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, SingleCar, MyCart} from './components'
+import {Login, Signup, UserHome, SingleCar, MyCart, Faker} from './components'
 import {me} from './store'
 import fetchSingleCar from './store/singleCar'
-import Faker from './components/Faker'
 
 class Routes extends Component {
   componentDidMount() {
@@ -36,14 +35,14 @@ class Routes extends Component {
         <Route exact path="/cars/:carID" component={SingleCar} />
         <Route exact path="/add" component={Faker} />
 
-        {/* {isLoggedIn && (
-          <Switch> */}
-        {/* Routes placed here are only available after logging in */}
-        {/* <Route path="/home" component={UserHome} />
+        {isLoggedIn && (
+          <Switch>
+            {/* Routes placed here are only available after logging in */}
+            <Route path="/home" component={UserHome} />
           </Switch>
-        )} */}
+        )}
         {/* Displays our Login component as a fallback */}
-        {/* <Route component={Login} /> */}
+        <Route component={Login} />
       </Switch>
     )
   }
