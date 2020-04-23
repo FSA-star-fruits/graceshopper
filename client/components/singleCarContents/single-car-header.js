@@ -13,7 +13,6 @@ export const SingleCarHeader = props => {
         </h1>
         <p>miles driven</p>
         <h3>{singleCar.Price}</h3>
-        <button>BUY</button>
       </span>
     </div>
   )
