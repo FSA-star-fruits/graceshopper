@@ -16,6 +16,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <Link to="/users/1/mycart">My Cart</Link>
+          {/* Q: how to fix above link so that the userID becomes dynamic? */}
         </div>
       ) : (
         <div>

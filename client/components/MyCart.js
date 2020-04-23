@@ -10,15 +10,17 @@ class MyCart extends Component {
 
   componentDidMount() {
     const userID = this.props.match.params.userID
-    console.log('userID >>>', userID)
     this.props.getCartItems(userID)
   }
 
   render() {
     const cartItems = this.props.cartItems
-    console.log('cartItems >>>', cartItems)
     if (cartItems.length === 0) {
-      return <p>Your Cart Is Currently Empty.</p>
+      return (
+        <div>
+          <p>Your Cart Is Currently Empty.</p>
+        </div>
+      )
     }
     return (
       <div>
