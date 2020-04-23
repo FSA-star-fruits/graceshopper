@@ -9,7 +9,15 @@ import {
 import AllCars from '../client/components/AllCars'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, SingleCar, MyCart, Faker} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  SingleCar,
+  MyCart,
+  Faker,
+  GuestCart
+} from './components'
 import {me} from './store'
 import fetchSingleCar from './store/singleCar'
 
@@ -24,10 +32,10 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route exact path="/" component={UserHome} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
-        <Route exact path="/" component={UserHome} />
-        <Route exact path="/mycart" component={MyCart} />
+        <Route exact path="/guestcart" component={GuestCart} />
         <Route exact path="/users/:userID/mycart" component={MyCart} />
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
