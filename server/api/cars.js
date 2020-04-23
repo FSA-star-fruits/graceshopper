@@ -18,7 +18,7 @@ router.get('/:carID', async (req, res, next) => {
       where: {id: id}
     })
 
-    res.json(singleCar.dataValues)
+    res.json(singleCar)
   } catch (err) {
     next(err)
   }
