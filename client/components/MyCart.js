@@ -14,7 +14,7 @@ class MyCart extends Component {
   }
 
   render() {
-    const cartItems = this.props.cartItems
+    const {cartItems} = this.props
     if (cartItems.length === 0) {
       return (
         <div>
@@ -28,7 +28,7 @@ class MyCart extends Component {
         {cartItems.map((item, idx) => {
           return (
             <div key={item.car.id}>
-              {idx}. {item.car.Brand} {item.car.Name}
+              {idx + 1}. {item.car.Brand} {item.car.Name}
             </div>
           )
         })}

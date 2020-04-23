@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postUser} from '../store/user'
 import {postCar} from '../store/cars'
-const faker = require('faker')
+// const faker = require('faker') // this is broken...
 
 const brand = () => {
   const brands = [
