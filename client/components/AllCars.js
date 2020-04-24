@@ -11,7 +11,6 @@ export class AllCars extends React.Component {
 
   componentDidMount() {
     this.props.getCars()
-    console.log(this.props)
   }
 
   render() {

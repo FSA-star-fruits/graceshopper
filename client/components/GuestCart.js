@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-export default class GuestCart extends Component {
+class GuestCart extends Component {
   constructor() {
     super()
     this.state = {}
@@ -10,13 +10,35 @@ export default class GuestCart extends Component {
   componentDidMount() {}
 
   render() {
+    const {cartItems} = this.props
+
+    const orders = cartItems.orders
+    if (orders.length === 0) {
+      return (
+        <div>
+          <p>Your Cart Is Currently Empty.</p>
+        </div>
+      )
+    }
     return (
       <div>
-        <h2>Items in your cart: show items stored in Sessions</h2>
-        {/* <div key={item.car.id}>
-               {idx + 1}. {item.car.Brand} {item.car.Name}
-             </div> */}
+        <h2>Items in your cart: </h2>
+        {orders.map((item, idx = 0) => {
+          return (
+            <div key={idx}>
+              {idx}. {item.car.brand} {item.car.name}
+            </div>
+          )
+        })}
       </div>
     )
   }
 }
+
+const mapState = state => {
+  return {
+    cartItems: state.cartItems
+  }
+}
+
+export default connect(mapState, null)(GuestCart)
