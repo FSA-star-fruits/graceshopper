@@ -22,7 +22,9 @@ class MyCart extends Component {
 
   render() {
     const {cartItems} = this.props
-    if (cartItems.length === 0) {
+
+    const orders = cartItems.orders
+    if (orders.length === 0) {
       return (
         <div>
           <p>Your Cart Is Currently Empty.</p>
@@ -32,9 +34,9 @@ class MyCart extends Component {
     return (
       <div>
         <h2>Items in your cart: </h2>
-        {cartItems.map((item, idx) => {
+        {orders.map((item, idx = 0) => {
           return (
-            <div key={item.car.id}>
+            <div key={idx}>
               {idx}. {item.car.brand} {item.car.name}
               <button
                 type="button"
