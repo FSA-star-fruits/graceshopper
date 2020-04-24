@@ -6,6 +6,7 @@ class MyCart extends Component {
   constructor() {
     super()
     this.state = {}
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount() {
@@ -13,8 +14,22 @@ class MyCart extends Component {
     this.props.getCartItems(userID)
   }
 
+  handleClick(item) {
+    const {cartItems} = this.props
+    console.log('event >>>', event.target.name === 'add')
+    console.log('item qty >>>', item.quantity)
+    console.log('cartItems >>>', cartItems)
+    switch (event.target.name) {
+      case 'add':
+        item.quantity++
+        return this.setState({cartItems})
+      default:
+    }
+  }
+
   render() {
     const {cartItems} = this.props
+
     if (cartItems.length === 0) {
       return (
         <div>
@@ -28,7 +43,14 @@ class MyCart extends Component {
         {cartItems.map((item, idx) => {
           return (
             <div key={item.car.id}>
-              {idx}. {item.car.brand} {item.car.name}
+              {idx}. {item.car.brand} {item.car.name} Qty: {item.quantity}
+              <button
+                type="button"
+                name="add"
+                onClick={() => this.handleClick(item)}
+              >
+                +
+              </button>
             </div>
           )
         })}
