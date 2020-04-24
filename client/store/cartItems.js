@@ -24,7 +24,7 @@ const decrementItems = items => ({
   items
 })
 
-const removeitems = items => ({
+const removeItems = items => ({
   type: REMOVE_ITEMS,
   items
 })
@@ -39,28 +39,28 @@ export const gotCartItems = userId => async dispatch => {
   }
 }
 
-export const incrementedItems = userId => async dispatch => {
+export const incrementedItems = cartItemId => async dispatch => {
   try {
-    const res = await axios.put(`/api/users/${userId}/mycart`)
-    dispatch(fetchCartItems(res.data))
+    const res = await axios.put(`/api/cartItems/${cartItemId}/`)
+    dispatch(incrementItems(res.data))
   } catch (err) {
     console.error(err)
   }
 }
 
-export const decrementedItems = userId => async dispatch => {
+export const decrementedItems = cartItemId => async dispatch => {
   try {
-    const res = await axios.put(`/api/users/${userId}/mycart`)
-    dispatch(fetchCartItems(res.data))
+    const res = await axios.put(`/api/cartItems/${cartItemId}`)
+    dispatch(decrementItems(res.data))
   } catch (err) {
     console.error(err)
   }
 }
 
-export const removedItems = userId => async dispatch => {
+export const removedItems = cartItemId => async dispatch => {
   try {
-    const res = await axios.delete(`/api/users/${userId}/mycart`)
-    dispatch(fetchCartItems(res.data))
+    const res = await axios.delete(`/api/cartItems/${cartItemId}`)
+    dispatch(removeItems(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -72,11 +72,11 @@ export default function(state = initialState, action) {
     case FETCH_ITEMS:
       return action.items
     case PLUS:
-      return action.items
+      return [...state, action.items.quantity++]
     case MINUS:
-      return action.items
+      return [...state, action.items.quantity--]
     case REMOVE_ITEMS:
-      return action.items
+      return [...state].filter(item => item.id !== action.items.id)
     default:
       return state
   }

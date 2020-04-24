@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {gotCartItems} from '../store/cartItems'
+import {gotCartItems, incrementedItems} from '../store/cartItems'
 
 class MyCart extends Component {
   constructor() {
@@ -15,14 +15,16 @@ class MyCart extends Component {
   }
 
   handleClick(item) {
-    const {cartItems} = this.props
+    const {cartItems, incrementItems} = this.props
     console.log('event >>>', event.target.name === 'add')
     console.log('item qty >>>', item.quantity)
     console.log('cartItems >>>', cartItems)
     switch (event.target.name) {
       case 'add':
         item.quantity++
-        return this.setState({cartItems})
+        this.setState({cartItems})
+        incrementItems(cartItems.id, this.state)
+
       default:
     }
   }
@@ -69,6 +71,9 @@ const mapDispatch = dispatch => {
   return {
     getCartItems: userID => {
       dispatch(gotCartItems(userID))
+    },
+    incrementItems: (cartItemId, edits) => {
+      dispatch(incrementedItems(cartItemId, edits))
     }
   }
 }
