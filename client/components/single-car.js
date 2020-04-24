@@ -16,16 +16,18 @@ import {buildPostCartThunk} from '../store/addItem'
 export class SingleCar extends Component {
   constructor(props) {
     super(props)
-
+    const {user} = props
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
   componentDidMount() {
-    const carId = this.props.match.params.carId
+    const carId = this.props.match.params.carID
+
     this.props.fetchSingleCar(carId)
   }
   handleAddToCart() {
-    const carId = 1
-    const userId = 1
+    const carId = this.props.match.params.carID
+    const userId = this.props.user.id
+
     this.props.postAddToCart(carId, userId)
   }
 
@@ -48,7 +50,8 @@ export class SingleCar extends Component {
  */
 const mapState = state => {
   return {
-    singleCar: state.singleCar
+    singleCar: state.singleCar,
+    user: state.user
   }
 }
 
@@ -58,10 +61,3 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(SingleCar)
-
-/**
- * PROP TYPES
- */
-// UserHome.propTypes = {
-//   email: PropTypes.string,
-// }

@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import {Provider} from 'react-redux'
-import store from './store'
 import {
   BrowserRouter as Router,
   Link,
@@ -41,7 +39,7 @@ class Routes extends Component {
         <Route exact path="/users/:userID/mycart" component={MyCart} />
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
-        <Route exact path="/add" component={Faker} />
+        {/* <Route exact path="/add" component={Faker} /> */}
 
         {isLoggedIn && (
           <Switch>
