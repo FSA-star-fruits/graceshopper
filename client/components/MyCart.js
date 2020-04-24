@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {gotCartItems, incrementedItems} from '../store/cartItems'
+import {gotCartItems, tossCartItem} from '../store/cartItems'
 
 class MyCart extends Component {
   constructor() {
     super()
     this.state = {}
-    this.handleClick = this.handleClick.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
   }
 
   componentDidMount() {
@@ -14,25 +14,17 @@ class MyCart extends Component {
     this.props.getCartItems(userID)
   }
 
-  handleClick(item) {
-    const {cartItems, incrementItems} = this.props
-    console.log('event >>>', event.target.name === 'add')
-    console.log('item qty >>>', item.quantity)
-    console.log('cartItems >>>', cartItems)
-    switch (event.target.name) {
-      case 'add':
-        item.quantity++
-        this.setState({cartItems})
-        incrementItems(cartItems.id, this.state)
-
-      default:
-    }
+  handleRemove(item) {
+    this.props.tossCartItem(item)
+    const userID = this.props.match.params.userID
+    this.props.getCartItems(userID)
   }
 
   render() {
     const {cartItems} = this.props
 
-    if (cartItems.length === 0) {
+    const orders = cartItems.orders
+    if (orders.length === 0) {
       return (
         <div>
           <h2>Your Cart Is Currently Empty.</h2>
@@ -42,16 +34,18 @@ class MyCart extends Component {
     return (
       <div>
         <h2>Items in your cart: </h2>
-        {cartItems.map((item, idx) => {
+        {orders.map((item, idx = 0) => {
           return (
-            <div key={item.car.id}>
-              {idx}. {item.car.brand} {item.car.name} Qty: {item.quantity}
+            <div key={idx}>
+              {idx}. {item.car.brand} {item.car.name} {item.quantity}
               <button
                 type="button"
-                name="add"
-                onClick={() => this.handleClick(item)}
+                onClick={() => {
+                  this.handleRemove(item)
+                }}
               >
-                +
+                {' '}
+                REMOVE
               </button>
             </div>
           )
@@ -72,8 +66,8 @@ const mapDispatch = dispatch => {
     getCartItems: userID => {
       dispatch(gotCartItems(userID))
     },
-    incrementItems: (cartItemId, edits) => {
-      dispatch(incrementedItems(cartItemId, edits))
+    tossCartItem: item => {
+      dispatch(tossCartItem(item))
     }
   }
 }

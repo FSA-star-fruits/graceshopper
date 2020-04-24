@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import {Provider} from 'react-redux'
-import store from './store'
 import {
   BrowserRouter as Router,
   Link,
@@ -22,10 +20,13 @@ import {
 } from './components'
 import {me} from './store'
 import fetchSingleCar from './store/singleCar'
+import {gotCartItems} from './store/cartItems'
 
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    const userID = this.props.user.id
+    this.props.getCartItems(userID)
   }
 
   render() {
@@ -41,7 +42,7 @@ class Routes extends Component {
         <Route exact path="/users/:userID/mycart" component={MyCart} />
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
-        <Route exact path="/add" component={Faker} />
+        {/* <Route exact path="/add" component={Faker} /> */}
 
         {isLoggedIn && (
           <Switch>
@@ -63,7 +64,9 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user,
+    cartItems: state.cartItems
   }
 }
 
@@ -71,6 +74,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    getCartItems: userID => {
+      dispatch(gotCartItems(userID))
     }
   }
 }

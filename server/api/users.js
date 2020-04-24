@@ -5,9 +5,6 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
       attributes: ['id', 'email']
     })
     res.json(users)
@@ -38,17 +35,30 @@ router.get('/:userId/mycart', async (req, res, next) => {
 })
 
 router.post('/:userId/mycart', async (req, res, next) => {
-  console.log(req.body)
   try {
-    await CartItem.create({
-      carId: req.body.carId,
-      orderId: req.body.userId,
-      quantity: 1
-    })
     await Order.create({
       userId: req.body.userId
     })
+    await CartItem.create({
+      carId: req.body.carId,
+      orderId: req.body.userId,
+      quantity: req.body.quantity++
+    })
   } catch (err) {
     next(err)
+  }
+})
+
+router.delete('/:cartItemId/mycart', async (req, res, next) => {
+  try {
+    const cartItemId = req.params.cartItemId
+    const response = await CartItem.destroy({
+      where: {
+        id: cartItemId
+      }
+    })
+    res.json(response)
+  } catch (error) {
+    next(error)
   }
 })

@@ -1,12 +1,9 @@
 import axios from 'axios'
 
-const initialState = []
-
 // action types
 const FETCH_ITEMS = 'FETCH_ITEMS'
-const PLUS = 'PLUS'
-const MINUS = 'MINUS'
-const REMOVE_ITEMS = 'REMOVE_ITEMS'
+const ADD_ITEM = 'ADD_ITEM'
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 // action creator
 const fetchCartItems = items => ({
@@ -14,70 +11,63 @@ const fetchCartItems = items => ({
   items
 })
 
-const incrementItems = items => ({
-  type: PLUS,
-  items
+const addItem = car => ({
+  type: ADD_ITEM,
+  car
 })
-
-const decrementItems = items => ({
-  type: MINUS,
-  items
-})
-
-const removeItems = items => ({
-  type: REMOVE_ITEMS,
-  items
+const removeItem = item => ({
+  type: REMOVE_ITEM,
+  item
 })
 
 // thunk creator
 export const gotCartItems = userId => async dispatch => {
   try {
     const res = await axios.get(`/api/users/${userId}/mycart`)
+
     dispatch(fetchCartItems(res.data))
   } catch (err) {
     console.error(err)
   }
 }
 
-export const incrementedItems = cartItemId => async dispatch => {
+export const buildPostCartThunk = (
+  carId,
+  carItem,
+  userId
+) => async dispatch => {
   try {
-    const res = await axios.put(`/api/cartItems/${cartItemId}/`)
-    dispatch(incrementItems(res.data))
+    dispatch(addItem({car: carItem}))
+    const cartObj = {
+      carId: carId,
+      userId: userId
+      // quantity: quantity
+    }
+    await axios.post(`/api/users/${userId}/mycart`, cartObj)
   } catch (err) {
     console.error(err)
   }
 }
 
-export const decrementedItems = cartItemId => async dispatch => {
-  try {
-    const res = await axios.put(`/api/cartItems/${cartItemId}`)
-    dispatch(decrementItems(res.data))
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-export const removedItems = cartItemId => async dispatch => {
-  try {
-    const res = await axios.delete(`/api/cartItems/${cartItemId}`)
-    dispatch(removeItems(res.data))
-  } catch (err) {
-    console.error(err)
+export const tossCartItem = item => {
+  return async dispatch => {
+    dispatch(removeItem(item))
+    await axios.delete(`/api/users/${item.id}/mycart`)
   }
 }
 
 // reducer
-export default function(state = initialState, action) {
+const cartItems = (state = {orders: [], client: []}, action) => {
   switch (action.type) {
     case FETCH_ITEMS:
-      return action.items
-    case PLUS:
-      return [...state, action.items.quantity++]
-    case MINUS:
-      return [...state, action.items.quantity--]
-    case REMOVE_ITEMS:
-      return [...state].filter(item => item.id !== action.items.id)
+      return {...state, orders: action.items}
+    case ADD_ITEM:
+      return {...state, orders: [...state.orders, action.car]}
+    case REMOVE_ITEM:
+      return state
     default:
       return state
   }
 }
+
+export default cartItems
