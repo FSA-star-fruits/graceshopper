@@ -1,13 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {tossCartItem} from '../store/cartItems'
 
 class GuestCart extends Component {
   constructor() {
     super()
     this.state = {}
+    this.handleRemove = this.handleRemove.bind(this)
   }
 
   componentDidMount() {}
+
+  handleRemove(item) {
+    this.props.tossCartItem(item)
+  }
 
   render() {
     const {cartItems} = this.props
@@ -27,6 +33,15 @@ class GuestCart extends Component {
           return (
             <div key={idx}>
               {idx}. {item.car.brand} {item.car.name}
+              <button
+                type="button"
+                onClick={() => {
+                  this.handleRemove(item)
+                }}
+              >
+                {' '}
+                REMOVE
+              </button>
             </div>
           )
         })}
@@ -40,5 +55,12 @@ const mapState = state => {
     cartItems: state.cartItems
   }
 }
+const mapDispatch = dispatch => {
+  return {
+    tossCartItem: item => {
+      dispatch(tossCartItem(item))
+    }
+  }
+}
 
-export default connect(mapState, null)(GuestCart)
+export default connect(mapState, mapDispatch)(GuestCart)

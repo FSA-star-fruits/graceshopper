@@ -48,3 +48,17 @@ router.post('/:userId/mycart', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:cartItemId/mycart', async (req, res, next) => {
+  try {
+    const cartItemId = req.params.cartItemId
+    const response = await CartItem.destroy({
+      where: {
+        id: cartItemId
+      }
+    })
+    res.json(response)
+  } catch (error) {
+    next(error)
+  }
+})

@@ -1,14 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {gotCartItems} from '../store/cartItems'
+import {gotCartItems, tossCartItem} from '../store/cartItems'
 
 class MyCart extends Component {
   constructor() {
     super()
     this.state = {}
+    this.handleRemove = this.handleRemove.bind(this)
   }
 
   componentDidMount() {
+    const userID = this.props.match.params.userID
+    this.props.getCartItems(userID)
+  }
+
+  handleRemove(item) {
+    this.props.tossCartItem(item)
     const userID = this.props.match.params.userID
     this.props.getCartItems(userID)
   }
@@ -31,6 +38,15 @@ class MyCart extends Component {
           return (
             <div key={idx}>
               {idx}. {item.car.brand} {item.car.name}
+              <button
+                type="button"
+                onClick={() => {
+                  this.handleRemove(item)
+                }}
+              >
+                {' '}
+                REMOVE
+              </button>
             </div>
           )
         })}
@@ -49,6 +65,9 @@ const mapDispatch = dispatch => {
   return {
     getCartItems: userID => {
       dispatch(gotCartItems(userID))
+    },
+    tossCartItem: item => {
+      dispatch(tossCartItem(item))
     }
   }
 }
