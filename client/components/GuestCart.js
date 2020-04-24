@@ -1,23 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {gotCartItems, tossCartItem} from '../store/cartItems'
+import {tossCartItem} from '../store/cartItems'
 
-class MyCart extends Component {
+class GuestCart extends Component {
   constructor() {
     super()
     this.state = {}
     this.handleRemove = this.handleRemove.bind(this)
   }
 
-  componentDidMount() {
-    const userID = this.props.match.params.userID
-    this.props.getCartItems(userID)
-  }
+  componentDidMount() {}
 
   handleRemove(item) {
     this.props.tossCartItem(item)
-    const userID = this.props.match.params.userID
-    this.props.getCartItems(userID)
   }
 
   render() {
@@ -60,16 +55,12 @@ const mapState = state => {
     cartItems: state.cartItems
   }
 }
-
 const mapDispatch = dispatch => {
   return {
-    getCartItems: userID => {
-      dispatch(gotCartItems(userID))
-    },
     tossCartItem: item => {
       dispatch(tossCartItem(item))
     }
   }
 }
 
-export default connect(mapState, mapDispatch)(MyCart)
+export default connect(mapState, mapDispatch)(GuestCart)

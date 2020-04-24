@@ -8,7 +8,7 @@ import {SingleCarSecondaryImage} from './singleCarContents/single-car-secondary-
 
 import {buildfetchSingleCarThunk} from '../store'
 
-import {buildPostCartThunk} from '../store/addItem'
+import {buildPostCartThunk} from '../store/cartItems'
 
 /**
  * COMPONENT
@@ -20,18 +20,21 @@ export class SingleCar extends Component {
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
   componentDidMount() {
-    const carId = this.props.match.params.carId
+    const carId = this.props.match.params.carID
+
     this.props.fetchSingleCar(carId)
   }
   handleAddToCart() {
-    const carId = 1
-    const userId = 1
-    this.props.postAddToCart(carId, userId)
+    const carId = this.props.match.params.carID
+    const userId = this.props.user.id
+    const carItem = this.props.singleCar
+
+    this.props.postAddToCart(carId, carItem, userId)
   }
 
   render() {
     const singleCar = this.props.singleCar
-    console.log(this.props)
+
     return (
       <div id="single-car">
         <button onClick={this.handleAddToCart}>ADD TO CART</button>
@@ -48,20 +51,15 @@ export class SingleCar extends Component {
  */
 const mapState = state => {
   return {
-    singleCar: state.singleCar
+    singleCar: state.singleCar,
+    user: state.user
   }
 }
 
 const mapDispatch = dispatch => ({
   fetchSingleCar: carId => dispatch(buildfetchSingleCarThunk(carId)),
-  postAddToCart: (carId, userId) => dispatch(buildPostCartThunk(carId, userId))
+  postAddToCart: (carId, carItem, userId) =>
+    dispatch(buildPostCartThunk(carId, carItem, userId))
 })
 
 export default connect(mapState, mapDispatch)(SingleCar)
-
-/**
- * PROP TYPES
- */
-// UserHome.propTypes = {
-//   email: PropTypes.string,
-// }
