@@ -5,13 +5,14 @@ import {gotCartItems, tossCartItem} from '../store/cartItems'
 class MyCart extends Component {
   constructor() {
     super()
-    this.state = {}
+    // this.state = {}
     this.handleRemove = this.handleRemove.bind(this)
   }
 
   componentDidMount() {
     const userID = this.props.match.params.userID
     this.props.getCartItems(userID)
+    // console.log('cartItems >>>>>', this.props)
   }
 
   handleRemove(item) {
@@ -22,8 +23,8 @@ class MyCart extends Component {
 
   render() {
     const {cartItems} = this.props
-
     const orders = cartItems.orders
+
     if (orders.length === 0) {
       return (
         <div>
@@ -35,9 +36,10 @@ class MyCart extends Component {
       <div>
         <h2>Items in your cart: </h2>
         {orders.map((item, idx = 0) => {
+          // console.log('item >>>>> car >>>>>', item, car)
           return (
             <div key={idx}>
-              {idx}. {item.car.brand} {item.car.name} {item.quantity}
+              {idx + 1}.{item.car.brand} {item.car.name} {item.quantity}
               <button
                 type="button"
                 onClick={() => {

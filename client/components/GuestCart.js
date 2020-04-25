@@ -17,8 +17,8 @@ class GuestCart extends Component {
 
   render() {
     const {cartItems} = this.props
-
     const orders = cartItems.orders
+
     if (orders.length === 0) {
       return (
         <div>

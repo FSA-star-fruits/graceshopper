@@ -15,9 +15,15 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId/mycart', async (req, res, next) => {
   try {
+    const userData = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    const orderId = userData.id
     const items = await CartItem.findAll({
       where: {
-        orderId: req.params.userId
+        orderId: orderId
       },
       include: [
         {
@@ -36,14 +42,41 @@ router.get('/:userId/mycart', async (req, res, next) => {
 
 router.post('/:userId/mycart', async (req, res, next) => {
   try {
-    await Order.create({
-      userId: req.body.userId
+    const userData = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      }
     })
+    const orderId = userData.id
+
     await CartItem.create({
       carId: req.body.carId,
-      orderId: req.body.userId,
-      quantity: req.body.quantity++
+      orderId: orderId,
+      quantity: 1
     })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:userId/mycart', async (req, res, next) => {
+  try {
+    const userData = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    const orderId = userData.id
+
+    const cartItem = await CartItem.findOne({
+      where: {
+        orderId: orderId,
+        carId: req.body.carId
+      }
+    })
+    console.log(req.body)
+    cartItem.update(req.body)
+    res.json(cartItem)
   } catch (err) {
     next(err)
   }

@@ -1,9 +1,14 @@
 import axios from 'axios'
 
+// initial state
+const initialState = {orders: [], client: []}
+// const initialState = []
+
 // action types
 const FETCH_ITEMS = 'FETCH_ITEMS'
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+const INCREMENT = 'INCREMENT'
 
 // action creator
 const fetchCartItems = items => ({
@@ -15,6 +20,12 @@ const addItem = car => ({
   type: ADD_ITEM,
   car
 })
+
+const increment = car => ({
+  type: INCREMENT,
+  car
+})
+
 const removeItem = item => ({
   type: REMOVE_ITEM,
   item
@@ -24,8 +35,16 @@ const removeItem = item => ({
 export const gotCartItems = userId => async dispatch => {
   try {
     const res = await axios.get(`/api/users/${userId}/mycart`)
-
     dispatch(fetchCartItems(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const incremented = (userId, edits) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/users/${userId}/mycart`, edits)
+    dispatch(increment(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -41,7 +60,6 @@ export const buildPostCartThunk = (
     const cartObj = {
       carId: carId,
       userId: userId
-      // quantity: quantity
     }
     await axios.post(`/api/users/${userId}/mycart`, cartObj)
   } catch (err) {
@@ -57,14 +75,28 @@ export const tossCartItem = item => {
 }
 
 // reducer
-const cartItems = (state = {orders: [], client: []}, action) => {
+const cartItems = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ITEMS:
       return {...state, orders: action.items}
     case ADD_ITEM:
       return {...state, orders: [...state.orders, action.car]}
     case REMOVE_ITEM:
-      return state
+      return {
+        ...state,
+        orders: [
+          ...state.orders.filter(order => order.carId !== +action.item.carId)
+        ]
+      }
+    // return state
+    case INCREMENT:
+      return {
+        ...state,
+        orders: [
+          ...state.orders.filter(order => order.carId !== +action.car.carId),
+          action.car
+        ]
+      }
     default:
       return state
   }
