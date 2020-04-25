@@ -28,7 +28,7 @@ class MyCart extends Component {
   handleQuantity(carId, value) {
     const userId = this.props.match.params.userID
 
-    this.props.getincreaseQuantityCart(carId, userId, value)
+    this.props.getincreaseQuantityCart(carId, value, userId)
     const userID = userId
     this.props.getCartItems(userID)
   }
@@ -92,11 +92,9 @@ const mapDispatch = dispatch => ({
   tossCartItem: item => {
     dispatch(tossCartItem(item))
   },
-  getincreaseQuantityCart: (carId, userId, value) => {
-    dispatch(increaseQuantityCart(carId, userId, value))
-  },
-  getdecreaseQuantityCart: (carId, userId, value) => {
-    dispatch(decreaseQuantityCart(carId, userId, value))
+  getincreaseQuantityCart: (carId, value, userId) => {
+    dispatch(increaseQuantityCart(carId, value, userId))
+    dispatch(gotCartItems(userId))
   }
 })
 

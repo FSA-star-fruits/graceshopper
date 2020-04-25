@@ -1,23 +1,35 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {tossCartItem} from '../store/cartItems'
+import {
+  gotCartItems,
+  tossCartItem,
+  increaseQuantityCart
+} from '../store/cartItems'
 
 class GuestCart extends Component {
   constructor() {
     super()
     this.state = {}
     this.handleRemove = this.handleRemove.bind(this)
+    this.handleQuantity = this.handleQuantity.bind(this)
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const userID = this.props.match.params.userID
+    this.props.getCartItems(userID)
+  }
 
   handleRemove(item) {
     this.props.tossCartItem(item)
   }
+  handleQuantity(carId, value) {
+    const userId = this.props.match.params.userID
+
+    this.props.getincreaseQuantityCart(carId, value, userId)
+  }
 
   render() {
     const {cartItems} = this.props
-
     const orders = cartItems.orders
     if (orders.length === 0) {
       return (
@@ -33,11 +45,23 @@ class GuestCart extends Component {
           return (
             <div key={idx}>
               {idx}. {item.car.brand} {item.car.name}
+              {item.quantity}
               <button
                 type="button"
-                onClick={() => {
-                  this.handleRemove(item)
-                }}
+                onClick={() => this.handleQuantity(item.car.id, true)}
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={() => this.handleQuantity(item.car.id, false)}
+              >
+                -
+              </button>
+              <button
+                key={idx}
+                type="button"
+                onClick={() => this.handleRemove(item)}
               >
                 {' '}
                 REMOVE
@@ -50,17 +74,21 @@ class GuestCart extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    cartItems: state.cartItems
+const mapState = state => ({
+  cartItems: state.cartItems
+})
+
+const mapDispatch = dispatch => ({
+  getCartItems: userID => {
+    dispatch(gotCartItems(userID))
+  },
+  tossCartItem: item => {
+    dispatch(tossCartItem(item))
+  },
+  getincreaseQuantityCart: (carId, value, userId) => {
+    dispatch(increaseQuantityCart(carId, value, userId))
+    dispatch(gotCartItems(userId))
   }
-}
-const mapDispatch = dispatch => {
-  return {
-    tossCartItem: item => {
-      dispatch(tossCartItem(item))
-    }
-  }
-}
+})
 
 export default connect(mapState, mapDispatch)(GuestCart)
