@@ -20,6 +20,7 @@ const Navbar = ({handleClick, isLoggedIn, userID, cartItems}) => (
             My Cart {cartItems.orders.length}
           </Link>
           <Link to="/add">Add</Link>
+          <Link to="/admin">Admin</Link>
         </div>
       ) : (
         <div>
@@ -30,6 +31,7 @@ const Navbar = ({handleClick, isLoggedIn, userID, cartItems}) => (
           <Link to="/signup">Sign Up</Link>
           <Link to="/guestcart">My Cart {cartItems.orders.length}</Link>
           <Link to="/add">Add</Link>
+          <Link to="/admin">Admin</Link>
         </div>
       )}
     </nav>

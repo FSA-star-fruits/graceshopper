@@ -30,6 +30,26 @@ export const fetchCars = () => async dispatch => {
   }
 }
 
+export const addCar = newCar => async dispatch => {
+  try {
+    await axios.post('/api/cars', newCar)
+    const {data} = await axios.get('/api/cars')
+    dispatch(getCars(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const removeCar = carId => async dispatch => {
+  try {
+    await axios.delete(`/api/cars/${carId}`)
+    const {data} = await axios.get('/api/cars')
+    dispatch(getCars(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -44,6 +64,5 @@ export default function(state = [], action) {
 
 // for adding fake cars
 export const postCar = newCar => async dispatch => {
-  // console.log('newCar: ', newCar)
   await axios.post('/api/add', newCar)
 }

@@ -24,3 +24,45 @@ router.get('/:carId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const {
+      brand,
+      name,
+      image,
+      price,
+      year,
+      color,
+      interiorColor,
+      engineType,
+      stockNo,
+      transmission,
+      doors,
+      vin,
+      vehicleId,
+      isSold,
+      inventory
+    } = req.body
+    const newCar = await Car.create({
+      brand,
+      name,
+      image,
+      price,
+      year,
+      color,
+      interiorColor,
+      engineType,
+      stockNo,
+      transmission,
+      doors,
+      vin,
+      vehicleId,
+      isSold,
+      inventory
+    })
+    res.json(newCar)
+  } catch (error) {
+    next(error)
+  }
+})
