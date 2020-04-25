@@ -39,10 +39,9 @@ class MyCart extends Component {
             <div key={idx}>
               {idx}. {item.car.brand} {item.car.name}
               <button
+                key={idx}
                 type="button"
-                onClick={() => {
-                  this.handleRemove(item)
-                }}
+                onClick={() => this.handleRemove(item)}
               >
                 {' '}
                 REMOVE

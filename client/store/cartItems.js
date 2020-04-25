@@ -4,6 +4,7 @@ import axios from 'axios'
 const FETCH_ITEMS = 'FETCH_ITEMS'
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+const EMPTY_ITEM = 'EMPTY_ITEM'
 
 // action creator
 const fetchCartItems = items => ({
@@ -15,9 +16,14 @@ const addItem = car => ({
   type: ADD_ITEM,
   car
 })
-const removeItem = item => ({
+const removeItem = (item, idx) => ({
   type: REMOVE_ITEM,
-  item
+  item,
+  idx
+})
+
+const emptyItem = () => ({
+  type: EMPTY_ITEM
 })
 
 // thunk creator
@@ -47,10 +53,17 @@ export const buildPostCartThunk = (
     console.error(err)
   }
 }
+
 export const tossCartItem = item => {
   return async dispatch => {
     dispatch(removeItem(item))
+
     await axios.delete(`/api/users/${item.id}/mycart`)
+  }
+}
+export const emptyCartItem = () => {
+  return dispatch => {
+    dispatch(emptyItem())
   }
 }
 
@@ -63,6 +76,8 @@ const cartItems = (state = {orders: [], client: []}, action) => {
       return {...state, orders: [...state.orders, action.car]}
     case REMOVE_ITEM:
       return state
+    case EMPTY_ITEM:
+      return {...state, orders: []}
     default:
       return state
   }
