@@ -3,6 +3,9 @@
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+export {default as Admin} from './Admin'
+export {default as AdminAddCar} from './AdminAddCar'
+export {default as AdminEditCar} from './AdminEditCar'
 export {default as Faker} from './Faker'
 export {default as MyCart} from './MyCart'
 export {default as GuestCart} from './GuestCart'

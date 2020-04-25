@@ -66,3 +66,57 @@ router.post('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.delete('/:carId', async (req, res, next) => {
+  try {
+    const removeCar = await Car.destroy({
+      where: {id: req.params.carId}
+    })
+    res.json(removeCar)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:carId', async (req, res, next) => {
+  try {
+    const {
+      brand,
+      name,
+      image,
+      price,
+      year,
+      color,
+      interiorColor,
+      engineType,
+      stockNo,
+      transmission,
+      doors,
+      vin,
+      vehicleId,
+      isSold,
+      inventory
+    } = req.body
+    const car = await Car.findByPk(req.params.carId)
+    const editCar = await car.update({
+      brand,
+      name,
+      image,
+      price,
+      year,
+      color,
+      interiorColor,
+      engineType,
+      stockNo,
+      transmission,
+      doors,
+      vin,
+      vehicleId,
+      isSold,
+      inventory
+    })
+    res.status(201).json(editCar)
+  } catch (error) {
+    next(error)
+  }
+})

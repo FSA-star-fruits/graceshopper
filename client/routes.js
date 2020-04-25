@@ -48,7 +48,7 @@ class Routes extends Component {
         <Route exact path="/add" component={Faker} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/add" component={AdminAddCar} />
-        {/* <Route exact path="/admin/edit/:carId" component={AdminEditCar} />        */}
+        <Route exact path="/admin/edit/:carId" component={AdminEditCar} />
 
         {isLoggedIn && (
           <Switch>

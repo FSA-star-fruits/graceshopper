@@ -47,23 +47,7 @@ export class AdminAddCar extends Component {
       inventory: state.inventory
     }
     this.props.addCar(newCar)
-    this.setState({
-      brand: '',
-      name: '',
-      image: '',
-      price: '',
-      year: '',
-      color: '',
-      interiorColor: '',
-      engineType: '',
-      stockNo: '',
-      transmission: '',
-      doors: '',
-      vin: '',
-      vehicleId: '',
-      isSold: '',
-      inventory: ''
-    })
+    this.props.history.push('/admin')
   }
 
   handleChange(event) {
@@ -75,7 +59,7 @@ export class AdminAddCar extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.carSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <label htmlFor="brand">Brand:</label>
           <input
             type="text"

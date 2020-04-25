@@ -111,6 +111,611 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./client/components/Admin.js":
+/*!************************************!*\
+  !*** ./client/components/Admin.js ***!
+  \************************************/
+/*! exports provided: Admin, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Admin", function() { return Admin; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _store_cars__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/cars */ "./client/store/cars.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Admin =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Admin, _Component);
+
+  function Admin() {
+    var _this;
+
+    _classCallCheck(this, Admin);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Admin).call(this));
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Admin, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchCars();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "All Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "/admin/add"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button"
+      }, "Add Car")), this.props.cars.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cars.map(function (car) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: car.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "/cars/".concat(car.id)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: car.image,
+          style: {
+            width: '150px',
+            height: '150px'
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, car.brand), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, car.price)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          onClick: function onClick() {
+            _this2.props.removeCar(car.id);
+          }
+        }, "Remove"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "/admin/edit/".concat(car.id)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
+      })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "There are no cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please register your car")));
+    }
+  }]);
+
+  return Admin;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapState = function mapState(state) {
+  return {
+    cars: state.cars
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    fetchCars: function fetchCars() {
+      return dispatch(Object(_store_cars__WEBPACK_IMPORTED_MODULE_3__["fetchCars"])());
+    },
+    removeCar: function removeCar(carId) {
+      return dispatch(Object(_store_cars__WEBPACK_IMPORTED_MODULE_3__["removeCar"])(carId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(Admin));
+
+/***/ }),
+
+/***/ "./client/components/AdminAddCar.js":
+/*!******************************************!*\
+  !*** ./client/components/AdminAddCar.js ***!
+  \******************************************/
+/*! exports provided: AdminAddCar, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminAddCar", function() { return AdminAddCar; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_cars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/cars */ "./client/store/cars.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var AdminAddCar =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(AdminAddCar, _Component);
+
+  function AdminAddCar(props) {
+    var _this;
+
+    _classCallCheck(this, AdminAddCar);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AdminAddCar).call(this, props));
+    _this.state = {
+      brand: '',
+      name: '',
+      image: '',
+      price: '',
+      year: '',
+      color: '',
+      interiorColor: '',
+      engineType: '',
+      stockNo: '',
+      transmission: '',
+      doors: '',
+      vin: '',
+      vehicleId: '',
+      isSold: '',
+      inventory: ''
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(AdminAddCar, [{
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var state = this.state;
+      var newCar = {
+        brand: state.brand,
+        name: state.name,
+        image: state.image,
+        price: state.price,
+        year: state.year,
+        color: state.color,
+        interiorColor: state.interiorColor,
+        engineType: state.engineType,
+        stockNo: state.stockNo,
+        transmission: state.transmission,
+        doors: state.doors,
+        vin: state.vin,
+        vehicleId: state.vehicleId,
+        isSold: state.isSold,
+        inventory: state.inventory
+      };
+      this.props.addCar(newCar);
+      this.props.history.push('/admin');
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "brand"
+      }, "Brand:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "brand",
+        value: this.state.brand,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name"
+      }, "Name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "name",
+        value: this.state.name,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "image"
+      }, "Image:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "image",
+        value: this.state.image,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "price"
+      }, "Price:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "price",
+        value: this.state.price,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "year"
+      }, "Year:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "year",
+        value: this.state.year,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "color"
+      }, "Color:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "color",
+        value: this.state.color,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "interiorColor"
+      }, "Interior Color:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "interiorColor",
+        value: this.state.interiorColor,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "engineType"
+      }, "Engine Type:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "engineType",
+        value: this.state.engineType,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "stockNo"
+      }, "StockNo:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "stockNo",
+        value: this.state.stockNo,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "transmission"
+      }, "Transmission:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "transmission",
+        value: this.state.transmission,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "doors"
+      }, "Doors:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "doors",
+        value: this.state.doors,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "vin"
+      }, "Vin:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "vin",
+        value: this.state.vin,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "vehicleId"
+      }, "Vehicle Id:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "vehicleId",
+        value: this.state.vehicleId,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "isSold"
+      }, "Is Sold:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "isSold",
+        value: this.state.isSold,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "inventory"
+      }, "Inventory:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "inventory",
+        value: this.state.inventory,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        style: {
+          backgroundColor: 'yellow'
+        },
+        type: "submit"
+      }, "Add Car")));
+    }
+  }]);
+
+  return AdminAddCar;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    addCar: function addCar(newCar) {
+      return dispatch(Object(_store_cars__WEBPACK_IMPORTED_MODULE_2__["addCar"])(newCar));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(AdminAddCar));
+
+/***/ }),
+
+/***/ "./client/components/AdminEditCar.js":
+/*!*******************************************!*\
+  !*** ./client/components/AdminEditCar.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_cars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/cars */ "./client/store/cars.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var AdminEditCar =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(AdminEditCar, _Component);
+
+  function AdminEditCar() {
+    var _this;
+
+    _classCallCheck(this, AdminEditCar);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AdminEditCar).call(this));
+    _this.state = {
+      brand: '',
+      name: '',
+      image: '',
+      price: '',
+      year: '',
+      color: '',
+      interiorColor: '',
+      engineType: '',
+      stockNo: '',
+      transmission: '',
+      doors: '',
+      vin: '',
+      vehicleId: '',
+      isSold: '',
+      inventory: ''
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(AdminEditCar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        brand: '',
+        name: '',
+        image: '',
+        price: '',
+        year: '',
+        color: '',
+        interiorColor: '',
+        engineType: '',
+        stockNo: '',
+        transmission: '',
+        doors: '',
+        vin: '',
+        vehicleId: '',
+        isSold: '',
+        inventory: ''
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var carId = this.props.match.params.carId;
+      var state = this.state;
+      var editCar = {
+        brand: state.brand,
+        name: state.name,
+        image: state.image,
+        price: state.price,
+        year: state.year,
+        color: state.color,
+        interiorColor: state.interiorColor,
+        engineType: state.engineType,
+        stockNo: state.stockNo,
+        transmission: state.transmission,
+        doors: state.doors,
+        vin: state.vin,
+        vehicleId: state.vehicleId,
+        isSold: state.isSold,
+        inventory: state.inventory
+      };
+      this.props.updateCar(carId, editCar);
+      this.props.history.push('/admin');
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "brand"
+      }, "Brand:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "brand",
+        value: this.state.brand,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name"
+      }, "Name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "name",
+        value: this.state.name,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "image"
+      }, "Image:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "image",
+        value: this.state.image,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "price"
+      }, "Price:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "price",
+        value: this.state.price,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "year"
+      }, "Year:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "year",
+        value: this.state.year,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "color"
+      }, "Color:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "color",
+        value: this.state.color,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "interiorColor"
+      }, "Interior Color:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "interiorColor",
+        value: this.state.interiorColor,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "engineType"
+      }, "Engine Type:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "engineType",
+        value: this.state.engineType,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "stockNo"
+      }, "StockNo:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "stockNo",
+        value: this.state.stockNo,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "transmission"
+      }, "Transmission:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "transmission",
+        value: this.state.transmission,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "doors"
+      }, "Doors:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "doors",
+        value: this.state.doors,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "vin"
+      }, "Vin:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "vin",
+        value: this.state.vin,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "vehicleId"
+      }, "Vehicle Id:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "vehicleId",
+        value: this.state.vehicleId,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "isSold"
+      }, "Is Sold:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "isSold",
+        value: this.state.isSold,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "inventory"
+      }, "Inventory:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "inventory",
+        value: this.state.inventory,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        style: {
+          backgroundColor: 'yellow'
+        },
+        type: "submit"
+      }, "Edit Car")));
+    }
+  }]);
+
+  return AdminEditCar;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    updateCar: function updateCar(carId, editCar) {
+      return dispatch(Object(_store_cars__WEBPACK_IMPORTED_MODULE_2__["updateCar"])(carId, editCar));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(AdminEditCar));
+
+/***/ }),
+
 /***/ "./client/components/AllCars.js":
 /*!**************************************!*\
   !*** ./client/components/AllCars.js ***!
@@ -862,54 +1467,66 @@ AuthForm.propTypes = {
 /*!************************************!*\
   !*** ./client/components/index.js ***!
   \************************************/
-/*! exports provided: Faker, MyCart, GuestCart, Navbar, UserHome, SingleCar, SingleCarHeader, SingleCarMainView, SingleCarDetails, SingleCarSecondaryImage, Login, Signup, AllCars */
+/*! exports provided: Admin, AdminAddCar, AdminEditCar, Faker, MyCart, GuestCart, Navbar, UserHome, SingleCar, SingleCarHeader, SingleCarMainView, SingleCarDetails, SingleCarSecondaryImage, Login, Signup, AllCars */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Faker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Faker */ "./client/components/Faker.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Faker", function() { return _Faker__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _Admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Admin */ "./client/components/Admin.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Admin", function() { return _Admin__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _MyCart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyCart */ "./client/components/MyCart.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MyCart", function() { return _MyCart__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _AdminAddCar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminAddCar */ "./client/components/AdminAddCar.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AdminAddCar", function() { return _AdminAddCar__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _GuestCart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GuestCart */ "./client/components/GuestCart.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GuestCart", function() { return _GuestCart__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _AdminEditCar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminEditCar */ "./client/components/AdminEditCar.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AdminEditCar", function() { return _AdminEditCar__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navbar */ "./client/components/navbar.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Navbar", function() { return _navbar__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _Faker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faker */ "./client/components/Faker.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Faker", function() { return _Faker__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _user_home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./user-home */ "./client/components/user-home.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserHome", function() { return _user_home__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _MyCart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MyCart */ "./client/components/MyCart.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MyCart", function() { return _MyCart__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _single_car__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./single-car */ "./client/components/single-car.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCar", function() { return _single_car__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _GuestCart__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./GuestCart */ "./client/components/GuestCart.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GuestCart", function() { return _GuestCart__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _singleCarContents_single_car_header__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./singleCarContents/single-car-header */ "./client/components/singleCarContents/single-car-header.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarHeader", function() { return _singleCarContents_single_car_header__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./navbar */ "./client/components/navbar.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Navbar", function() { return _navbar__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
-/* harmony import */ var _singleCarContents_single_car_main_view__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./singleCarContents/single-car-main-view */ "./client/components/singleCarContents/single-car-main-view.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarMainView", function() { return _singleCarContents_single_car_main_view__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+/* harmony import */ var _user_home__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./user-home */ "./client/components/user-home.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserHome", function() { return _user_home__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
-/* harmony import */ var _singleCarContents_single_car_details__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./singleCarContents/single-car-details */ "./client/components/singleCarContents/single-car-details.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarDetails", function() { return _singleCarContents_single_car_details__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+/* harmony import */ var _single_car__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./single-car */ "./client/components/single-car.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCar", function() { return _single_car__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
-/* harmony import */ var _singleCarContents_single_car_secondary_images__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./singleCarContents/single-car-secondary-images */ "./client/components/singleCarContents/single-car-secondary-images.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarSecondaryImage", function() { return _singleCarContents_single_car_secondary_images__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony import */ var _singleCarContents_single_car_header__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./singleCarContents/single-car-header */ "./client/components/singleCarContents/single-car-header.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarHeader", function() { return _singleCarContents_single_car_header__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _auth_form__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./auth-form */ "./client/components/auth-form.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Login", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_10__["Login"]; });
+/* harmony import */ var _singleCarContents_single_car_main_view__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./singleCarContents/single-car-main-view */ "./client/components/singleCarContents/single-car-main-view.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarMainView", function() { return _singleCarContents_single_car_main_view__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Signup", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_10__["Signup"]; });
+/* harmony import */ var _singleCarContents_single_car_details__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./singleCarContents/single-car-details */ "./client/components/singleCarContents/single-car-details.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarDetails", function() { return _singleCarContents_single_car_details__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _AllCars__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AllCars */ "./client/components/AllCars.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AllCars", function() { return _AllCars__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+/* harmony import */ var _singleCarContents_single_car_secondary_images__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./singleCarContents/single-car-secondary-images */ "./client/components/singleCarContents/single-car-secondary-images.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleCarSecondaryImage", function() { return _singleCarContents_single_car_secondary_images__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+
+/* harmony import */ var _auth_form__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./auth-form */ "./client/components/auth-form.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Login", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_13__["Login"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Signup", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_13__["Signup"]; });
+
+/* harmony import */ var _AllCars__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./AllCars */ "./client/components/AllCars.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AllCars", function() { return _AllCars__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
 /**
  * `components/index.js` exists simply as a 'central export' for our components.
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+
+
+
 
 
 
@@ -1537,6 +2154,10 @@ function (_Component) {
         exact: true,
         path: "/admin/add",
         component: _components__WEBPACK_IMPORTED_MODULE_5__["AdminAddCar"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        exact: true,
+        path: "/admin/edit/:carId",
+        component: _components__WEBPACK_IMPORTED_MODULE_5__["AdminEditCar"]
       }), isLoggedIn && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         path: "/home",
         component: _components__WEBPACK_IMPORTED_MODULE_5__["UserHome"]
@@ -1612,7 +2233,7 @@ socket.on('connect', function () {
 /*!******************************!*\
   !*** ./client/store/cars.js ***!
   \******************************/
-/*! exports provided: fetchCars, addCar, removeCar, default, postCar */
+/*! exports provided: fetchCars, addCar, removeCar, updateCar, default, postCar */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1620,6 +2241,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCars", function() { return fetchCars; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addCar", function() { return addCar; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeCar", function() { return removeCar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCar", function() { return updateCar; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postCar", function() { return postCar; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -1788,6 +2410,53 @@ var removeCar = function removeCar(carId) {
     }()
   );
 };
+var updateCar = function updateCar(carId, editCar) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref6 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(dispatch) {
+        var _ref7, data;
+
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cars/".concat(carId), editCar);
+
+              case 3:
+                _context4.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/cars');
+
+              case 5:
+                _ref7 = _context4.sent;
+                data = _ref7.data;
+                dispatch(getCars(data));
+                _context4.next = 13;
+                break;
+
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
+
+              case 13:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 10]]);
+      }));
+
+      return function (_x4) {
+        return _ref6.apply(this, arguments);
+      };
+    }()
+  );
+};
 /**
  * REDUCER
  */
@@ -1809,26 +2478,26 @@ var postCar = function postCar(newCar) {
   return (
     /*#__PURE__*/
     function () {
-      var _ref6 = _asyncToGenerator(
+      var _ref8 = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4(dispatch) {
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      regeneratorRuntime.mark(function _callee5(dispatch) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.next = 2;
+                _context5.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/add', newCar);
 
               case 2:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }));
 
-      return function (_x4) {
-        return _ref6.apply(this, arguments);
+      return function (_x5) {
+        return _ref8.apply(this, arguments);
       };
     }()
   );
@@ -2047,7 +2716,7 @@ var cartItems = function cartItems() {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, postUser, buildfetchSingleCarThunk, fetchCars, addCar, removeCar, postCar, gotCartItems, buildPostCartThunk, tossCartItem */
+/*! exports provided: default, me, auth, logout, postUser, buildfetchSingleCarThunk, gotCartItems, buildPostCartThunk, tossCartItem, fetchCars, addCar, removeCar, updateCar, postCar */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2077,6 +2746,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addCar", function() { return _cars__WEBPACK_IMPORTED_MODULE_5__["addCar"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeCar", function() { return _cars__WEBPACK_IMPORTED_MODULE_5__["removeCar"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "updateCar", function() { return _cars__WEBPACK_IMPORTED_MODULE_5__["updateCar"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "postCar", function() { return _cars__WEBPACK_IMPORTED_MODULE_5__["postCar"]; });
 

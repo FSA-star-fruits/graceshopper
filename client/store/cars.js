@@ -50,6 +50,16 @@ export const removeCar = carId => async dispatch => {
   }
 }
 
+export const updateCar = (carId, editCar) => async dispatch => {
+  try {
+    await axios.put(`/api/cars/${carId}`, editCar)
+    const {data} = await axios.get('/api/cars')
+    dispatch(getCars(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 /**
  * REDUCER
  */
