@@ -16,7 +16,10 @@ import {
   SingleCar,
   MyCart,
   Faker,
-  GuestCart
+  GuestCart,
+  Admin,
+  AdminAddCar,
+  AdminEditCar
 } from './components'
 import {me} from './store'
 import fetchSingleCar from './store/singleCar'
@@ -42,7 +45,10 @@ class Routes extends Component {
         <Route exact path="/users/:userID/mycart" component={MyCart} />
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
-        {/* <Route exact path="/add" component={Faker} /> */}
+        <Route exact path="/add" component={Faker} />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/add" component={AdminAddCar} />
+        <Route exact path="/admin/edit/:carId" component={AdminEditCar} />
 
         {isLoggedIn && (
           <Switch>
