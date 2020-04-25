@@ -24,9 +24,7 @@ const Navbar = ({
           <a href="#" onClick={handleClick}>
             Logout
           </a>
-          <Link to={`/users/${userID}/mycart`}>
-            My Cart {cartItems.orders.length}
-          </Link>
+          <Link to={`/users/${userID}/mycart`}>My Cart</Link>
           <Link to="/add">Add</Link>
           {isAdmin ? <Link to="/admin">Admin</Link> : ''}
         </div>

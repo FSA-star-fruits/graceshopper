@@ -39,11 +39,22 @@ router.post('/:userId/mycart', async (req, res, next) => {
     await Order.create({
       userId: req.body.userId
     })
-    await CartItem.create({
-      carId: req.body.carId,
-      orderId: req.body.userId,
-      quantity: 1
+    const existingCartItem = await CartItem.findOne({
+      where: {carId: req.body.carId, orderId: req.body.userId}
     })
+
+    if (existingCartItem === null) {
+      await CartItem.create({
+        carId: req.body.carId,
+        orderId: req.body.userId,
+        quantity: 1
+      })
+    } else {
+      await existingCartItem.update({
+        quantity: existingCartItem.quantity + 1
+      })
+      console.log(existingCartItem.quantity)
+    }
   } catch (err) {
     next(err)
   }
@@ -63,5 +74,29 @@ router.delete('/:cartItemId/mycart', async (req, res, next) => {
     }
   } catch (error) {
     next(error)
+  }
+})
+
+router.put('/:userId/mycart', async (req, res, next) => {
+  console.log(req.body.handle, 'AKEFhsei')
+  try {
+    const existingCartItem = await CartItem.findOne({
+      where: {carId: req.body.carId, orderId: req.body.userId}
+    })
+
+    if (req.body.handle === true) {
+      const response = await existingCartItem.update({
+        quantity: existingCartItem.quantity + 1
+      })
+      console.log(existingCartItem.quantity)
+      res.json(response)
+    } else {
+      const response = await existingCartItem.update({
+        quantity: existingCartItem.quantity - 1
+      })
+      res.json(response)
+    }
+  } catch (err) {
+    next(err)
   }
 })

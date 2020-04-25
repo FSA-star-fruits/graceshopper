@@ -5,6 +5,8 @@ const FETCH_ITEMS = 'FETCH_ITEMS'
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const EMPTY_ITEM = 'EMPTY_ITEM'
+const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
+const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
 
 // action creator
 const fetchCartItems = items => ({
@@ -24,6 +26,16 @@ const removeItem = (item, idx) => ({
 
 const emptyItem = () => ({
   type: EMPTY_ITEM
+})
+
+const increaseQuantity = carId => ({
+  type: INCREASE_QUANTITY,
+  carId
+})
+
+const decreaseQuantity = carId => ({
+  type: DECREASE_QUANTITY,
+  carId
 })
 
 // thunk creator
@@ -67,6 +79,30 @@ export const emptyCartItem = () => {
   }
 }
 
+export const increaseQuantityCart = (carId, userId, value) => {
+  return async dispatch => {
+    dispatch(increaseQuantity(carId))
+    const cartObj = {
+      carId: carId,
+      userId: userId,
+      handle: value
+    }
+    await axios.put(`/api/users/${userId}/mycart`, cartObj)
+  }
+}
+
+export const decreaseQuantityCart = (carId, userId) => {
+  return async dispatch => {
+    dispatch(decreaseQuantity(carId))
+    const cartObj = {
+      carId: carId,
+      userId: userId,
+      handle: false
+    }
+    await axios.put(`/api/users/${userId}/mycart`, cartObj)
+  }
+}
+
 // reducer
 const cartItems = (state = {orders: [], client: []}, action) => {
   switch (action.type) {
@@ -78,6 +114,10 @@ const cartItems = (state = {orders: [], client: []}, action) => {
       return state
     case EMPTY_ITEM:
       return {...state, orders: []}
+    case INCREASE_QUANTITY:
+      return state
+    case DECREASE_QUANTITY:
+      return state
     default:
       return state
   }
