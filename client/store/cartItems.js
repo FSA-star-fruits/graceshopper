@@ -8,8 +8,9 @@ const initialState = {orders: [], client: []}
 const FETCH_ITEMS = 'FETCH_ITEMS'
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
-const INCREMENT = 'INCREMENT'
-const EMPTY_CART = 'EMPTY_CART'
+const EMPTY_ITEM = 'EMPTY_ITEM'
+const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
+const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
 
 // action creator
 const fetchCartItems = items => ({
@@ -20,35 +21,28 @@ const addItem = car => ({
   type: ADD_ITEM,
   car
 })
-const increment = car => ({
-  type: INCREMENT,
-  car
-})
 const removeItem = item => ({
   type: REMOVE_ITEM,
   item
 })
-const emptyCart = () => ({
-  type: EMPTY_CART
+const emptyItem = () => ({
+  type: EMPTY_ITEM
+})
+const increaseQuantity = carId => ({
+  type: INCREASE_QUANTITY,
+  carId
+})
+const decreaseQuantity = carId => ({
+  type: DECREASE_QUANTITY,
+  carId
 })
 
 // thunk creator
 export const gotCartItems = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/users/${userId}/mycart`)
-    dispatch(fetchCartItems(res.data))
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-export const incremented = (userId, edits) => async dispatch => {
-  try {
     if (userId) {
-      const res = await axios.put(`/api/users/${userId}/mycart`, edits)
-      dispatch(increment(res.data))
-    } else {
-      dispatch(increment(edits))
+      const res = await axios.get(`/api/users/${userId}/mycart`)
+      dispatch(fetchCartItems(res.data))
     }
   } catch (err) {
     console.error(err)
@@ -58,7 +52,8 @@ export const incremented = (userId, edits) => async dispatch => {
 export const buildPostCartThunk = (
   carId,
   carItem,
-  userId
+  userId,
+  quantity
 ) => async dispatch => {
   try {
     if (userId) {
@@ -69,13 +64,15 @@ export const buildPostCartThunk = (
       const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
       dispatch(addItem(res.data))
     } else {
-      const guestCartObj = {
-        carId: carId,
-        userId: userId,
-        quantity: 1
+      if (!quantity) {
+        quantity = 0
       }
-
-      dispatch(addItem(guestCartObj))
+      const item = {
+        carId: +carId,
+        car: carItem,
+        quantity: quantity++
+      }
+      dispatch(addItem(item))
     }
   } catch (err) {
     console.error(err)
@@ -85,13 +82,32 @@ export const buildPostCartThunk = (
 export const tossCartItem = item => {
   return async dispatch => {
     dispatch(removeItem(item))
+
     await axios.delete(`/api/users/${item.id}/mycart`)
   }
 }
 
-export const emptiedCart = () => {
+export const emptyCartItem = () => {
+  return dispatch => {
+    dispatch(emptyItem())
+  }
+}
+
+export const increaseQuantityCart = (carId, value, userId) => {
   return async dispatch => {
-    dispatch(emptyCart())
+    if (value === true) {
+      dispatch(increaseQuantity(carId))
+    } else {
+      dispatch(decreaseQuantity(carId))
+    }
+    if (userId) {
+      const cartObj = {
+        carId: carId,
+        userId: userId,
+        handle: value
+      }
+      await axios.put(`/api/users/${userId}/mycart`, cartObj)
+    }
   }
 }
 
@@ -100,25 +116,43 @@ const cartItems = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ITEMS:
       return {...state, orders: action.items}
+
     case ADD_ITEM:
-      return {...state, orders: [...state.orders, action.car]}
+      const noChangeItems = [
+        ...state.orders.filter(order => order.carId !== action.car.carId)
+      ]
+      return {
+        ...state,
+        orders: [...noChangeItems, action.car]
+      }
+
     case REMOVE_ITEM:
+      const newCart = state.orders.filter(
+        order => order.carId !== +action.item.carId
+      )
+      return {...state, orders: newCart}
+
+    case EMPTY_ITEM:
+      return {...state, orders: [], client: []}
+
+    case INCREASE_QUANTITY:
+      const incrementingItem = state.orders.filter(
+        order => order.carId === +action.carId
+      )[0]
+      incrementingItem.quantity++
       return {
-        ...state,
-        orders: [
-          ...state.orders.filter(order => order.carId !== +action.item.carId)
-        ]
+        ...state
       }
-    case INCREMENT:
+
+    case DECREASE_QUANTITY:
+      const decrementingItem = state.orders.filter(
+        order => order.carId === +action.carId
+      )[0]
+      decrementingItem.quantity--
       return {
-        ...state,
-        orders: [
-          ...state.orders.filter(order => order.carId !== +action.car.carId),
-          action.car
-        ]
+        ...state
       }
-    case EMPTY_CART:
-      return {...state, orders: []}
+
     default:
       return state
   }

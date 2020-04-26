@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {buildfetchSingleCarThunk, buildPostCartThunk} from '../store'
+
 import {SingleCarHeader} from './singleCarContents/single-car-header'
 import {SingleCarMainView} from './singleCarContents/single-car-main-view'
 import {SingleCarDetails} from './singleCarContents/single-car-details'
 import {SingleCarSecondaryImage} from './singleCarContents/single-car-secondary-images'
-import {buildfetchSingleCarThunk, incremented} from '../store'
-import {buildPostCartThunk, gotCartItems} from '../store/cartItems'
 
 /**
  * COMPONENT
@@ -13,45 +13,27 @@ import {buildPostCartThunk, gotCartItems} from '../store/cartItems'
 export class SingleCar extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
 
   componentDidMount() {
     const carId = this.props.match.params.carID
     this.props.fetchSingleCar(carId)
-    this.props.getCartItems(this.props.user.id)
   }
 
   handleAddToCart() {
+    // JO: clean up vars, if time permits
     const carId = this.props.match.params.carID
     const userId = this.props.user.id
     const carItem = this.props.singleCar
-    const {cartItems} = this.props
-    const orders = cartItems.orders
+    const {orders} = this.props.cartItems
+    const item = orders.filter(order => order.carId === +carId)
 
-    const carInCart = orders.filter(order => order.carId === +carId)
-    const notInCart = !carInCart.length
-
-    if (userId) {
-      if (notInCart) {
-        this.props.postAddToCart(carId, carItem, userId)
-      } else {
-        const quantity = carInCart[0].quantity + 1
-        this.props.increment(userId, {
-          carId: +carId,
-          quantity: quantity
-        })
-      }
-    } else if (!cartItems.orders.filter(order => order.carId === +carId).length) {
-        this.props.postAddToCart(+carId, carItem, userId)
-      } else {
-        const guestQuantity = carInCart[0].quantity + 1
-        this.props.increment(userId, {
-          carId: +carId,
-          quantity: guestQuantity
-        })
-      }
+    let quantity = 1
+    if (item.length) {
+      quantity = item[0].quantity + 1
+    }
+    this.props.postAddToCart(carId, carItem, userId, quantity)
   }
 
   render() {
@@ -80,11 +62,12 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  fetchSingleCar: carId => dispatch(buildfetchSingleCarThunk(carId)),
-  getCartItems: userId => dispatch(gotCartItems(userId)),
-  postAddToCart: (carId, carItem, userId) =>
-    dispatch(buildPostCartThunk(carId, carItem, userId)),
-  increment: (userId, edits) => dispatch(incremented(userId, edits))
+  fetchSingleCar: carId => {
+    dispatch(buildfetchSingleCarThunk(carId))
+  },
+  postAddToCart: (carId, carItem, userId, quantity) => {
+    dispatch(buildPostCartThunk(carId, carItem, userId, quantity))
+  }
 })
 
 export default connect(mapState, mapDispatch)(SingleCar)

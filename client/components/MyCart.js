@@ -1,13 +1,17 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {gotCartItems, tossCartItem} from '../store/cartItems'
-import store from '../store'
+import {
+  gotCartItems,
+  tossCartItem,
+  increaseQuantityCart
+} from '../store/cartItems'
 
 class MyCart extends Component {
   constructor() {
     super()
     this.state = {}
     this.handleRemove = this.handleRemove.bind(this)
+    this.handleQuantity = this.handleQuantity.bind(this)
   }
 
   componentDidMount() {
@@ -23,28 +27,47 @@ class MyCart extends Component {
     this.props.getCartItems(userID)
   }
 
-  render() {
-    const {orders} = this.props.cartItems
+  handleQuantity(carId, value) {
+    const userId = this.props.match.params.userID
+    this.props.getincreaseQuantityCart(carId, value, userId)
+    const userID = userId
+    this.props.getCartItems(userID)
+  }
 
-    if (!orders[0]) {
+  render() {
+    const {cartItems} = this.props
+    const {orders} = cartItems
+
+    if (orders.length === 0) {
       return (
         <div>
-          <h2>Your Cart Is Currently Empty.</h2>
+          <h2>Your cart is currently empty. </h2>
         </div>
       )
     } else {
       return (
         <div>
           <h2>Items in your cart: </h2>
-          {orders.map((item, idx) => {
+          {orders.map((item, idx = 0) => {
             return (
               <div key={item.car.id}>
-                {idx + 1}. {item.car.brand} {item.car.name} {item.quantity}
+                {idx}. {item.car.brand} {item.car.name} (Qty: {item.quantity})
                 <button
                   type="button"
-                  onClick={() => {
-                    this.handleRemove(item)
-                  }}
+                  onClick={() => this.handleQuantity(item.car.id, true)}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  onClick={() => this.handleQuantity(item.car.id, false)}
+                >
+                  -
+                </button>
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => this.handleRemove(item)}
                 >
                   {' '}
                   REMOVE
@@ -64,15 +87,17 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    getCartItems: userID => {
-      dispatch(gotCartItems(userID))
-    },
-    tossCartItem: item => {
-      dispatch(tossCartItem(item))
-    }
+const mapDispatch = dispatch => ({
+  getCartItems: userID => {
+    dispatch(gotCartItems(userID))
+  },
+  tossCartItem: item => {
+    dispatch(tossCartItem(item))
+  },
+  getincreaseQuantityCart: (carId, value, userId) => {
+    dispatch(increaseQuantityCart(carId, value, userId))
+    dispatch(gotCartItems(userId))
   }
-}
+})
 
 export default connect(mapState, mapDispatch)(MyCart)

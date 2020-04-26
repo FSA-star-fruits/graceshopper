@@ -2,27 +2,19 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import AllCars from './AllCars'
-import cartItems, {gotCartItems} from '../store/cartItems'
-
+import {gotCartItems} from '../store/cartItems'
 /**
  * COMPONENT
  */
-export class UserHome extends Component {
-  constructor() {
-    super()
-    this.state = {}
-  }
 
+class UserHome extends Component {
   componentDidMount() {
-    const {user} = this.props
-    if (user.id) {
-      this.props.getCartItems(user.id)
-    }
+    const {id} = this.props
+    this.props.getCartItems(id)
   }
 
   render() {
     const {email} = this.props
-
     return (
       <div>
         {email ? <h3>Welcome, {email}</h3> : <h3>Welcome!</h3>}
@@ -35,22 +27,19 @@ export class UserHome extends Component {
     )
   }
 }
-
 /**
  * CONTAINER
  */
 const mapState = state => {
   return {
     email: state.user.email,
-    user: state.user,
-    cartItems: state.cartItems
+    id: state.user.id
   }
 }
-
 const mapDispatch = dispatch => {
   return {
-    getCartItems: userID => {
-      dispatch(gotCartItems(userID))
+    getCartItems: id => {
+      dispatch(gotCartItems(id))
     }
   }
 }
