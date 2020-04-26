@@ -20,10 +20,6 @@ const addItem = car => ({
   car
 })
 
-const addItemGuest = car => ({
-  type: ADD_ITEM_GUEST,
-  car
-})
 const removeItem = item => ({
   type: REMOVE_ITEM,
   item
@@ -71,7 +67,7 @@ export const buildPostCartThunk = (
     } else {
       const item = {id: carItem.id, car: carItem, quantity: 1}
 
-      dispatch(addItemGuest(item))
+      dispatch(addItem(item))
     }
   } catch (err) {
     console.error(err)
@@ -116,8 +112,6 @@ const cartItems = (state = {orders: [], client: []}, action) => {
     case FETCH_ITEMS:
       return {...state, orders: action.items}
     case ADD_ITEM:
-      return {...state, orders: [...state.orders, action.car]}
-    case ADD_ITEM_GUEST:
       if (state.orders.length === 0) {
         return {...state, orders: [action.car]}
       } else {

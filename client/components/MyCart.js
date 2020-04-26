@@ -3,8 +3,7 @@ import {connect} from 'react-redux'
 import {
   gotCartItems,
   tossCartItem,
-  increaseQuantityCart,
-  decreaseQuantityCart
+  increaseQuantityCart
 } from '../store/cartItems'
 
 class MyCart extends Component {

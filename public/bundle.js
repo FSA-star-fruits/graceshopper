@@ -1770,10 +1770,10 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var singleCar = this.props.singleCar;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "single-car"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
         onClick: this.handleAddToCart
       }, "ADD TO CART"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_header__WEBPACK_IMPORTED_MODULE_2__["SingleCarHeader"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_main_view__WEBPACK_IMPORTED_MODULE_3__["SingleCarMainView"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_secondary_images__WEBPACK_IMPORTED_MODULE_5__["SingleCarSecondaryImage"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_details__WEBPACK_IMPORTED_MODULE_4__["SingleCarDetails"], this.props));
     }
@@ -1795,10 +1795,10 @@ var mapState = function mapState(state) {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetchSingleCar: function fetchSingleCar(carId) {
-      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_6__["buildfetchSingleCarThunk"])(carId));
+      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_6__["buildfetchSingleCarThunk"])(carId));
     },
     postAddToCart: function postAddToCart(carId, carItem, userId) {
-      return dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_7__["buildPostCartThunk"])(carId, carItem, userId));
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_7__["buildPostCartThunk"])(carId, carItem, userId));
     }
   };
 };
@@ -2659,13 +2659,6 @@ var addItem = function addItem(car) {
   };
 };
 
-var addItemGuest = function addItemGuest(car) {
-  return {
-    type: ADD_ITEM_GUEST,
-    car: car
-  };
-};
-
 var removeItem = function removeItem(item) {
   return {
     type: REMOVE_ITEM,
@@ -2782,7 +2775,7 @@ var buildPostCartThunk = function buildPostCartThunk(carId, carItem, userId) {
                   car: carItem,
                   quantity: 1
                 };
-                dispatch(addItemGuest(item));
+                dispatch(addItem(item));
 
               case 10:
                 _context2.next = 15;
@@ -2902,11 +2895,6 @@ var cartItems = function cartItems() {
       });
 
     case ADD_ITEM:
-      return _objectSpread({}, state, {
-        orders: [].concat(_toConsumableArray(state.orders), [action.car])
-      });
-
-    case ADD_ITEM_GUEST:
       if (state.orders.length === 0) {
         return _objectSpread({}, state, {
           orders: [action.car]
