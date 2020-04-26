@@ -16,7 +16,9 @@ export class UserHome extends Component {
 
   componentDidMount() {
     const {user} = this.props
-    this.props.getCartItems(user.id)
+    if (user.id) {
+      this.props.getCartItems(user.id)
+    }
   }
 
   render() {

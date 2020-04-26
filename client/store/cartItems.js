@@ -9,6 +9,7 @@ const FETCH_ITEMS = 'FETCH_ITEMS'
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const INCREMENT = 'INCREMENT'
+const EMPTY_CART = 'EMPTY_CART'
 
 // action creator
 const fetchCartItems = items => ({
@@ -29,6 +30,10 @@ const increment = car => ({
 const removeItem = item => ({
   type: REMOVE_ITEM,
   item
+})
+
+const emptyCart = () => ({
+  type: EMPTY_CART
 })
 
 // thunk creator
@@ -81,6 +86,12 @@ export const tossCartItem = item => {
   }
 }
 
+export const emptiedCart = () => {
+  return async dispatch => {
+    dispatch(emptyCart())
+  }
+}
+
 // reducer
 const cartItems = (state = initialState, action) => {
   switch (action.type) {
@@ -105,6 +116,8 @@ const cartItems = (state = initialState, action) => {
           action.car
         ]
       }
+    case EMPTY_CART:
+      return {...state, orders: []}
     default:
       return state
   }

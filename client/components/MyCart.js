@@ -12,11 +12,12 @@ class MyCart extends Component {
 
   componentDidMount() {
     const userID = this.props.match.params.userID
-    this.props.getCartItems(userID)
+    if (userID) {
+      this.props.getCartItems(userID)
+    }
     // this.unsubscribe = store.subscribe(() => {
     //   console.log('MYCART new state ***', store.getState())
     // })
-    // console.log('MYCART this.props >>>>>', this.props)
   }
 
   // componentWillUnmount() {
