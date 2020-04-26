@@ -33,11 +33,11 @@ export class SingleCar extends Component {
   }
 
   render() {
-    const singleCar = this.props.singleCar
-
     return (
       <div id="single-car">
-        <button onClick={this.handleAddToCart}>ADD TO CART</button>
+        <button type="button" onClick={this.handleAddToCart}>
+          ADD TO CART
+        </button>
         <SingleCarHeader {...this.props} />
         <SingleCarMainView {...this.props} />
         <SingleCarSecondaryImage {...this.props} />
@@ -57,9 +57,12 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  fetchSingleCar: carId => dispatch(buildfetchSingleCarThunk(carId)),
-  postAddToCart: (carId, carItem, userId) =>
+  fetchSingleCar: carId => {
+    dispatch(buildfetchSingleCarThunk(carId))
+  },
+  postAddToCart: (carId, carItem, userId) => {
     dispatch(buildPostCartThunk(carId, carItem, userId))
+  }
 })
 
 export default connect(mapState, mapDispatch)(SingleCar)

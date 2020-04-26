@@ -1190,16 +1190,26 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(GuestCart).call(this));
     _this.state = {};
     _this.handleRemove = _this.handleRemove.bind(_assertThisInitialized(_this));
+    _this.handleQuantity = _this.handleQuantity.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(GuestCart, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      var userID = this.props.match.params.userID;
+      this.props.getCartItems(userID);
+    }
   }, {
     key: "handleRemove",
     value: function handleRemove(item) {
       this.props.tossCartItem(item);
+    }
+  }, {
+    key: "handleQuantity",
+    value: function handleQuantity(carId, value) {
+      var userId = this.props.match.params.userID;
+      this.props.getincreaseQuantityCart(carId, value, userId);
     }
   }, {
     key: "render",
@@ -1217,10 +1227,21 @@ function (_Component) {
         var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: idx
-        }, idx, ". ", item.car.brand, " ", item.car.name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, idx, ". ", item.car.brand, " ", item.car.name, item.quantity, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
           onClick: function onClick() {
-            _this2.handleRemove(item);
+            return _this2.handleQuantity(item.car.id, true);
+          }
+        }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          onClick: function onClick() {
+            return _this2.handleQuantity(item.car.id, false);
+          }
+        }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          key: idx,
+          type: "button",
+          onClick: function onClick() {
+            return _this2.handleRemove(item);
           }
         }, ' ', "REMOVE"));
       }));
@@ -1238,8 +1259,15 @@ var mapState = function mapState(state) {
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
+    getCartItems: function getCartItems(userID) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["gotCartItems"])(userID));
+    },
     tossCartItem: function tossCartItem(item) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["tossCartItem"])(item));
+    },
+    getincreaseQuantityCart: function getincreaseQuantityCart(carId, value, userId) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["increaseQuantityCart"])(carId, value, userId));
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["gotCartItems"])(userId));
     }
   };
 };
@@ -1296,6 +1324,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MyCart).call(this));
     _this.state = {};
     _this.handleRemove = _this.handleRemove.bind(_assertThisInitialized(_this));
+    _this.handleQuantity = _this.handleQuantity.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1313,6 +1342,14 @@ function (_Component) {
       this.props.getCartItems(userID);
     }
   }, {
+    key: "handleQuantity",
+    value: function handleQuantity(carId, value) {
+      var userId = this.props.match.params.userID;
+      this.props.getincreaseQuantityCart(carId, value, userId);
+      var userID = userId;
+      this.props.getCartItems(userID);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -1327,11 +1364,22 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Items in your cart: "), orders.map(function (item) {
         var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: idx
-        }, idx, ". ", item.car.brand, " ", item.car.name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          key: true
+        }, idx, ". ", item.car.brand, " ", item.car.name, item.quantity, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
           onClick: function onClick() {
-            _this2.handleRemove(item);
+            return _this2.handleQuantity(item.car.id, true);
+          }
+        }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          onClick: function onClick() {
+            return _this2.handleQuantity(item.car.id, false);
+          }
+        }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          key: idx,
+          type: "button",
+          onClick: function onClick() {
+            return _this2.handleRemove(item);
           }
         }, ' ', "REMOVE"));
       }));
@@ -1354,6 +1402,10 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     tossCartItem: function tossCartItem(item) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["tossCartItem"])(item));
+    },
+    getincreaseQuantityCart: function getincreaseQuantityCart(carId, value, userId) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["increaseQuantityCart"])(carId, value, userId));
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["gotCartItems"])(userId));
     }
   };
 };
@@ -1440,10 +1492,11 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     handleSubmit: function handleSubmit(evt) {
       evt.preventDefault();
+      var isAdmin = false;
       var formName = evt.target.name;
       var email = evt.target.email.value;
       var password = evt.target.password.value;
-      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["auth"])(email, password, formName));
+      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["auth"])(email, password, formName, isAdmin));
     }
   };
 };
@@ -1558,6 +1611,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
+/* harmony import */ var _store_cartItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/cartItems */ "./client/store/cartItems.js");
+
 
 
 
@@ -1568,9 +1623,11 @@ var Navbar = function Navbar(_ref) {
   var handleClick = _ref.handleClick,
       isLoggedIn = _ref.isLoggedIn,
       userID = _ref.userID,
-      cartItems = _ref.cartItems;
+      cartItems = _ref.cartItems,
+      isAdmin = _ref.isAdmin,
+      handleCart = _ref.handleCart;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Grace Shopper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, isLoggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/"
+    to: "/home"
   }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/cars"
   }, "Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1578,25 +1635,21 @@ var Navbar = function Navbar(_ref) {
     onClick: handleClick
   }, "Logout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/users/".concat(userID, "/mycart")
-  }, "My Cart ", cartItems.orders.length), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/add"
-  }, "Add"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+  }, "My Cart ", cartItems.orders.length), isAdmin ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/admin"
-  }, "Admin")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+  }, "Admin") : '') : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/"
   }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/cars"
   }, "Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/login"
+    to: "/login",
+    onClick: handleCart
   }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/signup"
+    to: "/signup",
+    onClick: handleCart
   }, "Sign Up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/guestcart"
-  }, "My Cart ", cartItems.orders.length), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/add"
-  }, "Add"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/admin"
-  }, "Admin"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
+  }, "My Cart ", cartItems.orders.length))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
 };
 /**
  * CONTAINER
@@ -1606,6 +1659,7 @@ var Navbar = function Navbar(_ref) {
 var mapState = function mapState(state) {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin,
     userID: state.user.id,
     cartItems: state.cartItems
   };
@@ -1614,7 +1668,11 @@ var mapState = function mapState(state) {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     handleClick: function handleClick() {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_5__["emptyCartItem"])());
       dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_4__["logout"])());
+    },
+    handleCart: function handleCart() {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_5__["emptyCartItem"])());
     }
   };
 };
@@ -1712,10 +1770,10 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var singleCar = this.props.singleCar;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "single-car"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
         onClick: this.handleAddToCart
       }, "ADD TO CART"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_header__WEBPACK_IMPORTED_MODULE_2__["SingleCarHeader"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_main_view__WEBPACK_IMPORTED_MODULE_3__["SingleCarMainView"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_secondary_images__WEBPACK_IMPORTED_MODULE_5__["SingleCarSecondaryImage"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_details__WEBPACK_IMPORTED_MODULE_4__["SingleCarDetails"], this.props));
     }
@@ -1737,10 +1795,10 @@ var mapState = function mapState(state) {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetchSingleCar: function fetchSingleCar(carId) {
-      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_6__["buildfetchSingleCarThunk"])(carId));
+      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_6__["buildfetchSingleCarThunk"])(carId));
     },
     postAddToCart: function postAddToCart(carId, carItem, userId) {
-      return dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_7__["buildPostCartThunk"])(carId, carItem, userId));
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_7__["buildPostCartThunk"])(carId, carItem, userId));
     }
   };
 };
@@ -1945,18 +2003,37 @@ var SingleCarSecondaryImage = function SingleCarSecondaryImage(props) {
 /*!****************************************!*\
   !*** ./client/components/user-home.js ***!
   \****************************************/
-/*! exports provided: UserHome, default */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserHome", function() { return UserHome; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _AllCars__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AllCars */ "./client/components/AllCars.js");
+/* harmony import */ var _store_cartItems__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/cartItems */ "./client/store/cartItems.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -1965,23 +2042,56 @@ __webpack_require__.r(__webpack_exports__);
  * COMPONENT
  */
 
-var UserHome = function UserHome(props) {
-  var email = props.email;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, email ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", email) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "2020 Jaguar E-pace"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Starting at $39,950"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "MPG: Up to 21 city/ 28 Highway"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Horsepower: 246 to 296 hp"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQ57PaEpZbPxFjGe-3y2T-LevyR3AAfBab55eGD6ld7QlMHfd_&usqp=CAU"
-  }));
-};
+var UserHome =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(UserHome, _Component);
+
+  function UserHome() {
+    _classCallCheck(this, UserHome);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(UserHome).apply(this, arguments));
+  }
+
+  _createClass(UserHome, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var id = this.props.id;
+      this.props.getCartItems(id);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var email = this.props.email;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, email ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", email) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "2020 Jaguar E-pace"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Starting at $39,950"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "MPG: Up to 21 city/ 28 Highway"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Horsepower: 246 to 296 hp"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQ57PaEpZbPxFjGe-3y2T-LevyR3AAfBab55eGD6ld7QlMHfd_&usqp=CAU"
+      }));
+    }
+  }]);
+
+  return UserHome;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 /**
  * CONTAINER
  */
 
+
 var mapState = function mapState(state) {
   return {
-    email: state.user.email
+    email: state.user.email,
+    id: state.user.id
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(UserHome));
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    getCartItems: function getCartItems(id) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_4__["gotCartItems"])(id));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, mapDispatch)(UserHome));
 /**
  * PROP TYPES
  */
@@ -2062,8 +2172,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components */ "./client/components/index.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./client/store/index.js");
-/* harmony import */ var _store_singleCar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store/singleCar */ "./client/store/singleCar.js");
-/* harmony import */ var _store_cartItems__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store/cartItems */ "./client/store/cartItems.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2090,8 +2198,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
-
 var Routes =
 /*#__PURE__*/
 function (_Component) {
@@ -2107,13 +2213,12 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.loadInitialData();
-      var userID = this.props.user.id;
-      this.props.getCartItems(userID);
     }
   }, {
     key: "render",
     value: function render() {
       var isLoggedIn = this.props.isLoggedIn;
+      var isAdmin = this.props.isAdmin;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/",
@@ -2132,35 +2237,28 @@ function (_Component) {
         component: _components__WEBPACK_IMPORTED_MODULE_5__["GuestCart"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
-        path: "/users/:userID/mycart",
-        component: _components__WEBPACK_IMPORTED_MODULE_5__["MyCart"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-        exact: true,
         path: "/cars",
         component: _client_components_AllCars__WEBPACK_IMPORTED_MODULE_2__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/cars/:carID",
         component: _components__WEBPACK_IMPORTED_MODULE_5__["SingleCar"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      }), isLoggedIn && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        path: "/home",
+        component: _components__WEBPACK_IMPORTED_MODULE_5__["UserHome"]
+      }), isLoggedIn && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
-        path: "/add",
-        component: _components__WEBPACK_IMPORTED_MODULE_5__["Faker"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-        exact: true,
-        path: "/admin",
-        component: _components__WEBPACK_IMPORTED_MODULE_5__["Admin"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-        exact: true,
+        path: "/users/:userID/mycart",
+        component: _components__WEBPACK_IMPORTED_MODULE_5__["MyCart"]
+      }), isAdmin && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         path: "/admin/add",
         component: _components__WEBPACK_IMPORTED_MODULE_5__["AdminAddCar"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-        exact: true,
         path: "/admin/edit/:carId",
         component: _components__WEBPACK_IMPORTED_MODULE_5__["AdminEditCar"]
-      }), isLoggedIn && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-        path: "/home",
-        component: _components__WEBPACK_IMPORTED_MODULE_5__["UserHome"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        path: "/admin",
+        component: _components__WEBPACK_IMPORTED_MODULE_5__["Admin"]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         component: _components__WEBPACK_IMPORTED_MODULE_5__["Login"]
       }));
@@ -2178,6 +2276,7 @@ var mapState = function mapState(state) {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    isAdmin: state.user.isAdmin,
     isLoggedIn: !!state.user.id,
     user: state.user,
     cartItems: state.cartItems
@@ -2188,9 +2287,6 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     loadInitialData: function loadInitialData() {
       dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_6__["me"])());
-    },
-    getCartItems: function getCartItems(userID) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_8__["gotCartItems"])(userID));
     }
   };
 }; // The `withRouter` wrapper makes sure that updates are not blocked
@@ -2509,7 +2605,7 @@ var postCar = function postCar(newCar) {
 /*!***********************************!*\
   !*** ./client/store/cartItems.js ***!
   \***********************************/
-/*! exports provided: gotCartItems, buildPostCartThunk, tossCartItem, default */
+/*! exports provided: gotCartItems, buildPostCartThunk, tossCartItem, emptyCartItem, increaseQuantityCart, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2517,6 +2613,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "gotCartItems", function() { return gotCartItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildPostCartThunk", function() { return buildPostCartThunk; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tossCartItem", function() { return tossCartItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "emptyCartItem", function() { return emptyCartItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "increaseQuantityCart", function() { return increaseQuantityCart; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -2541,7 +2639,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var FETCH_ITEMS = 'FETCH_ITEMS';
 var ADD_ITEM = 'ADD_ITEM';
-var REMOVE_ITEM = 'REMOVE_ITEM'; // action creator
+var ADD_ITEM_GUEST = 'ADD_ITEM_GUEST';
+var REMOVE_ITEM = 'REMOVE_ITEM';
+var EMPTY_ITEM = 'EMPTY_ITEM';
+var INCREASE_QUANTITY = 'INCREASE_QUANTITY';
+var DECREASE_QUANTITY = 'DECREASE_QUANTITY'; // action creator
 
 var fetchCartItems = function fetchCartItems(items) {
   return {
@@ -2562,6 +2664,26 @@ var removeItem = function removeItem(item) {
     type: REMOVE_ITEM,
     item: item
   };
+};
+
+var emptyItem = function emptyItem() {
+  return {
+    type: EMPTY_ITEM
+  };
+};
+
+var increaseQuantity = function increaseQuantity(carId) {
+  return {
+    type: INCREASE_QUANTITY,
+    carId: carId
+  };
+};
+
+var decreaseQuantity = function decreaseQuantity(carId) {
+  return {
+    type: DECREASE_QUANTITY,
+    carId: carId
+  };
 }; // thunk creator
 
 
@@ -2578,26 +2700,34 @@ var gotCartItems = function gotCartItems(userId) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                _context.next = 3;
+
+                if (!userId) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _context.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/users/".concat(userId, "/mycart"));
 
-              case 3:
+              case 4:
                 res = _context.sent;
                 dispatch(fetchCartItems(res.data));
-                _context.next = 10;
+
+              case 6:
+                _context.next = 11;
                 break;
 
-              case 7:
-                _context.prev = 7;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee, null, [[0, 8]]);
       }));
 
       return function (_x) {
@@ -2613,12 +2743,18 @@ var buildPostCartThunk = function buildPostCartThunk(carId, carItem, userId) {
       var _ref2 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(dispatch) {
-        var cartObj;
+        var cartObj, item;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
+
+                if (!(userId !== undefined)) {
+                  _context2.next = 8;
+                  break;
+                }
+
                 dispatch(addItem({
                   car: carItem
                 }));
@@ -2626,24 +2762,36 @@ var buildPostCartThunk = function buildPostCartThunk(carId, carItem, userId) {
                   carId: carId,
                   userId: userId
                 };
-                _context2.next = 5;
+                _context2.next = 6;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/users/".concat(userId, "/mycart"), cartObj);
 
-              case 5:
+              case 6:
                 _context2.next = 10;
                 break;
 
-              case 7:
-                _context2.prev = 7;
+              case 8:
+                item = {
+                  id: carItem.id,
+                  car: carItem,
+                  quantity: 1
+                };
+                dispatch(addItem(item));
+
+              case 10:
+                _context2.next = 15;
+                break;
+
+              case 12:
+                _context2.prev = 12;
                 _context2.t0 = _context2["catch"](0);
                 console.error(_context2.t0);
 
-              case 10:
+              case 15:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee2, null, [[0, 12]]);
       }));
 
       return function (_x2) {
@@ -2680,6 +2828,57 @@ var tossCartItem = function tossCartItem(item) {
       };
     }()
   );
+};
+var emptyCartItem = function emptyCartItem() {
+  return function (dispatch) {
+    dispatch(emptyItem());
+  };
+};
+var increaseQuantityCart = function increaseQuantityCart(carId, value, userId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref4 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(dispatch) {
+        var cartObj;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (value === true) {
+                  dispatch(increaseQuantity(carId));
+                } else {
+                  dispatch(decreaseQuantity(carId));
+                }
+
+                cartObj = {
+                  carId: carId,
+                  userId: userId,
+                  handle: value
+                };
+
+                if (!(userId !== undefined)) {
+                  _context4.next = 5;
+                  break;
+                }
+
+                _context4.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(userId, "/mycart"), cartObj);
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      return function (_x4) {
+        return _ref4.apply(this, arguments);
+      };
+    }()
+  );
 }; // reducer
 
 var cartItems = function cartItems() {
@@ -2696,12 +2895,65 @@ var cartItems = function cartItems() {
       });
 
     case ADD_ITEM:
-      return _objectSpread({}, state, {
-        orders: [].concat(_toConsumableArray(state.orders), [action.car])
-      });
+      if (state.orders.length === 0) {
+        return _objectSpread({}, state, {
+          orders: [action.car]
+        });
+      } else {
+        var _found = state.orders.find(function (order) {
+          return order.id === action.car.id;
+        });
+
+        var _index = state.orders.indexOf(_found);
+
+        if (_found !== undefined) {
+          _found.quantity = _found.quantity + 1;
+          console.log(state.orders[_index]);
+          state.orders[_index] = _found;
+          return state;
+        } else {
+          return _objectSpread({}, state, {
+            orders: [].concat(_toConsumableArray(state.orders), [action.car])
+          });
+        }
+      }
 
     case REMOVE_ITEM:
-      return state;
+      var newCart = state.orders.filter(function (order) {
+        return order.id !== action.item.id;
+      });
+      return _objectSpread({}, state, {
+        orders: newCart
+      });
+
+    case EMPTY_ITEM:
+      return _objectSpread({}, state, {
+        orders: []
+      });
+
+    case INCREASE_QUANTITY:
+      var found = state.orders.find(function (order) {
+        return order.id === action.carId;
+      });
+      var index = state.orders.indexOf(found);
+
+      if (found !== undefined) {
+        found.quantity = found.quantity + 1;
+        state.orders[index] = found;
+        return state;
+      }
+
+    case DECREASE_QUANTITY:
+      var foundDecrease = state.orders.find(function (order) {
+        return order.id === action.carId;
+      });
+      var indexDecrease = state.orders.indexOf(found);
+
+      if (foundDecrease !== undefined) {
+        foundDecrease.quantity = foundDecrease.quantity - 1;
+        state.orders[indexDecrease] = foundDecrease;
+        return state;
+      }
 
     default:
       return state;
@@ -2716,7 +2968,7 @@ var cartItems = function cartItems() {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, postUser, buildfetchSingleCarThunk, gotCartItems, buildPostCartThunk, tossCartItem, fetchCars, addCar, removeCar, updateCar, postCar */
+/*! exports provided: default, me, auth, logout, postUser, buildfetchSingleCarThunk, fetchCars, addCar, removeCar, updateCar, postCar, gotCartItems, buildPostCartThunk, tossCartItem, emptyCartItem, increaseQuantityCart */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2756,6 +3008,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "buildPostCartThunk", function() { return _cartItems__WEBPACK_IMPORTED_MODULE_6__["buildPostCartThunk"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tossCartItem", function() { return _cartItems__WEBPACK_IMPORTED_MODULE_6__["tossCartItem"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "emptyCartItem", function() { return _cartItems__WEBPACK_IMPORTED_MODULE_6__["emptyCartItem"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "increaseQuantityCart", function() { return _cartItems__WEBPACK_IMPORTED_MODULE_6__["increaseQuantityCart"]; });
 
 
 
@@ -2988,7 +3244,7 @@ var me = function me() {
     }()
   );
 };
-var auth = function auth(email, password, method) {
+var auth = function auth(email, password, method, isAdmin) {
   return (
     /*#__PURE__*/
     function () {
@@ -3004,7 +3260,8 @@ var auth = function auth(email, password, method) {
                 _context2.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/auth/".concat(method), {
                   email: email,
-                  password: password
+                  password: password,
+                  isAdmin: isAdmin
                 });
 
               case 3:
@@ -141190,7 +141447,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -22,18 +22,15 @@ import {
   AdminEditCar
 } from './components'
 import {me} from './store'
-import fetchSingleCar from './store/singleCar'
-import {gotCartItems} from './store/cartItems'
 
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    const userID = this.props.user.id
-    this.props.getCartItems(userID)
   }
 
   render() {
     const {isLoggedIn} = this.props
+    const {isAdmin} = this.props
 
     return (
       <Switch>
@@ -42,20 +39,21 @@ class Routes extends Component {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/guestcart" component={GuestCart} />
-        <Route exact path="/users/:userID/mycart" component={MyCart} />
+
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
-        <Route exact path="/add" component={Faker} />
-        <Route exact path="/admin" component={Admin} />
-        <Route exact path="/admin/add" component={AdminAddCar} />
-        <Route exact path="/admin/edit/:carId" component={AdminEditCar} />
-
+        {isLoggedIn && <Route path="/home" component={UserHome} />}
         {isLoggedIn && (
+          <Route exact path="/users/:userID/mycart" component={MyCart} />
+        )}
+        {isAdmin && (
           <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/admin/add" component={AdminAddCar} />
+            <Route path="/admin/edit/:carId" component={AdminEditCar} />
+            <Route path="/admin" component={Admin} />
           </Switch>
         )}
+
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -70,6 +68,7 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    isAdmin: state.user.isAdmin,
     isLoggedIn: !!state.user.id,
     user: state.user,
     cartItems: state.cartItems
@@ -80,9 +79,6 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    },
-    getCartItems: userID => {
-      dispatch(gotCartItems(userID))
     }
   }
 }
