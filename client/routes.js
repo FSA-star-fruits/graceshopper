@@ -15,9 +15,12 @@ import {
   UserHome,
   SingleCar,
   MyCart,
-  GuestCart
+  Faker,
+  GuestCart,
+  Admin,
+  AdminAddCar,
+  AdminEditCar
 } from './components'
-import {Admin} from './components/Admin'
 import {me} from './store'
 
 class Routes extends Component {
@@ -36,17 +39,18 @@ class Routes extends Component {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/guestcart" component={GuestCart} />
-        <Route exact path="/users/:userID/mycart" component={MyCart} />
+
         <Route exact path="/cars" component={AllCars} />
         <Route exact path="/cars/:carID" component={SingleCar} />
-
-        {/* <Route exact path="/add" component={Faker} /> */}
-
+        {isLoggedIn && <Route path="/home" component={UserHome} />}
         {isLoggedIn && (
+          <Route exact path="/users/:userID/mycart" component={MyCart} />
+        )}
+        {isAdmin && (
           <Switch>
-            {isAdmin && <Route path="/admin" component={Admin} />}
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/admin/add" component={AdminAddCar} />
+            <Route path="/admin/edit/:carId" component={AdminEditCar} />
+            <Route path="/admin" component={Admin} />
           </Switch>
         )}
 

@@ -27,7 +27,6 @@ const Navbar = ({
           <Link to={`/users/${userID}/mycart`}>
             My Cart {cartItems.orders.length}
           </Link>
-          <Link to="/add">Add</Link>
           {isAdmin ? <Link to="/admin">Admin</Link> : ''}
         </div>
       ) : (
@@ -42,7 +41,6 @@ const Navbar = ({
             Sign Up
           </Link>
           <Link to="/guestcart">My Cart {cartItems.orders.length}</Link>
-          <Link to="/add">Add</Link>
         </div>
       )}
     </nav>
