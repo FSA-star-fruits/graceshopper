@@ -1,19 +1,27 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {gotCartItems, tossCartItem} from '../store/cartItems'
+import store from '../store'
 
 class MyCart extends Component {
   constructor() {
     super()
-    // this.state = {}
+    this.state = {}
     this.handleRemove = this.handleRemove.bind(this)
   }
 
   componentDidMount() {
     const userID = this.props.match.params.userID
     this.props.getCartItems(userID)
-    // console.log('cartItems >>>>>', this.props)
+    // this.unsubscribe = store.subscribe(() => {
+    //   console.log('MYCART new state ***', store.getState())
+    // })
+    // console.log('MYCART this.props >>>>>', this.props)
   }
+
+  // componentWillUnmount() {
+  //   this.unsubscribe()
+  // }
 
   handleRemove(item) {
     this.props.tossCartItem(item)
@@ -22,38 +30,45 @@ class MyCart extends Component {
   }
 
   render() {
-    const {cartItems} = this.props
-    const orders = cartItems.orders
+    const {orders} = this.props.cartItems
+    // const orders = [
+    //   {car: {brand: 'brand1'}},
+    //   {car: {brand: 'brand2'}},
+    //   {car: {brand: 'brand3'}},
+    // ]
 
-    if (orders.length === 0) {
+    console.log('MyCart orders >>>>>', this.props)
+    // console.log('MyCart orders >>>>>', orders[0].car)
+
+    if (!orders[0]) {
       return (
         <div>
           <h2>Your Cart Is Currently Empty.</h2>
         </div>
       )
+    } else {
+      return (
+        <div>
+          <h2>Items in your cart: </h2>
+          {orders.map((item, idx) => {
+            return (
+              <div key={item.car.id}>
+                {idx + 1}. {item.car.brand} {item.car.name} {item.quantity}
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.handleRemove(item)
+                  }}
+                >
+                  {' '}
+                  REMOVE
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      )
     }
-    return (
-      <div>
-        <h2>Items in your cart: </h2>
-        {orders.map((item, idx = 0) => {
-          // console.log('item >>>>> car >>>>>', item, car)
-          return (
-            <div key={idx}>
-              {idx + 1}.{item.car.brand} {item.car.name} {item.quantity}
-              <button
-                type="button"
-                onClick={() => {
-                  this.handleRemove(item)
-                }}
-              >
-                {' '}
-                REMOVE
-              </button>
-            </div>
-          )
-        })}
-      </div>
-    )
   }
 }
 

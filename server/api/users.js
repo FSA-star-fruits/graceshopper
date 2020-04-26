@@ -21,6 +21,7 @@ router.get('/:userId/mycart', async (req, res, next) => {
       }
     })
     const orderId = userData.id
+
     const items = await CartItem.findAll({
       where: {
         orderId: orderId
@@ -54,6 +55,23 @@ router.post('/:userId/mycart', async (req, res, next) => {
       orderId: orderId,
       quantity: 1
     })
+
+    const item = await CartItem.findOne({
+      where: {
+        carId: req.body.carId,
+        orderId: orderId,
+        quantity: 1
+      },
+      include: [
+        {
+          model: Order
+        },
+        {
+          model: Car
+        }
+      ]
+    })
+    res.json(item)
   } catch (err) {
     next(err)
   }
@@ -72,9 +90,16 @@ router.put('/:userId/mycart', async (req, res, next) => {
       where: {
         orderId: orderId,
         carId: req.body.carId
-      }
+      },
+      include: [
+        {
+          model: Order
+        },
+        {
+          model: Car
+        }
+      ]
     })
-    console.log(req.body)
     cartItem.update(req.body)
     res.json(cartItem)
   } catch (err) {

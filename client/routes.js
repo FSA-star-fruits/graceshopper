@@ -18,15 +18,19 @@ import {
   Faker,
   GuestCart
 } from './components'
-import {me} from './store'
+import store, {me} from './store'
 import fetchSingleCar from './store/singleCar'
 import {gotCartItems} from './store/cartItems'
 
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData()
-    const userID = this.props.user.id
-    this.props.getCartItems(userID)
+  constructor() {
+    super()
+    this.state = {}
+  }
+
+  async componentDidMount() {
+    await this.props.loadInitialData() // JO: this is responsible for GET_USER after connecting
+    // await this.props.getCartItems(this.props.user.Id)
   }
 
   render() {

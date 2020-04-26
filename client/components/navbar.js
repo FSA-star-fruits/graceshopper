@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {gotCartItems} from '../store/cartItems'
 
 const Navbar = ({handleClick, isLoggedIn, userID, cartItems}) => (
   <div>
@@ -59,6 +60,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+    },
+    getCartItems: userId => {
+      dispatch(gotCartItems(userId))
     }
   }
 }
@@ -70,5 +74,6 @@ export default connect(mapState, mapDispatch)(Navbar)
  */
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
+  getCartItems: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }

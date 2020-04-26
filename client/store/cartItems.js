@@ -56,12 +56,19 @@ export const buildPostCartThunk = (
   userId
 ) => async dispatch => {
   try {
-    dispatch(addItem({car: carItem}))
     const cartObj = {
       carId: carId,
       userId: userId
     }
-    await axios.post(`/api/users/${userId}/mycart`, cartObj)
+    const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
+    dispatch(addItem(res.data))
+
+    // const cartObj = {
+    //   carId: carId,
+    //   userId: userId,
+    // }
+    // dispatch(addItem({car: carItem}))
+    // await axios.post(`/api/users/${userId}/mycart`, cartObj)
   } catch (err) {
     console.error(err)
   }
@@ -81,14 +88,15 @@ const cartItems = (state = initialState, action) => {
       return {...state, orders: action.items}
     case ADD_ITEM:
       return {...state, orders: [...state.orders, action.car]}
+    //  ********************* single-car.js & cartItems.js
     case REMOVE_ITEM:
-      return {
-        ...state,
-        orders: [
-          ...state.orders.filter(order => order.carId !== +action.item.carId)
-        ]
-      }
-    // return state
+      // return {
+      //   ...state,
+      //   orders: [
+      //     ...state.orders.filter((order) => order.carId !== +action.item.carId),
+      //   ],
+      // }
+      return state
     case INCREMENT:
       return {
         ...state,
