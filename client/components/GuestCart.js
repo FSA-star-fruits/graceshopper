@@ -9,50 +9,55 @@ class GuestCart extends Component {
     this.handleRemove = this.handleRemove.bind(this)
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log('GuestCart Props >>>>>', this.props)
+  }
 
   handleRemove(item) {
     this.props.tossCartItem(item)
   }
 
   render() {
-    const {cartItems} = this.props
-    const orders = cartItems.orders
-
-    if (orders.length === 0) {
+    const {orders} = this.props.cartItems
+    const {cars} = this.props
+    if (!orders[0]) {
       return (
         <div>
           <p>Your Cart Is Currently Empty.</p>
         </div>
       )
+    } else {
+      return (
+        <div>
+          <h2>Items in your cart: </h2>
+          {orders.map((item, idx = 0) => {
+            return (
+              <div key={idx}>
+                {idx + 1}.{cars.filter(car => car.id === item.carId)[0].brand}{' '}
+                {cars.filter(car => car.id === item.carId)[0].name}{' '}
+                {item.quantity}
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.handleRemove(item)
+                  }}
+                >
+                  {' '}
+                  REMOVE
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      )
     }
-    return (
-      <div>
-        <h2>Items in your cart: </h2>
-        {orders.map((item, idx = 0) => {
-          return (
-            <div key={idx}>
-              {idx + 1}. {item.car.brand} {item.car.name}
-              <button
-                type="button"
-                onClick={() => {
-                  this.handleRemove(item)
-                }}
-              >
-                {' '}
-                REMOVE
-              </button>
-            </div>
-          )
-        })}
-      </div>
-    )
   }
 }
 
 const mapState = state => {
   return {
-    cartItems: state.cartItems
+    cartItems: state.cartItems,
+    cars: state.cars
   }
 }
 const mapDispatch = dispatch => {

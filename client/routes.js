@@ -28,9 +28,16 @@ class Routes extends Component {
     this.state = {}
   }
 
-  async componentDidMount() {
-    await this.props.loadInitialData() // JO: this is responsible for GET_USER after connecting
-    // await this.props.getCartItems(this.props.user.Id)
+  componentDidMount() {
+    this.props.loadInitialData() // JO: this is responsible for GET_USER after connecting
+    // this.props.getCartItems(1)  // JO: should make it work in routes.js so that users can refresh in other pages and keep their cart quantity stable
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.user.id !== this.props.user.id) {
+      const {user} = this.props
+      this.props.getCartItems(user.id)
+    }
   }
 
   render() {

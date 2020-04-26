@@ -15,14 +15,7 @@ class MyCart extends Component {
     if (userID) {
       this.props.getCartItems(userID)
     }
-    // this.unsubscribe = store.subscribe(() => {
-    //   console.log('MYCART new state ***', store.getState())
-    // })
   }
-
-  // componentWillUnmount() {
-  //   this.unsubscribe()
-  // }
 
   handleRemove(item) {
     this.props.tossCartItem(item)
@@ -32,14 +25,6 @@ class MyCart extends Component {
 
   render() {
     const {orders} = this.props.cartItems
-    // const orders = [
-    //   {car: {brand: 'brand1'}},
-    //   {car: {brand: 'brand2'}},
-    //   {car: {brand: 'brand3'}},
-    // ]
-
-    console.log('MyCart orders >>>>>', this.props)
-    // console.log('MyCart orders >>>>>', orders[0].car)
 
     if (!orders[0]) {
       return (

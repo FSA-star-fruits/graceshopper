@@ -65,7 +65,6 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
-    // return {...state, cartItems: {orders: {}, client: []}, user: {}}
     default:
       return state
   }

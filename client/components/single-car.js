@@ -4,7 +4,7 @@ import {SingleCarHeader} from './singleCarContents/single-car-header'
 import {SingleCarMainView} from './singleCarContents/single-car-main-view'
 import {SingleCarDetails} from './singleCarContents/single-car-details'
 import {SingleCarSecondaryImage} from './singleCarContents/single-car-secondary-images'
-import store, {buildfetchSingleCarThunk, incremented, me} from '../store'
+import {buildfetchSingleCarThunk, incremented} from '../store'
 import {buildPostCartThunk, gotCartItems} from '../store/cartItems'
 
 /**
@@ -20,10 +20,7 @@ export class SingleCar extends Component {
   componentDidMount() {
     const carId = this.props.match.params.carID
     this.props.fetchSingleCar(carId)
-
-    // this.unsubscribe = store.subscribe(() => {
-    //   console.log('SingleCar new state ***', store.getState())
-    // })
+    this.props.getCartItems(this.props.user.id)
   }
 
   handleAddToCart() {
@@ -46,19 +43,15 @@ export class SingleCar extends Component {
           quantity: quantity
         })
       }
-      //  ********************* single-car.js & cartItems.js
-      // } else {
-      //   if (!cartItems.orders.length) {
-      //     this.props.postAddToCart(carId, carItem, userId)
-      //   } else {
-      //     const quantity = carInCart[0].quantity + 1
-      //     this.props.increment(userId, {
-      //       carId: carId,
-      //       quantity: quantity,
-      //     })
-      //   }
-      // }
-    }
+    } else if (!cartItems.orders.filter(order => order.carId === +carId).length) {
+        this.props.postAddToCart(+carId, carItem, userId)
+      } else {
+        const guestQuantity = carInCart[0].quantity + 1
+        this.props.increment(userId, {
+          carId: +carId,
+          quantity: guestQuantity
+        })
+      }
   }
 
   render() {
@@ -91,8 +84,7 @@ const mapDispatch = dispatch => ({
   getCartItems: userId => dispatch(gotCartItems(userId)),
   postAddToCart: (carId, carItem, userId) =>
     dispatch(buildPostCartThunk(carId, carItem, userId)),
-  increment: (userId, edits) => dispatch(incremented(userId, edits)),
-  getMe: () => dispatch(me())
+  increment: (userId, edits) => dispatch(incremented(userId, edits))
 })
 
 export default connect(mapState, mapDispatch)(SingleCar)

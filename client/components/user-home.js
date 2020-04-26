@@ -7,7 +7,6 @@ import cartItems, {gotCartItems} from '../store/cartItems'
 /**
  * COMPONENT
  */
-// export const UserHome = props => {
 export class UserHome extends Component {
   constructor() {
     super()

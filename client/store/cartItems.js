@@ -16,22 +16,18 @@ const fetchCartItems = items => ({
   type: FETCH_ITEMS,
   items
 })
-
 const addItem = car => ({
   type: ADD_ITEM,
   car
 })
-
 const increment = car => ({
   type: INCREMENT,
   car
 })
-
 const removeItem = item => ({
   type: REMOVE_ITEM,
   item
 })
-
 const emptyCart = () => ({
   type: EMPTY_CART
 })
@@ -48,8 +44,12 @@ export const gotCartItems = userId => async dispatch => {
 
 export const incremented = (userId, edits) => async dispatch => {
   try {
-    const res = await axios.put(`/api/users/${userId}/mycart`, edits)
-    dispatch(increment(res.data))
+    if (userId) {
+      const res = await axios.put(`/api/users/${userId}/mycart`, edits)
+      dispatch(increment(res.data))
+    } else {
+      dispatch(increment(edits))
+    }
   } catch (err) {
     console.error(err)
   }
@@ -61,19 +61,22 @@ export const buildPostCartThunk = (
   userId
 ) => async dispatch => {
   try {
-    const cartObj = {
-      carId: carId,
-      userId: userId
-    }
-    const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
-    dispatch(addItem(res.data))
+    if (userId) {
+      const cartObj = {
+        carId: carId,
+        userId: userId
+      }
+      const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
+      dispatch(addItem(res.data))
+    } else {
+      const guestCartObj = {
+        carId: carId,
+        userId: userId,
+        quantity: 1
+      }
 
-    // const cartObj = {
-    //   carId: carId,
-    //   userId: userId,
-    // }
-    // dispatch(addItem({car: carItem}))
-    // await axios.post(`/api/users/${userId}/mycart`, cartObj)
+      dispatch(addItem(guestCartObj))
+    }
   } catch (err) {
     console.error(err)
   }
@@ -99,15 +102,13 @@ const cartItems = (state = initialState, action) => {
       return {...state, orders: action.items}
     case ADD_ITEM:
       return {...state, orders: [...state.orders, action.car]}
-    //  ********************* single-car.js & cartItems.js
     case REMOVE_ITEM:
-      // return {
-      //   ...state,
-      //   orders: [
-      //     ...state.orders.filter((order) => order.carId !== +action.item.carId),
-      //   ],
-      // }
-      return state
+      return {
+        ...state,
+        orders: [
+          ...state.orders.filter(order => order.carId !== +action.item.carId)
+        ]
+      }
     case INCREMENT:
       return {
         ...state,

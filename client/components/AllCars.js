@@ -1,16 +1,24 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCars} from '../store/cars'
+// import {fetchCars} from '../store/cars'
+import store, {fetchCars, gotCartItems} from '../store'
 import {Link} from 'react-router-dom'
 
 export class AllCars extends React.Component {
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+      user: {}
+    }
   }
 
   componentDidMount() {
     this.props.getCars()
+    // store.subscribe(() => store.getState())
+    // this.setState({user: this.props.user})
+    // if (this.state.user.id) {
+    //   this.props.getCartItems(this.state.user.id)
+    // }
   }
 
   render() {
@@ -38,7 +46,8 @@ export class AllCars extends React.Component {
 
 const mapState = state => {
   return {
-    cars: state.cars
+    cars: state.cars,
+    user: state.user
   }
 }
 
@@ -46,6 +55,9 @@ const mapDispatch = dispatch => {
   return {
     getCars: () => {
       dispatch(fetchCars())
+    },
+    getCartItems: userId => {
+      dispatch(gotCartItems(userId))
     }
   }
 }

@@ -24,7 +24,7 @@ const Navbar = ({handleClick, isLoggedIn, userID, cartItems}) => (
                   (accumulator, order) => accumulator + order.quantity,
                   0
                 )
-              : ''}
+              : 0}
             )
           </Link>
           <Link to="/add">Add</Link>
@@ -36,7 +36,16 @@ const Navbar = ({handleClick, isLoggedIn, userID, cartItems}) => (
           <Link to="/cars">Cars</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to="/guestcart">My Cart ({cartItems.orders.length})</Link>
+          <Link to="/guestcart">
+            My Cart (
+            {cartItems.orders.length
+              ? cartItems.orders.reduce(
+                  (accumulator, order) => accumulator + order.quantity,
+                  0
+                )
+              : 0}
+            )
+          </Link>
           <Link to="/add">Add</Link>
         </div>
       )}
