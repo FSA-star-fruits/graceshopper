@@ -17,30 +17,50 @@ const Navbar = ({
     <h1>Grace Shopper</h1>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div className="ui labeled menu">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/cars">Cars</Link>
-          <a href="#" onClick={handleClick}>
+
+          <a className="item" href="/home">
+            Home
+          </a>
+          <a className="item" href="/cars">
+            Cars
+          </a>
+
+          <a className="item" href={`/users/${userID}/mycart`}>
+            My Cart {cartItems.orders.length}
+          </a>
+          {isAdmin ? (
+            <a className="item" href="/admin">
+              Admin
+            </a>
+          ) : (
+            ''
+          )}
+          <a className="right item" href="#" onClick={handleClick}>
             Logout
           </a>
-          <Link to={`/users/${userID}/mycart`}>
-            My Cart {cartItems.orders.length}
-          </Link>
-          {isAdmin ? <Link to="/admin">Admin</Link> : ''}
         </div>
       ) : (
-        <div>
+        <div className="ui labeled menu">
           {/* The navbar will show these links before you log in */}
-          <Link to="/">Home</Link>
-          <Link to="/cars">Cars</Link>
-          <Link to="/login" onClick={handleCart}>
-            Login
-          </Link>
-          <Link to="/signup" onClick={handleCart}>
+          <a className="item" href="/">
+            Home
+          </a>
+          <a className="item" href="/cars">
+            Cars
+          </a>
+
+          <a className="item" href="/guestcart">
+            My Cart {cartItems.orders.length}
+          </a>
+          <a className="item" href="/signup" onClick={handleCart}>
             Sign Up
-          </Link>
-          <Link to="/guestcart">My Cart {cartItems.orders.length}</Link>
+          </a>
+
+          <a className="right item" href="/login" onClick={handleCart}>
+            Login
+          </a>
         </div>
       )}
     </nav>

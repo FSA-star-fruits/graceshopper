@@ -78,7 +78,7 @@ class AdminEditCar extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form className="ui form" onSubmit={this.handleSubmit}>
           <label htmlFor="brand">Brand:</label>
           <input
             type="text"
@@ -214,8 +214,8 @@ class AdminEditCar extends Component {
           />
           <br />
 
-          <button style={{backgroundColor: 'yellow'}} type="submit">
-            Edit Car
+          <button className="ui primary button" type="submit">
+            Enter
           </button>
         </form>
       </div>

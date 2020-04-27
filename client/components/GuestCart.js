@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {
   gotCartItems,
   tossCartItem,
@@ -47,12 +48,14 @@ class GuestCart extends Component {
               {idx}. {item.car.brand} {item.car.name}
               {item.quantity}
               <button
+                className="ui basic button"
                 type="button"
                 onClick={() => this.handleQuantity(true, item, idx)}
               >
                 +
               </button>
               <button
+                className="ui basic button"
                 type="button"
                 onClick={() => this.handleQuantity(false, item, idx)}
               >
@@ -60,6 +63,7 @@ class GuestCart extends Component {
               </button>
               <button
                 key={idx}
+                className="ui basic button"
                 type="button"
                 onClick={() => this.handleRemove(item)}
               >
@@ -69,6 +73,13 @@ class GuestCart extends Component {
             </div>
           )
         })}
+
+        <Link to="/signup">
+          <button className="ui primary button" type="button">
+            {' '}
+            Check Out!
+          </button>
+        </Link>
       </div>
     )
   }
