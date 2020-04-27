@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {
   gotCartItems,
   tossCartItem,
@@ -64,6 +65,9 @@ class GuestCart extends Component {
               </div>
             )
           })}
+          <Link to="/signup">
+            <button type="button"> Check Out!</button>
+          </Link>
         </div>
       )
     }
