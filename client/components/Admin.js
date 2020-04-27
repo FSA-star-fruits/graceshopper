@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchCars, removeCar} from '../store/cars'
+import './adminStyle.css'
 
 export class Admin extends Component {
   constructor() {
@@ -18,7 +19,9 @@ export class Admin extends Component {
       <div>
         <h1>All Cars</h1>
         <Link to="/admin/add">
-          <button type="button">Add Car</button>
+          <button id="green" type="button">
+            Add Car
+          </button>
         </Link>
         {this.props.cars.length > 0 ? (
           <div>
@@ -35,6 +38,7 @@ export class Admin extends Component {
                   </Link>
 
                   <button
+                    id="red"
                     type="button"
                     onClick={() => {
                       this.props.removeCar(car.id)
@@ -44,7 +48,9 @@ export class Admin extends Component {
                   </button>
 
                   <Link to={`/admin/edit/${car.id}`}>
-                    <button type="button">Edit</button>
+                    <button id="yellow" type="button">
+                      Edit
+                    </button>
                   </Link>
                   <hr />
                 </div>

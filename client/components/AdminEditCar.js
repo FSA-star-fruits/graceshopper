@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateCar} from '../store/cars'
+import {buildfetchSingleCarThunk} from '../store/singleCar'
 
 class AdminEditCar extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       brand: '',
       name: '',
@@ -26,23 +27,8 @@ class AdminEditCar extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
-    this.setState({
-      brand: '',
-      name: '',
-      image: '',
-      price: '',
-      year: '',
-      color: '',
-      interiorColor: '',
-      engineType: '',
-      stockNo: '',
-      transmission: '',
-      doors: '',
-      vin: '',
-      vehicleId: '',
-      isSold: '',
-      inventory: ''
-    })
+    const carId = this.props.match.params.carId
+    this.props.buildfetchSingleCarThunk(carId)
   }
 
   handleSubmit(event) {
@@ -83,7 +69,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="brand"
-            value={this.state.brand}
+            defaultValue={this.props.singleCar.brand}
             onChange={this.handleChange}
           />
           <br />
@@ -92,7 +78,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="name"
-            value={this.state.name}
+            defaultValue={this.props.singleCar.name}
             onChange={this.handleChange}
           />
           <br />
@@ -101,7 +87,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="image"
-            value={this.state.image}
+            defaultValue={this.props.singleCar.image}
             onChange={this.handleChange}
           />
           <br />
@@ -110,7 +96,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="price"
-            value={this.state.price}
+            defaultValue={this.props.singleCar.price}
             onChange={this.handleChange}
           />
           <br />
@@ -119,7 +105,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="year"
-            value={this.state.year}
+            defaultValue={this.props.singleCar.year}
             onChange={this.handleChange}
           />
           <br />
@@ -128,7 +114,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="color"
-            value={this.state.color}
+            defaultValue={this.props.singleCar.color}
             onChange={this.handleChange}
           />
           <br />
@@ -137,7 +123,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="interiorColor"
-            value={this.state.interiorColor}
+            defaultValue={this.props.singleCar.interiorColor}
             onChange={this.handleChange}
           />
           <br />
@@ -146,7 +132,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="engineType"
-            value={this.state.engineType}
+            defaultValue={this.props.singleCar.engineType}
             onChange={this.handleChange}
           />
           <br />
@@ -155,7 +141,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="stockNo"
-            value={this.state.stockNo}
+            defaultValue={this.props.singleCar.stockNo}
             onChange={this.handleChange}
           />
           <br />
@@ -164,7 +150,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="transmission"
-            value={this.state.transmission}
+            defaultValue={this.props.singleCar.transmission}
             onChange={this.handleChange}
           />
           <br />
@@ -173,7 +159,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="doors"
-            value={this.state.doors}
+            defaultValue={this.props.singleCar.doors}
             onChange={this.handleChange}
           />
           <br />
@@ -182,7 +168,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="vin"
-            value={this.state.vin}
+            defaultValue={this.props.singleCar.vin}
             onChange={this.handleChange}
           />
           <br />
@@ -191,7 +177,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="vehicleId"
-            value={this.state.vehicleId}
+            defaultValue={this.props.singleCar.vehicleId}
             onChange={this.handleChange}
           />
           <br />
@@ -200,7 +186,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="isSold"
-            value={this.state.isSold}
+            defaultValue={this.props.singleCar.isSold}
             onChange={this.handleChange}
           />
           <br />
@@ -209,7 +195,7 @@ class AdminEditCar extends Component {
           <input
             type="text"
             name="inventory"
-            value={this.state.inventory}
+            defaultValue={this.props.singleCar.inventory}
             onChange={this.handleChange}
           />
           <br />
@@ -223,10 +209,17 @@ class AdminEditCar extends Component {
   }
 }
 
+const mapState = state => ({
+  singleCar: state.singleCar
+})
+
 const mapDispatch = dispatch => ({
   updateCar: (carId, editCar) => {
     return dispatch(updateCar(carId, editCar))
+  },
+  buildfetchSingleCarThunk: carId => {
+    return dispatch(buildfetchSingleCarThunk(carId))
   }
 })
 
-export default connect(null, mapDispatch)(AdminEditCar)
+export default connect(mapState, mapDispatch)(AdminEditCar)
