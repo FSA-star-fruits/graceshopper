@@ -34,6 +34,11 @@ class MyCart extends Component {
       this.props.tossCartItem(item)
     }
   }
+  // handleQuantity(value, item, idx) {
+  //   const userId = this.props.match.params.userID
+
+  //   this.props.getincreaseQuantityCart(value, userId, item, idx)
+  // }
 
   render() {
     const {cartItems} = this.props

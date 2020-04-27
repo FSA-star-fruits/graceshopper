@@ -94,8 +94,14 @@ router.delete('/:cartItemId/mycart', async (req, res, next) => {
 
 router.put('/:userId/mycart', async (req, res, next) => {
   try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      }
+    })
+
     const existingCartItem = await CartItem.findOne({
-      where: {carId: req.body.carId, orderId: req.body.userId},
+      where: {carId: req.body.carId, orderId: order.id},
       include: [
         {
           model: Car

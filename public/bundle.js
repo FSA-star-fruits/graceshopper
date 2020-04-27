@@ -1308,12 +1308,10 @@ function (_Component) {
     key: "handleRemove",
     value: function handleRemove(item) {
       this.props.tossCartItem(item);
-    }
-  }, {
-    key: "handleQuantity",
-    value: function handleQuantity(value, item, idx) {
-      var userId = this.props.match.params.userID;
-    }
+    } // handleQuantity(value, item, idx) {
+    //   const userId = this.props.match.params.userID
+    // }
+
   }, {
     key: "handleQuantity",
     value: function handleQuantity(item, value, idx) {
@@ -1467,7 +1465,11 @@ function (_Component) {
       } else {
         this.props.tossCartItem(item);
       }
-    }
+    } // handleQuantity(value, item, idx) {
+    //   const userId = this.props.match.params.userID
+    //   this.props.getincreaseQuantityCart(value, userId, item, idx)
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -141661,7 +141663,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

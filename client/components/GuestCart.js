@@ -24,9 +24,9 @@ class GuestCart extends Component {
     this.props.tossCartItem(item)
   }
 
-  handleQuantity(value, item, idx) {
-    const userId = this.props.match.params.userID
-  }
+  // handleQuantity(value, item, idx) {
+  //   const userId = this.props.match.params.userID
+  // }
 
   handleQuantity(item, value, idx) {
     if (item.quantity > 1) {
