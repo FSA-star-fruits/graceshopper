@@ -58,21 +58,22 @@ export const buildPostCartThunk = (
   try {
     if (userId) {
       const cartObj = {
-        carId: carId,
-        userId: userId
-      }
-      const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
-      dispatch(addItem(res.data))
-    } else {
-      if (!quantity) {
-        quantity = 0
-      }
-      const item = {
         carId: +carId,
-        car: carItem,
-        quantity: quantity++
+        userId: userId,
+        quantity: quantity,
+        handle: true
       }
-      dispatch(addItem(item))
+      if (quantity === 1) {
+        const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
+        dispatch(addItem(res.data))
+      } else {
+        const res = await axios.put(`/api/users/${userId}/mycart`, cartObj)
+        dispatch(addItem(res.data))
+      }
+    } else {
+      dispatch(
+        addItem({carId: +carId, userId: null, quantity: quantity, car: carItem})
+      )
     }
   } catch (err) {
     console.error(err)
@@ -115,7 +116,7 @@ export const increaseQuantityCart = (carId, value, userId) => {
 const cartItems = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ITEMS:
-      return {...state, orders: action.items}
+      return {...state, orders: [...action.items]}
 
     case ADD_ITEM:
       const noChangeItems = [
@@ -123,7 +124,7 @@ const cartItems = (state = initialState, action) => {
       ]
       return {
         ...state,
-        orders: [...noChangeItems, action.car]
+        orders: [action.car, ...noChangeItems]
       }
 
     case REMOVE_ITEM:

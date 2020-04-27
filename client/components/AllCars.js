@@ -7,18 +7,11 @@ import {Link} from 'react-router-dom'
 export class AllCars extends React.Component {
   constructor() {
     super()
-    this.state = {
-      user: {}
-    }
+    this.state = {}
   }
 
   componentDidMount() {
     this.props.getCars()
-    // store.subscribe(() => store.getState())
-    // this.setState({user: this.props.user})
-    // if (this.state.user.id) {
-    //   this.props.getCartItems(this.state.user.id)
-    // }
   }
 
   render() {

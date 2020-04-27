@@ -49,7 +49,13 @@ router.post('/:userId/mycart', async (req, res, next) => {
       }
     })
 
-    const existingCartItem = await CartItem.findOne({
+    await CartItem.create({
+      carId: req.body.carId,
+      orderId: order.id,
+      quantity: req.body.quantity
+    })
+
+    const cartItem = await CartItem.findOne({
       where: {
         carId: req.body.carId,
         orderId: order.id
@@ -63,19 +69,7 @@ router.post('/:userId/mycart', async (req, res, next) => {
         }
       ]
     })
-
-    if (!existingCartItem) {
-      await CartItem.create({
-        carId: req.body.carId,
-        orderId: order.id,
-        quantity: 1
-      })
-    } else {
-      await existingCartItem.update({
-        quantity: existingCartItem.quantity + 1
-      })
-    }
-    res.json(existingCartItem)
+    res.json(cartItem)
   } catch (err) {
     next(err)
   }
@@ -99,17 +93,23 @@ router.delete('/:cartItemId/mycart', async (req, res, next) => {
 })
 
 router.put('/:userId/mycart', async (req, res, next) => {
-  // console.log(req.body.handle, 'AKEFhsei')
   try {
     const existingCartItem = await CartItem.findOne({
-      where: {carId: req.body.carId, orderId: req.body.userId}
+      where: {carId: req.body.carId, orderId: req.body.userId},
+      include: [
+        {
+          model: Car
+        },
+        {
+          model: Order
+        }
+      ]
     })
 
     if (req.body.handle === true) {
       const response = await existingCartItem.update({
         quantity: existingCartItem.quantity + 1
       })
-      console.log(existingCartItem.quantity)
       res.json(response)
     } else {
       const response = await existingCartItem.update({

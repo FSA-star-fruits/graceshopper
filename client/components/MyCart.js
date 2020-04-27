@@ -50,8 +50,9 @@ class MyCart extends Component {
           <h2>Items in your cart: </h2>
           {orders.map((item, idx = 0) => {
             return (
-              <div key={item.car.id}>
-                {idx}. {item.car.brand} {item.car.name} (Qty: {item.quantity})
+              <div key={item.id}>
+                {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
+                {item.quantity})
                 <button
                   type="button"
                   onClick={() => this.handleQuantity(item.car.id, true)}

@@ -765,20 +765,14 @@ function (_React$Component) {
     _classCallCheck(this, AllCars);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(AllCars).call(this));
-    _this.state = {
-      user: {}
-    };
+    _this.state = {};
     return _this;
   }
 
   _createClass(AllCars, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.getCars(); // store.subscribe(() => store.getState())
-      // this.setState({user: this.props.user})
-      // if (this.state.user.id) {
-      //   this.props.getCartItems(this.state.user.id)
-      // }
+      this.props.getCars();
     }
   }, {
     key: "render",
@@ -1219,16 +1213,8 @@ function (_Component) {
   }, {
     key: "handleQuantity",
     value: function handleQuantity(carId, value) {
-      // const userId = this.props.match.params.userID
       this.props.getincreaseQuantityCart(carId, value, null);
-    } // from MyCart.js
-    // handleQuantity(carId, value) {
-    //   const userId = this.props.match.params.userID
-    //   this.props.getincreaseQuantityCart(carId, value, userId)
-    //   const userID = userId
-    //   this.props.getCartItems(userID)
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -1383,8 +1369,8 @@ function (_Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Items in your cart: "), orders.map(function (item) {
           var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: item.car.id
-          }, idx, ". ", item.car.brand, " ", item.car.name, " (Qty: ", item.quantity, ")", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            key: item.id
+          }, idx + 1, ". ", item.car.brand, " ", item.car.name, " (Qty:", ' ', item.quantity, ")", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             onClick: function onClick() {
               return _this2.handleQuantity(item.car.id, true);
@@ -1631,46 +1617,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
 
 
+ // const Navbar = ({
+//   handleClick,
+//   isLoggedIn,
+//   userID,
+//   cartItems,
+//   isAdmin,
+//   handleCart,
+// }) =>
 
-var Navbar = function Navbar(_ref) {
-  var handleClick = _ref.handleClick,
-      isLoggedIn = _ref.isLoggedIn,
-      userID = _ref.userID,
-      cartItems = _ref.cartItems,
-      isAdmin = _ref.isAdmin,
-      handleCart = _ref.handleCart;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Grace Shopper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, isLoggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/home"
-  }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/cars"
-  }, "Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "#",
-    onClick: handleClick
-  }, "Logout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/users/".concat(userID, "/mycart")
-  }, "My Cart (", cartItems.orders.length ? cartItems.orders.reduce(function (accumulator, order) {
-    return accumulator + order.quantity;
-  }, 0) : 0, ")"), isAdmin ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/admin"
-  }, "Admin") : '') : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/"
-  }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/cars"
-  }, "Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/login"
-  }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/signup"
-  }, "Sign Up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/guestcart"
-  }, "My Cart (", cartItems.orders.length ? cartItems.orders.reduce(function (accumulator, order) {
-    return accumulator + order.quantity;
-  }, 0) : 0, ")"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
-};
+var Navbar =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Navbar, _Component);
+
+  function Navbar() {
+    _classCallCheck(this, Navbar);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Navbar).apply(this, arguments));
+  }
+
+  _createClass(Navbar, [{
+    key: "compoentDidMount",
+    value: function compoentDidMount() {
+      var userID = this.props.userID;
+      this.props.getCartItems(userID);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          isLoggedIn = _this$props.isLoggedIn,
+          cartItems = _this$props.cartItems,
+          isAdmin = _this$props.isAdmin,
+          userID = _this$props.userID;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Grace Shopper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, isLoggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/home"
+      }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/cars"
+      }, "Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#",
+        onClick: this.props.handleClick
+      }, "Logout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/users/".concat(userID, "/mycart")
+      }, "My Cart (", cartItems.orders[0] ? cartItems.orders.reduce(function (accumulator, order) {
+        return accumulator + order.quantity;
+      }, 0) : 0, ")"), isAdmin ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/admin"
+      }, "Admin") : '') : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/"
+      }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/cars"
+      }, "Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/login"
+      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/signup"
+      }, "Sign Up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/guestcart"
+      }, "My Cart (", cartItems.orders.length ? cartItems.orders.reduce(function (accumulator, order) {
+        return accumulator + order.quantity;
+      }, 0) : 0, ")"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
+    }
+  }]);
+
+  return Navbar;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 /**
  * CONTAINER
  */
@@ -1693,6 +1726,9 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     handleCart: function handleCart() {
       dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_4__["emptyCartItem"])());
+    },
+    getCartItems: function getCartItems(userID) {
+      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_4__["gotCartItems"])(userID));
     }
   };
 };
@@ -1782,16 +1818,20 @@ function (_Component) {
     value: function handleAddToCart() {
       // JO: clean up vars, if time permits
       var carId = this.props.match.params.carID;
-      var userId = this.props.user.id;
       var carItem = this.props.singleCar;
+      var userId = this.props.user.id;
       var orders = this.props.cartItems.orders;
-      var item = orders.filter(function (order) {
-        return order.carId === +carId;
-      });
       var quantity = 1;
+      var itemClicked = [];
 
-      if (item.length) {
-        quantity = item[0].quantity + 1;
+      if (orders.length) {
+        itemClicked = orders.filter(function (order) {
+          return order.carId === +carId;
+        });
+      }
+
+      if (itemClicked.length) {
+        quantity = itemClicked[0].quantity + 1;
       }
 
       this.props.postAddToCart(carId, carItem, userId, quantity);
@@ -2247,11 +2287,16 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.loadInitialData();
-    } // componentDidUpdate(prevProps, prevState) {
-    //   const {user} = this.props
-    //   if (prevProps !== this.props) this.props.getCartItems(user.id)
-    // }
-
+      _store__WEBPACK_IMPORTED_MODULE_6__["default"].subscribe(function () {
+        return _store__WEBPACK_IMPORTED_MODULE_6__["default"].getState();
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      var id = this.props.user.id;
+      if (prevProps.user.id !== this.props.user.id) this.props.getCartItems(id);
+    }
   }, {
     key: "render",
     value: function render() {
@@ -2789,7 +2834,8 @@ var buildPostCartThunk = function buildPostCartThunk(carId, carItem, userId, qua
       var _ref2 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(dispatch) {
-        var cartObj, res, item;
+        var cartObj, res, _res;
+
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -2797,50 +2843,66 @@ var buildPostCartThunk = function buildPostCartThunk(carId, carItem, userId, qua
                 _context2.prev = 0;
 
                 if (!userId) {
-                  _context2.next = 9;
+                  _context2.next = 16;
                   break;
                 }
 
                 cartObj = {
-                  carId: carId,
-                  userId: userId
+                  carId: +carId,
+                  userId: userId,
+                  quantity: quantity,
+                  handle: true
                 };
-                _context2.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/users/".concat(userId, "/mycart"), cartObj);
 
-              case 5:
-                res = _context2.sent;
-                dispatch(addItem(res.data));
-                _context2.next = 12;
-                break;
-
-              case 9:
-                if (!quantity) {
-                  quantity = 0;
+                if (!(quantity === 1)) {
+                  _context2.next = 10;
+                  break;
                 }
 
-                item = {
-                  carId: +carId,
-                  car: carItem,
-                  quantity: quantity++
-                };
-                dispatch(addItem(item));
+                _context2.next = 6;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/users/".concat(userId, "/mycart"), cartObj);
+
+              case 6:
+                res = _context2.sent;
+                dispatch(addItem(res.data));
+                _context2.next = 14;
+                break;
+
+              case 10:
+                _context2.next = 12;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(userId, "/mycart"), cartObj);
 
               case 12:
+                _res = _context2.sent;
+                dispatch(addItem(_res.data));
+
+              case 14:
                 _context2.next = 17;
                 break;
 
-              case 14:
-                _context2.prev = 14;
+              case 16:
+                dispatch(addItem({
+                  carId: +carId,
+                  userId: null,
+                  quantity: quantity,
+                  car: carItem
+                }));
+
+              case 17:
+                _context2.next = 22;
+                break;
+
+              case 19:
+                _context2.prev = 19;
                 _context2.t0 = _context2["catch"](0);
                 console.error(_context2.t0);
 
-              case 17:
+              case 22:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 14]]);
+        }, _callee2, null, [[0, 19]]);
       }));
 
       return function (_x2) {
@@ -2936,7 +2998,7 @@ var cartItems = function cartItems() {
   switch (action.type) {
     case FETCH_ITEMS:
       return _objectSpread({}, state, {
-        orders: action.items
+        orders: _toConsumableArray(action.items)
       });
 
     case ADD_ITEM:
@@ -2945,7 +3007,7 @@ var cartItems = function cartItems() {
       }));
 
       return _objectSpread({}, state, {
-        orders: [].concat(_toConsumableArray(noChangeItems), [action.car])
+        orders: [action.car].concat(_toConsumableArray(noChangeItems))
       });
 
     case REMOVE_ITEM:
@@ -141468,7 +141530,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

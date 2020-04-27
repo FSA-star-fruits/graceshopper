@@ -22,7 +22,7 @@ import {
   AdminEditCar,
   getCartItems
 } from './components'
-import {me, gotCartItems} from './store'
+import store, {me, gotCartItems} from './store'
 
 class Routes extends Component {
   constructor() {
@@ -32,12 +32,13 @@ class Routes extends Component {
 
   componentDidMount() {
     this.props.loadInitialData()
+    store.subscribe(() => store.getState())
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   const {user} = this.props
-  //   if (prevProps !== this.props) this.props.getCartItems(user.id)
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    const {id} = this.props.user
+    if (prevProps.user.id !== this.props.user.id) this.props.getCartItems(id)
+  }
 
   render() {
     const {isLoggedIn} = this.props

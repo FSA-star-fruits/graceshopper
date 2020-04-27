@@ -24,15 +24,19 @@ export class SingleCar extends Component {
   handleAddToCart() {
     // JO: clean up vars, if time permits
     const carId = this.props.match.params.carID
-    const userId = this.props.user.id
     const carItem = this.props.singleCar
+    const userId = this.props.user.id
     const {orders} = this.props.cartItems
-    const item = orders.filter(order => order.carId === +carId)
-
     let quantity = 1
-    if (item.length) {
-      quantity = item[0].quantity + 1
+    let itemClicked = []
+
+    if (orders.length) {
+      itemClicked = orders.filter(order => order.carId === +carId)
     }
+    if (itemClicked.length) {
+      quantity = itemClicked[0].quantity + 1
+    }
+
     this.props.postAddToCart(carId, carItem, userId, quantity)
   }
 
