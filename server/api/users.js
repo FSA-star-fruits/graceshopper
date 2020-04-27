@@ -43,33 +43,25 @@ router.get('/:userId/mycart', async (req, res, next) => {
 
 router.post('/:userId/mycart', async (req, res, next) => {
   try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.params.userId
-      }
+    await Order.create({
+      userId: req.body.userId
+    })
+    const existingCartItem = await CartItem.findOne({
+      where: {carId: req.body.carId, orderId: req.body.userId}
     })
 
-    await CartItem.create({
-      carId: req.body.carId,
-      orderId: order.id,
-      quantity: req.body.quantity
-    })
-
-    const cartItem = await CartItem.findOne({
-      where: {
+    if (existingCartItem === null) {
+      await CartItem.create({
         carId: req.body.carId,
-        orderId: order.id
-      },
-      include: [
-        {
-          model: Car
-        },
-        {
-          model: Order
-        }
-      ]
-    })
-    res.json(cartItem)
+        orderId: req.body.userId,
+        quantity: 1
+      })
+    } else {
+      await existingCartItem.update({
+        quantity: existingCartItem.quantity + 1
+      })
+      console.log(existingCartItem.quantity)
+    }
   } catch (err) {
     next(err)
   }
