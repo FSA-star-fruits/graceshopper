@@ -13,67 +13,67 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:userId/mycart', async (req, res, next) => {
-  try {
-    const userData = await Order.findOne({
-      where: {
-        userId: req.params.userId
-      }
-    })
-    const orderId = userData.id
+// router.get('/:userId/mycart', async (req, res, next) => {
+//   try {
+//     const userData = await Order.findOne({
+//       where: {
+//         userId: req.params.userId
+//       }
+//     })
+//     const orderId = userData.id
 
-    const items = await CartItem.findAll({
-      where: {
-        orderId: orderId
-      },
-      include: [
-        {
-          model: Order
-        },
-        {
-          model: Car
-        }
-      ]
-    })
-    res.json(items)
-  } catch (err) {
-    next(err)
-  }
-})
+//     const items = await CartItem.findAll({
+//       where: {
+//         orderId: orderId
+//       },
+//       include: [
+//         {
+//           model: Order
+//         },
+//         {
+//           model: Car
+//         }
+//       ]
+//     })
+//     res.json(items)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
-router.post('/:userId/mycart', async (req, res, next) => {
-  try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.params.userId
-      }
-    })
+// router.post('/:userId/mycart', async (req, res, next) => {
+//   try {
+//     const order = await Order.findOne({
+//       where: {
+//         userId: req.params.userId
+//       }
+//     })
 
-    await CartItem.create({
-      carId: req.body.carId,
-      orderId: order.id,
-      quantity: req.body.quantity
-    })
+//     await CartItem.create({
+//       carId: req.body.carId,
+//       orderId: order.id,
+//       quantity: req.body.quantity
+//     })
 
-    const cartItem = await CartItem.findOne({
-      where: {
-        carId: req.body.carId,
-        orderId: order.id
-      },
-      include: [
-        {
-          model: Car
-        },
-        {
-          model: Order
-        }
-      ]
-    })
-    res.json(cartItem)
-  } catch (err) {
-    next(err)
-  }
-})
+//     const cartItem = await CartItem.findOne({
+//       where: {
+//         carId: req.body.carId,
+//         orderId: order.id
+//       },
+//       include: [
+//         {
+//           model: Car
+//         },
+//         {
+//           model: Order
+//         }
+//       ]
+//     })
+//     res.json(cartItem)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.delete('/:cartItemId/mycart', async (req, res, next) => {
   try {
