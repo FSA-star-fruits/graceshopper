@@ -1729,10 +1729,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
-/* harmony import */ var _store_cartItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/cartItems */ "./client/store/cartItems.js");
-
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
+/* harmony import */ var _store_cartItems__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/cartItems */ "./client/store/cartItems.js");
 
 
 
@@ -1802,11 +1800,11 @@ var mapState = function mapState(state) {
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     handleClick: function handleClick() {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_5__["emptyCartItem"])());
-      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_4__["logout"])());
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_4__["emptyCartItem"])());
+      dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["logout"])());
     },
     handleCart: function handleCart() {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_5__["emptyCartItem"])());
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_4__["emptyCartItem"])());
     }
   };
 };

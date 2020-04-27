@@ -42,12 +42,10 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    getCars: () => {
-      dispatch(fetchCars())
-    }
+const mapDispatch = dispatch => ({
+  getCars: () => {
+    dispatch(fetchCars())
   }
-}
+})
 
 export default connect(mapState, mapDispatch)(AllCars)
