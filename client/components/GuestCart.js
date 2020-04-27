@@ -28,6 +28,9 @@ class GuestCart extends Component {
 
     this.props.getincreaseQuantityCart(value, userId, item, idx)
   }
+  // handleQuantity(carId, value) {
+  //   this.props.getincreaseQuantityCart(carId, value, null)
+  // }
 
   render() {
     const {cartItems} = this.props
@@ -39,6 +42,7 @@ class GuestCart extends Component {
         </div>
       )
     }
+
     return (
       <div>
         <h2>Items in your cart: </h2>

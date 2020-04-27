@@ -1,73 +1,81 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {logout, emptyCartItem, gotCartItems} from '../store'
 
-import {logout} from '../store'
-import {emptyCartItem} from '../store/cartItems'
+// const Navbar = ({
+//   handleClick,
+//   isLoggedIn,
+//   userID,
+//   cartItems,
+//   isAdmin,
+//   handleCart,
+// }) =>
+class Navbar extends Component {
+  compoentDidMount() {
+    const {userID} = this.props
+    this.props.getCartItems(userID)
+  }
 
-const Navbar = ({
-  handleClick,
-  isLoggedIn,
-  userID,
-  cartItems,
-  isAdmin,
-  handleCart
-}) => (
-  <div>
-    <h1>Grace Shopper</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div className="ui labeled menu">
-          {/* The navbar will show these links after you log in */}
-
-          <a className="item" href="/home">
-            Home
-          </a>
-          <a className="item" href="/cars">
-            Cars
-          </a>
-
-          <a className="item" href={`/users/${userID}/mycart`}>
-            My Cart {cartItems.orders.length}
-          </a>
-          {isAdmin ? (
-            <a className="item" href="/admin">
-              Admin
-            </a>
+  render() {
+    const {isLoggedIn, cartItems, isAdmin, userID} = this.props
+    return (
+      <div>
+        <h1>Grace Shopper</h1>
+        <nav>
+          {isLoggedIn ? (
+            <div>
+              {/* The navbar will show these links after you log in */}
+              <Link to="/home">Home</Link>
+              <Link to="/cars">Cars</Link>
+              <a href="#" onClick={this.props.handleClick}>
+                Logout
+              </a>
+              <Link to={`/users/${userID}/mycart`}>
+                My Cart (
+                {cartItems.orders[0]
+                  ? cartItems.orders.reduce(
+                      (accumulator, order) => accumulator + order.quantity,
+                      0
+                    )
+                  : 0}
+                )
+              </Link>
+              {isAdmin ? <Link to="/admin">Admin</Link> : ''}
+            </div>
           ) : (
-            ''
+            <div>
+              {/* The navbar will show these links before you log in */}
+              <Link to="/">Home</Link>
+              <Link to="/cars">Cars</Link>
+              <Link to="/login">
+                {/* JO: why include handleCart here??? */}
+                {/* <Link to="/login" onClick={handleCart}> */}
+                Login
+              </Link>
+              <Link to="/signup">
+                {/* <Link to="/signup" onClick={handleCart}> */}
+                Sign Up
+              </Link>
+              <Link to="/guestcart">
+                My Cart (
+                {cartItems.orders.length
+                  ? cartItems.orders.reduce(
+                      (accumulator, order) => accumulator + order.quantity,
+                      0
+                    )
+                  : 0}
+                )
+              </Link>
+            </div>
           )}
-          <a className="right item" href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div className="ui labeled menu">
-          {/* The navbar will show these links before you log in */}
-          <a className="item" href="/">
-            Home
-          </a>
-          <a className="item" href="/cars">
-            Cars
-          </a>
-
-          <a className="item" href="/guestcart">
-            My Cart {cartItems.orders.length}
-          </a>
-          <a className="item" href="/signup" onClick={handleCart}>
-            Sign Up
-          </a>
-
-          <a className="right item" href="/login" onClick={handleCart}>
-            Login
-          </a>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
-
+        </nav>
+        <hr />
+      </div>
+    )
+  }
+}
 /**
  * CONTAINER
  */
@@ -88,6 +96,9 @@ const mapDispatch = dispatch => {
     },
     handleCart() {
       dispatch(emptyCartItem())
+    },
+    getCartItems(userID) {
+      dispatch(gotCartItems(userID))
     }
   }
 }

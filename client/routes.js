@@ -19,14 +19,26 @@ import {
   GuestCart,
   Admin,
   AdminAddCar,
-  AdminEditCar
+  AdminEditCar,
+  getCartItems
 } from './components'
-import {me} from './store'
+import store, {me, gotCartItems} from './store'
 import CheckOut from './components/CheckOut'
 
 class Routes extends Component {
+  constructor() {
+    super()
+    this.state = {}
+  }
+
   componentDidMount() {
     this.props.loadInitialData()
+    store.subscribe(() => store.getState())
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {id} = this.props.user
+    if (prevProps.user.id !== this.props.user.id) this.props.getCartItems(id)
   }
 
   render() {
@@ -83,6 +95,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    getCartItems(userId) {
+      dispatch(gotCartItems(userId))
     }
   }
 }

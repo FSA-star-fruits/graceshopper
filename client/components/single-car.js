@@ -1,14 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {buildfetchSingleCarThunk, buildPostCartThunk} from '../store'
 
 import {SingleCarHeader} from './singleCarContents/single-car-header'
 import {SingleCarMainView} from './singleCarContents/single-car-main-view'
 import {SingleCarDetails} from './singleCarContents/single-car-details'
 import {SingleCarSecondaryImage} from './singleCarContents/single-car-secondary-images'
-
-import {buildfetchSingleCarThunk} from '../store'
-
-import {buildPostCartThunk} from '../store/cartItems'
 
 /**
  * COMPONENT
@@ -16,20 +13,31 @@ import {buildPostCartThunk} from '../store/cartItems'
 export class SingleCar extends Component {
   constructor(props) {
     super(props)
-
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
+
   componentDidMount() {
     const carId = this.props.match.params.carID
-
     this.props.fetchSingleCar(carId)
   }
-  handleAddToCart() {
-    const carId = this.props.match.params.carID
-    const userId = this.props.user.id
-    const carItem = this.props.singleCar
 
-    this.props.postAddToCart(carId, carItem, userId)
+  handleAddToCart() {
+    // JO: clean up vars, if time permits
+    const carId = this.props.match.params.carID
+    const carItem = this.props.singleCar
+    const userId = this.props.user.id
+    const {orders} = this.props.cartItems
+    let quantity = 1
+    let itemClicked = []
+
+    if (orders.length) {
+      itemClicked = orders.filter(order => order.carId === +carId)
+    }
+    if (itemClicked.length) {
+      quantity = itemClicked[0].quantity + 1
+    }
+
+    this.props.postAddToCart(carId, carItem, userId, quantity)
   }
 
   render() {
@@ -56,7 +64,8 @@ export class SingleCar extends Component {
 const mapState = state => {
   return {
     singleCar: state.singleCar,
-    user: state.user
+    user: state.user,
+    cartItems: state.cartItems
   }
 }
 
@@ -64,8 +73,8 @@ const mapDispatch = dispatch => ({
   fetchSingleCar: carId => {
     dispatch(buildfetchSingleCarThunk(carId))
   },
-  postAddToCart: (carId, carItem, userId) => {
-    dispatch(buildPostCartThunk(carId, carItem, userId))
+  postAddToCart: (carId, carItem, userId, quantity) => {
+    dispatch(buildPostCartThunk(carId, carItem, userId, quantity))
   }
 })
 

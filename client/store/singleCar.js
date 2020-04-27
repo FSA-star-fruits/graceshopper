@@ -22,7 +22,7 @@ export const buildfetchSingleCarThunk = carId => async dispatch => {
   try {
     const res = await axios.get(`/api/cars/${carId}`)
 
-    dispatch(getSingleCar(res))
+    dispatch(getSingleCar(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -34,7 +34,7 @@ export const buildfetchSingleCarThunk = carId => async dispatch => {
 const singleCarReducer = (state = defaultSingleCar, action) => {
   switch (action.type) {
     case GET_SINGLECAR:
-      return {...action.car.data}
+      return {...action.car}
     default:
       return state
   }
