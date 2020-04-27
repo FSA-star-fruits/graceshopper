@@ -16,9 +16,11 @@ export class Admin extends Component {
   render() {
     return (
       <div>
-        <h1>All Cars</h1>
+        <h1>Inventory</h1>
         <Link to="/admin/add">
-          <button type="button">Add Car</button>
+          <button type="button" className="ui basic button">
+            Add Car
+          </button>
         </Link>
         {this.props.cars.length > 0 ? (
           <div>
@@ -36,6 +38,7 @@ export class Admin extends Component {
 
                   <button
                     type="button"
+                    className="ui basic button"
                     onClick={() => {
                       this.props.removeCar(car.id)
                     }}
@@ -44,7 +47,9 @@ export class Admin extends Component {
                   </button>
 
                   <Link to={`/admin/edit/${car.id}`}>
-                    <button type="button">Edit</button>
+                    <button type="button" className="ui basic button">
+                      Edit
+                    </button>
                   </Link>
                   <hr />
                 </div>

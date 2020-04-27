@@ -173,10 +173,11 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "All Cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Inventory"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/admin/add"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button"
+        type: "button",
+        className: "ui basic button"
       }, "Add Car")), this.props.cars.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cars.map(function (car) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: car.id
@@ -190,13 +191,15 @@ function (_Component) {
           }
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, car.brand), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, car.price)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
+          className: "ui basic button",
           onClick: function onClick() {
             _this2.props.removeCar(car.id);
           }
         }, "Remove"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
           to: "/admin/edit/".concat(car.id)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          type: "button"
+          type: "button",
+          className: "ui basic button"
         }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
       })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "There are no cars"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please register your car")));
     }
@@ -288,7 +291,6 @@ function (_Component) {
       doors: '',
       vin: '',
       vehicleId: '',
-      isSold: '',
       inventory: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -315,7 +317,6 @@ function (_Component) {
         doors: state.doors,
         vin: state.vin,
         vehicleId: state.vehicleId,
-        isSold: state.isSold,
         inventory: state.inventory
       };
       this.props.addCar(newCar);
@@ -330,7 +331,10 @@ function (_Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "ui form",
         onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "five wide field"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "brand"
       }, "Brand:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -359,7 +363,9 @@ function (_Component) {
         name: "price",
         value: this.state.price,
         onChange: this.handleChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "five wide field"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "year"
       }, "Year:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -387,7 +393,9 @@ function (_Component) {
         name: "engineType",
         value: this.state.engineType,
         onChange: this.handleChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "five wide field"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "stockNo"
       }, "StockNo:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -415,19 +423,14 @@ function (_Component) {
         name: "vin",
         value: this.state.vin,
         onChange: this.handleChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "four wide field"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "vehicleId"
       }, "Vehicle Id:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "vehicleId",
         value: this.state.vehicleId,
-        onChange: this.handleChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "isSold"
-      }, "Is Sold:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        name: "isSold",
-        value: this.state.isSold,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "inventory"
@@ -436,12 +439,10 @@ function (_Component) {
         name: "inventory",
         value: this.state.inventory,
         onChange: this.handleChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        style: {
-          backgroundColor: 'yellow'
-        },
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "ui primary button",
         type: "submit"
-      }, "Add Car")));
+      }, "Add Car"));
     }
   }]);
 
@@ -473,6 +474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_cars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/cars */ "./client/store/cars.js");
+/* harmony import */ var _store_singleCar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/singleCar */ "./client/store/singleCar.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -492,6 +494,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -533,23 +536,8 @@ function (_Component) {
   _createClass(AdminEditCar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setState({
-        brand: '',
-        name: '',
-        image: '',
-        price: '',
-        year: '',
-        color: '',
-        interiorColor: '',
-        engineType: '',
-        stockNo: '',
-        transmission: '',
-        doors: '',
-        vin: '',
-        vehicleId: '',
-        isSold: '',
-        inventory: ''
-      });
+      var carId = this.props.match.params.carId;
+      this.props.buildfetchSingleCarThunk(carId);
     }
   }, {
     key: "handleSubmit",
@@ -586,133 +574,141 @@ function (_Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "ui form",
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "brand"
       }, "Brand:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "brand",
-        value: this.state.brand,
+        defaultValue: this.props.singleCar.brand,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "name"
       }, "Name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "name",
-        value: this.state.name,
+        defaultValue: this.props.singleCar.name,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "image"
       }, "Image:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "image",
-        value: this.state.image,
+        defaultValue: this.props.singleCar.image,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "price"
       }, "Price:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "price",
-        value: this.state.price,
+        defaultValue: this.props.singleCar.price,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "year"
       }, "Year:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "year",
-        value: this.state.year,
+        defaultValue: this.props.singleCar.year,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "color"
       }, "Color:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "color",
-        value: this.state.color,
+        defaultValue: this.props.singleCar.color,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "interiorColor"
       }, "Interior Color:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "interiorColor",
-        value: this.state.interiorColor,
+        defaultValue: this.props.singleCar.interiorColor,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "engineType"
       }, "Engine Type:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "engineType",
-        value: this.state.engineType,
+        defaultValue: this.props.singleCar.engineType,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "stockNo"
       }, "StockNo:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "stockNo",
-        value: this.state.stockNo,
+        defaultValue: this.props.singleCar.stockNo,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "transmission"
       }, "Transmission:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "transmission",
-        value: this.state.transmission,
+        defaultValue: this.props.singleCar.transmission,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "doors"
       }, "Doors:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "doors",
-        value: this.state.doors,
+        defaultValue: this.props.singleCar.doors,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "vin"
       }, "Vin:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "vin",
-        value: this.state.vin,
+        defaultValue: this.props.singleCar.vin,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "vehicleId"
       }, "Vehicle Id:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "vehicleId",
-        value: this.state.vehicleId,
+        defaultValue: this.props.singleCar.vehicleId,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "isSold"
       }, "Is Sold:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "isSold",
-        value: this.state.isSold,
+        defaultValue: this.props.singleCar.isSold,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "inventory"
       }, "Inventory:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "inventory",
-        value: this.state.inventory,
+        defaultValue: this.props.singleCar.inventory,
         onChange: this.handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        style: {
-          backgroundColor: 'yellow'
-        },
+        className: "ui primary button",
         type: "submit"
-      }, "Edit Car")));
+      }, "Enter")));
     }
   }]);
 
   return AdminEditCar;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
+var mapState = function mapState(state) {
+  return {
+    singleCar: state.singleCar
+  };
+};
+
 var mapDispatch = function mapDispatch(dispatch) {
   return {
     updateCar: function updateCar(carId, editCar) {
       return dispatch(Object(_store_cars__WEBPACK_IMPORTED_MODULE_2__["updateCar"])(carId, editCar));
+    },
+    buildfetchSingleCarThunk: function buildfetchSingleCarThunk(carId) {
+      return dispatch(Object(_store_singleCar__WEBPACK_IMPORTED_MODULE_3__["buildfetchSingleCarThunk"])(carId));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(AdminEditCar));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(AdminEditCar));
 
 /***/ }),
 
@@ -1315,13 +1311,22 @@ function (_Component) {
     }
   }, {
     key: "handleQuantity",
+    value: function handleQuantity(value, item, idx) {
+      var userId = this.props.match.params.userID;
+    }
+  }, {
+    key: "handleQuantity",
     value: function handleQuantity(item, value, idx) {
       if (item.quantity > 1) {
         this.props.getincreaseQuantityCart(item, value, null, idx);
       } else {
         this.props.tossCartItem(item);
-      }
-    }
+      } // this.props.getincreaseQuantityCart(value, userId, item, idx)
+
+    } // handleQuantity(carId, value) {
+    //   this.props.getincreaseQuantityCart(carId, value, null)
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -1363,7 +1368,51 @@ function (_Component) {
   }]);
 
   return GuestCart;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); //     return (
+//       <div>
+//         <h2>Items in your cart: </h2>
+//         {orders.map((item, idx = 0) => {
+//           return (
+//             <div key={idx}>
+//               {idx}. {item.car.brand} {item.car.name}
+//               {item.quantity}
+//               <button
+//                 className="ui basic button"
+//                 type="button"
+//                 onClick={() => this.handleQuantity(true, item, idx)}
+//               >
+//                 +
+//               </button>
+//               <button
+//                 className="ui basic button"
+//                 type="button"
+//                 onClick={() => this.handleQuantity(false, item, idx)}
+//               >
+//                 -
+//               </button>
+//               <button
+//                 key={idx}
+//                 className="ui basic button"
+//                 type="button"
+//                 onClick={() => this.handleRemove(item)}
+//               >
+//                 {' '}
+//                 REMOVE
+//               </button>
+//             </div>
+//           )
+//         })}
+//         <Link to="/signup">
+//           <button className="ui primary button" type="button">
+//             {' '}
+//             Check Out!
+//           </button>
+//         </Link>
+//       </div>
+//     )
+//   }
+// }
+
 
 var mapState = function mapState(state) {
   return {
@@ -1380,7 +1429,8 @@ var mapDispatch = function mapDispatch(dispatch) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["tossCartItem"])(item));
     },
     getincreaseQuantityCart: function getincreaseQuantityCart(item, value, userId, idx) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx));
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx)); // getincreaseQuantityCart: (value, userId, item, idx) => {
+      //   dispatch(increaseQuantityCart(value, userId, item, idx))
     }
   };
 };
@@ -1468,8 +1518,17 @@ function (_Component) {
         this.props.tossCartItem(item);
       } // const userID = userId
       // this.props.getCartItems(userID)
+      // handleQuantity(value, item, idx) {
+      //   const userId = this.props.match.params.userID
+      //   this.props.getincreaseQuantityCart(value, userId, item, idx)
 
-    }
+    } // handleQuantity(carId, value) {
+    //   const userId = this.props.match.params.userID
+    //   this.props.getincreaseQuantityCart(carId, value, userId)
+    //   const userID = userId
+    //   this.props.getCartItems(userID)
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -1482,22 +1541,65 @@ function (_Component) {
       if (orders.length === 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Your cart is currently empty. "));
       } else {
+        //   return (
+        //     <div>
+        //       <h2>Items in your cart: </h2>
+        //       {orders.map((item, idx = 0) => {
+        //         return (
+        //           <div key={item.id}>
+        //             {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
+        //             {item.quantity})
+        //             <button
+        //               type="button"
+        //               onClick={() => this.handleQuantity(item.car.id, true)}
+        //             >
+        //               +
+        //             </button>
+        //             <button
+        //               type="button"
+        //               onClick={() => this.handleQuantity(item.car.id, false)}
+        //             >
+        //               -
+        //             </button>
+        //             <button
+        //               key={idx}
+        //               type="button"
+        //               onClick={() => this.handleRemove(item)}
+        //             >
+        //               {' '}
+        //               REMOVE
+        //             </button>
+        //           </div>
+        //         )
+        //       })}
+        //       <Link to={`/users/${userID}/checkout`}>
+        //         <button type="button"> Check Out!</button>
+        //       </Link>
+        //     </div>
+        //   )
+        // }
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Items in your cart: "), orders.map(function (item) {
           var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: idx
           }, idx + 1, ". ", item.car.brand, " ", item.car.name, " (Qty:", ' ', item.quantity, ")", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "ui basic button",
             type: "button",
             onClick: function onClick() {
               return _this2.handleQuantity(item, true, idx);
-            }
+            } // onClick={() => this.handleQuantity(true, item, idx)}
+
           }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "ui basic button",
             type: "button",
             onClick: function onClick() {
               return _this2.handleQuantity(item, false, idx);
-            }
+            } // onClick={() => this.handleQuantity(false, item, idx)}
+
           }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             // key={idx}
+            // key={idx}
+            className: "ui basic button",
             type: "button",
             onClick: function onClick() {
               return _this2.handleRemove(item);
@@ -1506,8 +1608,9 @@ function (_Component) {
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
           to: "/users/".concat(userID, "/checkout")
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "ui primary button",
           type: "button"
-        }, " Check Out!")));
+        }, ' ', "Check Out!")));
       }
     }
   }]);
@@ -1530,7 +1633,8 @@ var mapDispatch = function mapDispatch(dispatch) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["tossCartItem"])(item));
     },
     getincreaseQuantityCart: function getincreaseQuantityCart(item, value, userId, idx) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx));
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx)); // getincreaseQuantityCart: (value, userId, item, idx) => {
+      //   dispatch(increaseQuantityCart(value, userId, item, idx))
     }
   };
 };
@@ -1961,6 +2065,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "single-car"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "ui primary button",
         type: "button",
         onClick: this.handleAddToCart
       }, "ADD TO CART"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_header__WEBPACK_IMPORTED_MODULE_3__["SingleCarHeader"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_main_view__WEBPACK_IMPORTED_MODULE_4__["SingleCarMainView"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_secondary_images__WEBPACK_IMPORTED_MODULE_6__["SingleCarSecondaryImage"], this.props), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_singleCarContents_single_car_details__WEBPACK_IMPORTED_MODULE_5__["SingleCarDetails"], this.props));
@@ -2252,7 +2357,11 @@ function (_Component) {
     key: "render",
     value: function render() {
       var email = this.props.email;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, email ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", email) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "2020 Jaguar E-pace"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Starting at $39,950"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "MPG: Up to 21 city/ 28 Highway"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Horsepower: 246 to 296 hp"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "home"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "home_text"
+      }, email ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", email) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "2020 Jaguar E-pace"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Starting at $39,950"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "MPG: Up to 21 city/ 28 Highway"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Horsepower: 246 to 296 hp")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQ57PaEpZbPxFjGe-3y2T-LevyR3AAfBab55eGD6ld7QlMHfd_&usqp=CAU"
       }));
     }

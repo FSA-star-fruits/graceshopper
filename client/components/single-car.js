@@ -43,7 +43,11 @@ export class SingleCar extends Component {
   render() {
     return (
       <div id="single-car">
-        <button type="button" onClick={this.handleAddToCart}>
+        <button
+          className="ui primary button"
+          type="button"
+          onClick={this.handleAddToCart}
+        >
           ADD TO CART
         </button>
         <SingleCarHeader {...this.props} />

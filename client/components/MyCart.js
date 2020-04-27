@@ -38,7 +38,17 @@ class MyCart extends Component {
 
     // const userID = userId
     // this.props.getCartItems(userID)
+    // handleQuantity(value, item, idx) {
+    //   const userId = this.props.match.params.userID
+
+    //   this.props.getincreaseQuantityCart(value, userId, item, idx)
   }
+  // handleQuantity(carId, value) {
+  //   const userId = this.props.match.params.userID
+  //   this.props.getincreaseQuantityCart(carId, value, userId)
+  //   const userID = userId
+  //   this.props.getCartItems(userID)
+  // }
 
   render() {
     const {cartItems} = this.props
@@ -51,6 +61,43 @@ class MyCart extends Component {
         </div>
       )
     } else {
+      //   return (
+      //     <div>
+      //       <h2>Items in your cart: </h2>
+      //       {orders.map((item, idx = 0) => {
+      //         return (
+      //           <div key={item.id}>
+      //             {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
+      //             {item.quantity})
+      //             <button
+      //               type="button"
+      //               onClick={() => this.handleQuantity(item.car.id, true)}
+      //             >
+      //               +
+      //             </button>
+      //             <button
+      //               type="button"
+      //               onClick={() => this.handleQuantity(item.car.id, false)}
+      //             >
+      //               -
+      //             </button>
+      //             <button
+      //               key={idx}
+      //               type="button"
+      //               onClick={() => this.handleRemove(item)}
+      //             >
+      //               {' '}
+      //               REMOVE
+      //             </button>
+      //           </div>
+      //         )
+      //       })}
+      //       <Link to={`/users/${userID}/checkout`}>
+      //         <button type="button"> Check Out!</button>
+      //       </Link>
+      //     </div>
+      //   )
+      // }
       return (
         <div>
           <h2>Items in your cart: </h2>
@@ -60,19 +107,25 @@ class MyCart extends Component {
                 {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
                 {item.quantity})
                 <button
+                  className="ui basic button"
                   type="button"
                   onClick={() => this.handleQuantity(item, true, idx)}
+                  // onClick={() => this.handleQuantity(true, item, idx)}
                 >
                   +
                 </button>
                 <button
+                  className="ui basic button"
                   type="button"
                   onClick={() => this.handleQuantity(item, false, idx)}
+                  // onClick={() => this.handleQuantity(false, item, idx)}
                 >
                   -
                 </button>
                 <button
                   // key={idx}
+                  // key={idx}
+                  className="ui basic button"
                   type="button"
                   onClick={() => this.handleRemove(item)}
                 >
@@ -83,14 +136,16 @@ class MyCart extends Component {
             )
           })}
           <Link to={`/users/${userID}/checkout`}>
-            <button type="button"> Check Out!</button>
+            <button className="ui primary button" type="button">
+              {' '}
+              Check Out!
+            </button>
           </Link>
         </div>
       )
     }
   }
 }
-
 const mapState = state => {
   return {
     cartItems: state.cartItems
@@ -106,6 +161,8 @@ const mapDispatch = dispatch => ({
   },
   getincreaseQuantityCart: (item, value, userId, idx) => {
     dispatch(increaseQuantityCart(item, value, userId, idx))
+    // getincreaseQuantityCart: (value, userId, item, idx) => {
+    //   dispatch(increaseQuantityCart(value, userId, item, idx))
   }
 })
 

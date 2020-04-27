@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 // import {fetchCars} from '../store/cars'
-import store, {fetchCars, gotCartItems} from '../store'
+import {fetchCars, gotCartItems} from '../store'
 import {Link} from 'react-router-dom'
 
 export class AllCars extends React.Component {
