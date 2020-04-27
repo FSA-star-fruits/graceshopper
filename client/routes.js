@@ -22,6 +22,7 @@ import {
   AdminEditCar
 } from './components'
 import {me} from './store'
+import CheckOut from './components/CheckOut'
 
 class Routes extends Component {
   componentDidMount() {
@@ -45,6 +46,9 @@ class Routes extends Component {
         {isLoggedIn && <Route path="/home" component={UserHome} />}
         {isLoggedIn && (
           <Route exact path="/users/:userID/mycart" component={MyCart} />
+        )}
+        {isLoggedIn && (
+          <Route exact path="/users/:userID/checkout" component={CheckOut} />
         )}
         {isAdmin && (
           <Switch>
