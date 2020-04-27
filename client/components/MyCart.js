@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {
   gotCartItems,
   tossCartItem,
@@ -35,6 +36,7 @@ class MyCart extends Component {
   render() {
     const {cartItems} = this.props
     const orders = cartItems.orders
+    const userID = this.props.match.params.userID
     if (orders.length === 0) {
       return (
         <div>
@@ -73,6 +75,9 @@ class MyCart extends Component {
             </div>
           )
         })}
+        <Link to={`/users/${userID}/checkout`}>
+          <button type="button"> Check Out!</button>
+        </Link>
       </div>
     )
   }
