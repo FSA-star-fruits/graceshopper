@@ -23,14 +23,18 @@ class GuestCart extends Component {
   handleRemove(item) {
     this.props.tossCartItem(item)
   }
-  handleQuantity(value, item, idx) {
-    const userId = this.props.match.params.userID
 
-    this.props.getincreaseQuantityCart(value, userId, item, idx)
-  }
-  // handleQuantity(carId, value) {
-  //   this.props.getincreaseQuantityCart(carId, value, null)
+  // handleQuantity(value, item, idx) {
+  //   const userId = this.props.match.params.userID
   // }
+
+  handleQuantity(item, value, idx) {
+    if (item.quantity > 1) {
+      this.props.getincreaseQuantityCart(item, value, null, idx)
+    } else {
+      this.props.tossCartItem(item)
+    }
+  }
 
   render() {
     const {cartItems} = this.props
@@ -41,51 +45,40 @@ class GuestCart extends Component {
           <p>Your Cart Is Currently Empty.</p>
         </div>
       )
+    } else {
+      return (
+        <div>
+          <h2>Items in your cart: </h2>
+          {orders.map((item, idx = 0) => {
+            return (
+              <div key={idx}>
+                {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
+                {item.quantity})
+                <button
+                  type="button"
+                  onClick={() => this.handleQuantity(item, true, idx)}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  onClick={() => this.handleQuantity(item, false, idx)}
+                >
+                  -
+                </button>
+                <button type="button" onClick={() => this.handleRemove(item)}>
+                  {' '}
+                  REMOVE
+                </button>
+              </div>
+            )
+          })}
+          <Link to="/signup">
+            <button type="button"> Check Out!</button>
+          </Link>
+        </div>
+      )
     }
-
-    return (
-      <div>
-        <h2>Items in your cart: </h2>
-        {orders.map((item, idx = 0) => {
-          return (
-            <div key={idx}>
-              {idx}. {item.car.brand} {item.car.name}
-              {item.quantity}
-              <button
-                className="ui basic button"
-                type="button"
-                onClick={() => this.handleQuantity(true, item, idx)}
-              >
-                +
-              </button>
-              <button
-                className="ui basic button"
-                type="button"
-                onClick={() => this.handleQuantity(false, item, idx)}
-              >
-                -
-              </button>
-              <button
-                key={idx}
-                className="ui basic button"
-                type="button"
-                onClick={() => this.handleRemove(item)}
-              >
-                {' '}
-                REMOVE
-              </button>
-            </div>
-          )
-        })}
-
-        <Link to="/signup">
-          <button className="ui primary button" type="button">
-            {' '}
-            Check Out!
-          </button>
-        </Link>
-      </div>
-    )
   }
 }
 
@@ -100,8 +93,8 @@ const mapDispatch = dispatch => ({
   tossCartItem: item => {
     dispatch(tossCartItem(item))
   },
-  getincreaseQuantityCart: (value, userId, item, idx) => {
-    dispatch(increaseQuantityCart(value, userId, item, idx))
+  getincreaseQuantityCart: (item, value, userId, idx) => {
+    dispatch(increaseQuantityCart(item, value, userId, idx))
   }
 })
 

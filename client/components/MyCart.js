@@ -17,9 +17,7 @@ class MyCart extends Component {
 
   componentDidMount() {
     const userID = this.props.match.params.userID
-    if (userID) {
-      this.props.getCartItems(userID)
-    }
+    this.props.getCartItems(userID)
   }
 
   handleRemove(item) {
@@ -27,16 +25,19 @@ class MyCart extends Component {
     const userID = this.props.match.params.userID
     this.props.getCartItems(userID)
   }
-  handleQuantity(value, item, idx) {
-    const userId = this.props.match.params.userID
 
-    this.props.getincreaseQuantityCart(value, userId, item, idx)
+  handleQuantity(item, value, idx) {
+    const userId = this.props.match.params.userID
+    if (item.quantity > 1) {
+      this.props.getincreaseQuantityCart(item, value, userId, idx)
+    } else {
+      this.props.tossCartItem(item)
+    }
   }
-  // handleQuantity(carId, value) {
+  // handleQuantity(value, item, idx) {
   //   const userId = this.props.match.params.userID
-  //   this.props.getincreaseQuantityCart(carId, value, userId)
-  //   const userID = userId
-  //   this.props.getCartItems(userID)
+
+  //   this.props.getincreaseQuantityCart(value, userId, item, idx)
   // }
 
   render() {
@@ -50,67 +51,29 @@ class MyCart extends Component {
         </div>
       )
     } else {
-      //   return (
-      //     <div>
-      //       <h2>Items in your cart: </h2>
-      //       {orders.map((item, idx = 0) => {
-      //         return (
-      //           <div key={item.id}>
-      //             {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
-      //             {item.quantity})
-      //             <button
-      //               type="button"
-      //               onClick={() => this.handleQuantity(item.car.id, true)}
-      //             >
-      //               +
-      //             </button>
-      //             <button
-      //               type="button"
-      //               onClick={() => this.handleQuantity(item.car.id, false)}
-      //             >
-      //               -
-      //             </button>
-      //             <button
-      //               key={idx}
-      //               type="button"
-      //               onClick={() => this.handleRemove(item)}
-      //             >
-      //               {' '}
-      //               REMOVE
-      //             </button>
-      //           </div>
-      //         )
-      //       })}
-      //       <Link to={`/users/${userID}/checkout`}>
-      //         <button type="button"> Check Out!</button>
-      //       </Link>
-      //     </div>
-      //   )
-      // }
       return (
         <div>
           <h2>Items in your cart: </h2>
           {orders.map((item, idx = 0) => {
             return (
               <div key={idx}>
-                {idx}. {item.car.brand} {item.car.name}
-                {item.quantity}
+                {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
+                {item.quantity})
                 <button
                   className="ui basic button"
                   type="button"
-                  onClick={() => this.handleQuantity(true, item, idx)}
+                  onClick={() => this.handleQuantity(item, true, idx)}
                 >
                   +
                 </button>
                 <button
                   className="ui basic button"
                   type="button"
-                  onClick={() => this.handleQuantity(false, item, idx)}
+                  onClick={() => this.handleQuantity(item, false, idx)}
                 >
                   -
                 </button>
                 <button
-                  key={idx}
                   className="ui basic button"
                   type="button"
                   onClick={() => this.handleRemove(item)}
@@ -145,8 +108,8 @@ const mapDispatch = dispatch => ({
   tossCartItem: item => {
     dispatch(tossCartItem(item))
   },
-  getincreaseQuantityCart: (value, userId, item, idx) => {
-    dispatch(increaseQuantityCart(value, userId, item, idx))
+  getincreaseQuantityCart: (item, value, userId, idx) => {
+    dispatch(increaseQuantityCart(item, value, userId, idx))
   }
 })
 
