@@ -19,7 +19,6 @@ export class AdminAddCar extends Component {
       doors: '',
       vin: '',
       vehicleId: '',
-      isSold: '',
       inventory: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -43,7 +42,6 @@ export class AdminAddCar extends Component {
       doors: state.doors,
       vin: state.vin,
       vehicleId: state.vehicleId,
-      isSold: false,
       inventory: state.inventory
     }
     this.props.addCar(newCar)
