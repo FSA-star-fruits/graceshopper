@@ -1230,7 +1230,7 @@ function (_Component) {
           var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: idx
-          }, idx + 1, ". ", item.car.brand, " ", item.car.name, " ", item.quantity, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          }, idx + 1, ". ", item.car.brand, " ", item.car.name, " (Qty:", ' ', item.quantity, ")", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             onClick: function onClick() {
               return _this2.handleQuantity(item.car.id, true);
@@ -141530,7 +141530,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

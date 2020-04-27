@@ -43,7 +43,8 @@ class GuestCart extends Component {
           {orders.map((item, idx = 0) => {
             return (
               <div key={idx}>
-                {idx + 1}. {item.car.brand} {item.car.name} {item.quantity}
+                {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
+                {item.quantity})
                 <button
                   type="button"
                   onClick={() => this.handleQuantity(item.car.id, true)}
