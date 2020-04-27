@@ -24,12 +24,10 @@ class MyCart extends Component {
     const userID = this.props.match.params.userID
     this.props.getCartItems(userID)
   }
-  handleQuantity(carId, value) {
+  handleQuantity(value, item, idx) {
     const userId = this.props.match.params.userID
 
-    this.props.getincreaseQuantityCart(carId, value, userId)
-    const userID = userId
-    this.props.getCartItems(userID)
+    this.props.getincreaseQuantityCart(value, userId, item, idx)
   }
 
   render() {
@@ -47,18 +45,18 @@ class MyCart extends Component {
         <h2>Items in your cart: </h2>
         {orders.map((item, idx = 0) => {
           return (
-            <div key={true}>
+            <div key={idx}>
               {idx}. {item.car.brand} {item.car.name}
               {item.quantity}
               <button
                 type="button"
-                onClick={() => this.handleQuantity(item.car.id, true)}
+                onClick={() => this.handleQuantity(true, item, idx)}
               >
                 +
               </button>
               <button
                 type="button"
-                onClick={() => this.handleQuantity(item.car.id, false)}
+                onClick={() => this.handleQuantity(false, item, idx)}
               >
                 -
               </button>
@@ -91,9 +89,8 @@ const mapDispatch = dispatch => ({
   tossCartItem: item => {
     dispatch(tossCartItem(item))
   },
-  getincreaseQuantityCart: (carId, value, userId) => {
-    dispatch(increaseQuantityCart(carId, value, userId))
-    dispatch(gotCartItems(userId))
+  getincreaseQuantityCart: (value, userId, item, idx) => {
+    dispatch(increaseQuantityCart(value, userId, item, idx))
   }
 })
 

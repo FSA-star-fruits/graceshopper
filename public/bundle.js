@@ -1207,9 +1207,9 @@ function (_Component) {
     }
   }, {
     key: "handleQuantity",
-    value: function handleQuantity(carId, value) {
+    value: function handleQuantity(value, item, idx) {
       var userId = this.props.match.params.userID;
-      this.props.getincreaseQuantityCart(carId, value, userId);
+      this.props.getincreaseQuantityCart(value, userId, item, idx);
     }
   }, {
     key: "render",
@@ -1230,12 +1230,12 @@ function (_Component) {
         }, idx, ". ", item.car.brand, " ", item.car.name, item.quantity, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
           onClick: function onClick() {
-            return _this2.handleQuantity(item.car.id, true);
+            return _this2.handleQuantity(true, item, idx);
           }
         }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
           onClick: function onClick() {
-            return _this2.handleQuantity(item.car.id, false);
+            return _this2.handleQuantity(false, item, idx);
           }
         }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           key: idx,
@@ -1265,9 +1265,8 @@ var mapDispatch = function mapDispatch(dispatch) {
     tossCartItem: function tossCartItem(item) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["tossCartItem"])(item));
     },
-    getincreaseQuantityCart: function getincreaseQuantityCart(carId, value, userId) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["increaseQuantityCart"])(carId, value, userId));
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["gotCartItems"])(userId));
+    getincreaseQuantityCart: function getincreaseQuantityCart(value, userId, item, idx) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["increaseQuantityCart"])(value, userId, item, idx));
     }
   };
 };
@@ -1343,11 +1342,9 @@ function (_Component) {
     }
   }, {
     key: "handleQuantity",
-    value: function handleQuantity(carId, value) {
+    value: function handleQuantity(value, item, idx) {
       var userId = this.props.match.params.userID;
-      this.props.getincreaseQuantityCart(carId, value, userId);
-      var userID = userId;
-      this.props.getCartItems(userID);
+      this.props.getincreaseQuantityCart(value, userId, item, idx);
     }
   }, {
     key: "render",
@@ -1364,16 +1361,16 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Items in your cart: "), orders.map(function (item) {
         var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: true
+          key: idx
         }, idx, ". ", item.car.brand, " ", item.car.name, item.quantity, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
           onClick: function onClick() {
-            return _this2.handleQuantity(item.car.id, true);
+            return _this2.handleQuantity(true, item, idx);
           }
         }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
           onClick: function onClick() {
-            return _this2.handleQuantity(item.car.id, false);
+            return _this2.handleQuantity(false, item, idx);
           }
         }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           key: idx,
@@ -1403,9 +1400,8 @@ var mapDispatch = function mapDispatch(dispatch) {
     tossCartItem: function tossCartItem(item) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["tossCartItem"])(item));
     },
-    getincreaseQuantityCart: function getincreaseQuantityCart(carId, value, userId) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["increaseQuantityCart"])(carId, value, userId));
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["gotCartItems"])(userId));
+    getincreaseQuantityCart: function getincreaseQuantityCart(value, userId, item, idx) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_2__["increaseQuantityCart"])(value, userId, item, idx));
     }
   };
 };
@@ -2639,7 +2635,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var FETCH_ITEMS = 'FETCH_ITEMS';
 var ADD_ITEM = 'ADD_ITEM';
-var ADD_ITEM_GUEST = 'ADD_ITEM_GUEST';
 var REMOVE_ITEM = 'REMOVE_ITEM';
 var EMPTY_ITEM = 'EMPTY_ITEM';
 var INCREASE_QUANTITY = 'INCREASE_QUANTITY';
@@ -2672,17 +2667,19 @@ var emptyItem = function emptyItem() {
   };
 };
 
-var increaseQuantity = function increaseQuantity(carId) {
+var increaseQuantity = function increaseQuantity(item, idx) {
   return {
     type: INCREASE_QUANTITY,
-    carId: carId
+    item: item,
+    idx: idx
   };
 };
 
-var decreaseQuantity = function decreaseQuantity(carId) {
+var decreaseQuantity = function decreaseQuantity(item, idx) {
   return {
     type: DECREASE_QUANTITY,
-    carId: carId
+    item: item,
+    idx: idx
   };
 }; // thunk creator
 
@@ -2756,7 +2753,9 @@ var buildPostCartThunk = function buildPostCartThunk(carId, carItem, userId) {
                 }
 
                 dispatch(addItem({
-                  car: carItem
+                  id: carItem.id,
+                  car: carItem,
+                  quantity: 1
                 }));
                 cartObj = {
                   carId: carId,
@@ -2834,7 +2833,7 @@ var emptyCartItem = function emptyCartItem() {
     dispatch(emptyItem());
   };
 };
-var increaseQuantityCart = function increaseQuantityCart(carId, value, userId) {
+var increaseQuantityCart = function increaseQuantityCart(value, userId, item, idx) {
   return (
     /*#__PURE__*/
     function () {
@@ -2847,13 +2846,17 @@ var increaseQuantityCart = function increaseQuantityCart(carId, value, userId) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 if (value === true) {
-                  dispatch(increaseQuantity(carId));
+                  dispatch(increaseQuantity(item, idx));
                 } else {
-                  dispatch(decreaseQuantity(carId));
+                  if (item.quantity === 1) {
+                    dispatch(removeItem(item));
+                  } else {
+                    dispatch(decreaseQuantity(item, idx));
+                  }
                 }
 
                 cartObj = {
-                  carId: carId,
+                  carId: item.carId,
                   userId: userId,
                   handle: value
                 };
@@ -2900,16 +2903,16 @@ var cartItems = function cartItems() {
           orders: [action.car]
         });
       } else {
-        var _found = state.orders.find(function (order) {
-          return order.id === action.car.id;
+        var found = state.orders.find(function (order) {
+          return order.car.id === action.car.id;
         });
+        var index = state.orders.indexOf(found);
+        console.log(found);
 
-        var _index = state.orders.indexOf(_found);
-
-        if (_found !== undefined) {
-          _found.quantity = _found.quantity + 1;
-          console.log(state.orders[_index]);
-          state.orders[_index] = _found;
+        if (found !== undefined) {
+          found.quantity = found.quantity + 1;
+          console.log(state.orders[index]);
+          state.orders[index] = found;
           return state;
         } else {
           return _objectSpread({}, state, {
@@ -2932,28 +2935,18 @@ var cartItems = function cartItems() {
       });
 
     case INCREASE_QUANTITY:
-      var found = state.orders.find(function (order) {
-        return order.id === action.carId;
+      action.item.quantity = action.item.quantity + 1;
+      state.orders[action.idx] = action.item;
+      return _objectSpread({}, state, {
+        orders: state.orders
       });
-      var index = state.orders.indexOf(found);
-
-      if (found !== undefined) {
-        found.quantity = found.quantity + 1;
-        state.orders[index] = found;
-        return state;
-      }
 
     case DECREASE_QUANTITY:
-      var foundDecrease = state.orders.find(function (order) {
-        return order.id === action.carId;
+      action.item.quantity = action.item.quantity - 1;
+      state.orders[action.idx] = action.item;
+      return _objectSpread({}, state, {
+        orders: state.orders
       });
-      var indexDecrease = state.orders.indexOf(found);
-
-      if (foundDecrease !== undefined) {
-        foundDecrease.quantity = foundDecrease.quantity - 1;
-        state.orders[indexDecrease] = foundDecrease;
-        return state;
-      }
 
     default:
       return state;
@@ -141447,7 +141440,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -3,7 +3,6 @@ import axios from 'axios'
 // action types
 const FETCH_ITEMS = 'FETCH_ITEMS'
 const ADD_ITEM = 'ADD_ITEM'
-const ADD_ITEM_GUEST = 'ADD_ITEM_GUEST'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const EMPTY_ITEM = 'EMPTY_ITEM'
 const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
@@ -29,20 +28,23 @@ const emptyItem = () => ({
   type: EMPTY_ITEM
 })
 
-const increaseQuantity = carId => ({
+const increaseQuantity = (item, idx) => ({
   type: INCREASE_QUANTITY,
-  carId
+  item,
+  idx
 })
 
-const decreaseQuantity = carId => ({
+const decreaseQuantity = (item, idx) => ({
   type: DECREASE_QUANTITY,
-  carId
+  item,
+  idx
 })
 // thunk creator
 export const gotCartItems = userId => async dispatch => {
   try {
     if (userId) {
       const res = await axios.get(`/api/users/${userId}/mycart`)
+
       dispatch(fetchCartItems(res.data))
     }
   } catch (err) {
@@ -57,7 +59,7 @@ export const buildPostCartThunk = (
 ) => async dispatch => {
   try {
     if (userId !== undefined) {
-      dispatch(addItem({car: carItem}))
+      dispatch(addItem({id: carItem.id, car: carItem, quantity: 1}))
       const cartObj = {
         carId: carId,
         userId: userId
@@ -87,16 +89,18 @@ export const emptyCartItem = () => {
   }
 }
 
-export const increaseQuantityCart = (carId, value, userId) => {
+export const increaseQuantityCart = (value, userId, item, idx) => {
   return async dispatch => {
     if (value === true) {
-      dispatch(increaseQuantity(carId))
-    } else {
-      dispatch(decreaseQuantity(carId))
-    }
+      dispatch(increaseQuantity(item, idx))
+    } else if (item.quantity === 1) {
+        dispatch(removeItem(item))
+      } else {
+        dispatch(decreaseQuantity(item, idx))
+      }
 
     const cartObj = {
-      carId: carId,
+      carId: item.carId,
       userId: userId,
       handle: value
     }
@@ -115,8 +119,9 @@ const cartItems = (state = {orders: [], client: []}, action) => {
       if (state.orders.length === 0) {
         return {...state, orders: [action.car]}
       } else {
-        const found = state.orders.find(order => order.id === action.car.id)
+        const found = state.orders.find(order => order.car.id === action.car.id)
         const index = state.orders.indexOf(found)
+        console.log(found)
         if (found !== undefined) {
           found.quantity = found.quantity + 1
           console.log(state.orders[index])
@@ -132,23 +137,14 @@ const cartItems = (state = {orders: [], client: []}, action) => {
     case EMPTY_ITEM:
       return {...state, orders: []}
     case INCREASE_QUANTITY:
-      const found = state.orders.find(order => order.id === action.carId)
-      const index = state.orders.indexOf(found)
-      if (found !== undefined) {
-        found.quantity = found.quantity + 1
-        state.orders[index] = found
-        return state
-      }
+      action.item.quantity = action.item.quantity + 1
+      state.orders[action.idx] = action.item
+      return {...state, orders: state.orders}
+
     case DECREASE_QUANTITY:
-      const foundDecrease = state.orders.find(
-        order => order.id === action.carId
-      )
-      const indexDecrease = state.orders.indexOf(found)
-      if (foundDecrease !== undefined) {
-        foundDecrease.quantity = foundDecrease.quantity - 1
-        state.orders[indexDecrease] = foundDecrease
-        return state
-      }
+      action.item.quantity = action.item.quantity - 1
+      state.orders[action.idx] = action.item
+      return {...state, orders: state.orders}
     default:
       return state
   }
