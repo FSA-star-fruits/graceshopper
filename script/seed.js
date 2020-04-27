@@ -68,6 +68,11 @@ async function seed() {
     isCheckedOut: false,
     userId: 3
   })
+  await Order.create({
+    purchaseDate: null,
+    isCheckedOut: false,
+    userId: 4
+  })
   // ])
 
   console.log(`seeded orders`)

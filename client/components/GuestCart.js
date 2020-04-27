@@ -23,10 +23,9 @@ class GuestCart extends Component {
   handleRemove(item) {
     this.props.tossCartItem(item)
   }
-  handleQuantity(carId, value) {
-    const userId = this.props.match.params.userID
 
-    this.props.getincreaseQuantityCart(carId, value, userId)
+  handleQuantity(carId, value) {
+    this.props.getincreaseQuantityCart(carId, value, null)
   }
 
   render() {
@@ -38,44 +37,40 @@ class GuestCart extends Component {
           <p>Your Cart Is Currently Empty.</p>
         </div>
       )
+    } else {
+      return (
+        <div>
+          <h2>Items in your cart: </h2>
+          {orders.map((item, idx = 0) => {
+            return (
+              <div key={idx}>
+                {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
+                {item.quantity})
+                <button
+                  type="button"
+                  onClick={() => this.handleQuantity(item.car.id, true)}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  onClick={() => this.handleQuantity(item.car.id, false)}
+                >
+                  -
+                </button>
+                <button type="button" onClick={() => this.handleRemove(item)}>
+                  {' '}
+                  REMOVE
+                </button>
+              </div>
+            )
+          })}
+          <Link to="/signup">
+            <button type="button"> Check Out!</button>
+          </Link>
+        </div>
+      )
     }
-    return (
-      <div>
-        <h2>Items in your cart: </h2>
-        {orders.map((item, idx = 0) => {
-          return (
-            <div key={idx}>
-              {idx}. {item.car.brand} {item.car.name}
-              {item.quantity}
-              <button
-                type="button"
-                onClick={() => this.handleQuantity(item.car.id, true)}
-              >
-                +
-              </button>
-              <button
-                type="button"
-                onClick={() => this.handleQuantity(item.car.id, false)}
-              >
-                -
-              </button>
-              <button
-                key={idx}
-                type="button"
-                onClick={() => this.handleRemove(item)}
-              >
-                {' '}
-                REMOVE
-              </button>
-            </div>
-          )
-        })}
-
-        <Link to="/signup">
-          <button type="button"> Check Out!</button>
-        </Link>
-      </div>
-    )
   }
 }
 

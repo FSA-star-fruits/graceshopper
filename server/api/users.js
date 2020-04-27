@@ -15,9 +15,16 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId/mycart', async (req, res, next) => {
   try {
+    const userData = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    const orderId = userData.id
+
     const items = await CartItem.findAll({
       where: {
-        orderId: req.params.userId
+        orderId: orderId
       },
       include: [
         {
@@ -36,25 +43,33 @@ router.get('/:userId/mycart', async (req, res, next) => {
 
 router.post('/:userId/mycart', async (req, res, next) => {
   try {
-    await Order.create({
-      userId: req.body.userId
-    })
-    const existingCartItem = await CartItem.findOne({
-      where: {carId: req.body.carId, orderId: req.body.userId}
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      }
     })
 
-    if (existingCartItem === null) {
-      await CartItem.create({
+    await CartItem.create({
+      carId: req.body.carId,
+      orderId: order.id,
+      quantity: req.body.quantity
+    })
+
+    const cartItem = await CartItem.findOne({
+      where: {
         carId: req.body.carId,
-        orderId: req.body.userId,
-        quantity: 1
-      })
-    } else {
-      await existingCartItem.update({
-        quantity: existingCartItem.quantity + 1
-      })
-      console.log(existingCartItem.quantity)
-    }
+        orderId: order.id
+      },
+      include: [
+        {
+          model: Car
+        },
+        {
+          model: Order
+        }
+      ]
+    })
+    res.json(cartItem)
   } catch (err) {
     next(err)
   }
@@ -78,17 +93,23 @@ router.delete('/:cartItemId/mycart', async (req, res, next) => {
 })
 
 router.put('/:userId/mycart', async (req, res, next) => {
-  console.log(req.body.handle, 'AKEFhsei')
   try {
     const existingCartItem = await CartItem.findOne({
-      where: {carId: req.body.carId, orderId: req.body.userId}
+      where: {carId: req.body.carId, orderId: req.body.userId},
+      include: [
+        {
+          model: Car
+        },
+        {
+          model: Order
+        }
+      ]
     })
 
     if (req.body.handle === true) {
       const response = await existingCartItem.update({
         quantity: existingCartItem.quantity + 1
       })
-      console.log(existingCartItem.quantity)
       res.json(response)
     } else {
       const response = await existingCartItem.update({
