@@ -28,13 +28,13 @@ const removeItem = item => ({
 const emptyItem = () => ({
   type: EMPTY_ITEM
 })
-const increaseQuantity = carId => ({
+const increaseQuantity = item => ({
   type: INCREASE_QUANTITY,
-  carId
+  item
 })
-const decreaseQuantity = carId => ({
+const decreaseQuantity = item => ({
   type: DECREASE_QUANTITY,
-  carId
+  item
 })
 
 // thunk creator
@@ -94,16 +94,16 @@ export const emptyCartItem = () => {
   }
 }
 
-export const increaseQuantityCart = (carId, value, userId) => {
+export const increaseQuantityCart = (item, value, userId, idx) => {
   return async dispatch => {
     if (value === true) {
-      dispatch(increaseQuantity(carId))
+      dispatch(increaseQuantity(item, idx))
     } else {
-      dispatch(decreaseQuantity(carId))
+      dispatch(decreaseQuantity(item, idx))
     }
     if (userId) {
       const cartObj = {
-        carId: carId,
+        carId: item.car.id,
         userId: userId,
         handle: value
       }
@@ -137,23 +137,20 @@ const cartItems = (state = initialState, action) => {
       return {...state, orders: [], client: []}
 
     case INCREASE_QUANTITY:
-      const incrementingItem = state.orders.filter(
-        order => order.carId === +action.carId
-      )[0]
-      incrementingItem.quantity++
+      action.item.quantity = action.item.quantity + 1
+      state.orders[action.idx] = action.item
       return {
-        ...state
+        ...state,
+        orders: state.orders
       }
 
     case DECREASE_QUANTITY:
-      const decrementingItem = state.orders.filter(
-        order => order.carId === +action.carId
-      )[0]
-      decrementingItem.quantity--
+      action.item.quantity = action.item.quantity - 1
+      state.orders[action.idx] = action.item
       return {
-        ...state
+        ...state,
+        orders: state.orders
       }
-
     default:
       return state
   }

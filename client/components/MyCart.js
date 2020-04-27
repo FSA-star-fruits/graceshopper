@@ -17,9 +17,9 @@ class MyCart extends Component {
 
   componentDidMount() {
     const userID = this.props.match.params.userID
-    if (userID) {
-      this.props.getCartItems(userID)
-    }
+    // if (userID) {
+    this.props.getCartItems(userID)
+    // }
   }
 
   handleRemove(item) {
@@ -28,9 +28,14 @@ class MyCart extends Component {
     this.props.getCartItems(userID)
   }
 
-  handleQuantity(carId, value) {
+  handleQuantity(item, value, idx) {
     const userId = this.props.match.params.userID
-    this.props.getincreaseQuantityCart(carId, value, userId)
+    if (item.quantity > 1) {
+      this.props.getincreaseQuantityCart(item, value, userId, idx)
+    } else {
+      this.props.tossCartItem(item)
+    }
+
     // const userID = userId
     // this.props.getCartItems(userID)
   }
@@ -51,23 +56,23 @@ class MyCart extends Component {
           <h2>Items in your cart: </h2>
           {orders.map((item, idx = 0) => {
             return (
-              <div key={item.id}>
+              <div key={idx}>
                 {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
                 {item.quantity})
                 <button
                   type="button"
-                  onClick={() => this.handleQuantity(item.car.id, true)}
+                  onClick={() => this.handleQuantity(item, true, idx)}
                 >
                   +
                 </button>
                 <button
                   type="button"
-                  onClick={() => this.handleQuantity(item.car.id, false)}
+                  onClick={() => this.handleQuantity(item, false, idx)}
                 >
                   -
                 </button>
                 <button
-                  key={idx}
+                  // key={idx}
                   type="button"
                   onClick={() => this.handleRemove(item)}
                 >
@@ -99,9 +104,8 @@ const mapDispatch = dispatch => ({
   tossCartItem: item => {
     dispatch(tossCartItem(item))
   },
-  getincreaseQuantityCart: (carId, value, userId) => {
-    dispatch(increaseQuantityCart(carId, value, userId))
-    dispatch(gotCartItems(userId))
+  getincreaseQuantityCart: (item, value, userId, idx) => {
+    dispatch(increaseQuantityCart(item, value, userId, idx))
   }
 })
 

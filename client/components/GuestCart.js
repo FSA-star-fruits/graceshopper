@@ -24,8 +24,12 @@ class GuestCart extends Component {
     this.props.tossCartItem(item)
   }
 
-  handleQuantity(carId, value) {
-    this.props.getincreaseQuantityCart(carId, value, null)
+  handleQuantity(item, value, idx) {
+    if (item.quantity > 1) {
+      this.props.getincreaseQuantityCart(item, value, null, idx)
+    } else {
+      this.props.tossCartItem(item)
+    }
   }
 
   render() {
@@ -48,13 +52,13 @@ class GuestCart extends Component {
                 {item.quantity})
                 <button
                   type="button"
-                  onClick={() => this.handleQuantity(item.car.id, true)}
+                  onClick={() => this.handleQuantity(item, true, idx)}
                 >
                   +
                 </button>
                 <button
                   type="button"
-                  onClick={() => this.handleQuantity(item.car.id, false)}
+                  onClick={() => this.handleQuantity(item, false, idx)}
                 >
                   -
                 </button>
@@ -85,9 +89,8 @@ const mapDispatch = dispatch => ({
   tossCartItem: item => {
     dispatch(tossCartItem(item))
   },
-  getincreaseQuantityCart: (carId, value, userId) => {
-    dispatch(increaseQuantityCart(carId, value, userId))
-    dispatch(gotCartItems(userId))
+  getincreaseQuantityCart: (item, value, userId, idx) => {
+    dispatch(increaseQuantityCart(item, value, userId, idx))
   }
 })
 

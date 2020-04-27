@@ -1315,8 +1315,12 @@ function (_Component) {
     }
   }, {
     key: "handleQuantity",
-    value: function handleQuantity(carId, value) {
-      this.props.getincreaseQuantityCart(carId, value, null);
+    value: function handleQuantity(item, value, idx) {
+      if (item.quantity > 1) {
+        this.props.getincreaseQuantityCart(item, value, null, idx);
+      } else {
+        this.props.tossCartItem(item);
+      }
     }
   }, {
     key: "render",
@@ -1336,12 +1340,12 @@ function (_Component) {
           }, idx + 1, ". ", item.car.brand, " ", item.car.name, " (Qty:", ' ', item.quantity, ")", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             onClick: function onClick() {
-              return _this2.handleQuantity(item.car.id, true);
+              return _this2.handleQuantity(item, true, idx);
             }
           }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             onClick: function onClick() {
-              return _this2.handleQuantity(item.car.id, false);
+              return _this2.handleQuantity(item, false, idx);
             }
           }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
@@ -1375,9 +1379,8 @@ var mapDispatch = function mapDispatch(dispatch) {
     tossCartItem: function tossCartItem(item) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["tossCartItem"])(item));
     },
-    getincreaseQuantityCart: function getincreaseQuantityCart(carId, value, userId) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(carId, value, userId));
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["gotCartItems"])(userId));
+    getincreaseQuantityCart: function getincreaseQuantityCart(item, value, userId, idx) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx));
     }
   };
 };
@@ -1443,11 +1446,9 @@ function (_Component) {
   _createClass(MyCart, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var userID = this.props.match.params.userID;
+      var userID = this.props.match.params.userID; // if (userID) {
 
-      if (userID) {
-        this.props.getCartItems(userID);
-      }
+      this.props.getCartItems(userID); // }
     }
   }, {
     key: "handleRemove",
@@ -1458,10 +1459,16 @@ function (_Component) {
     }
   }, {
     key: "handleQuantity",
-    value: function handleQuantity(carId, value) {
+    value: function handleQuantity(item, value, idx) {
       var userId = this.props.match.params.userID;
-      this.props.getincreaseQuantityCart(carId, value, userId); // const userID = userId
+
+      if (item.quantity > 1) {
+        this.props.getincreaseQuantityCart(item, value, userId, idx);
+      } else {
+        this.props.tossCartItem(item);
+      } // const userID = userId
       // this.props.getCartItems(userID)
+
     }
   }, {
     key: "render",
@@ -1478,19 +1485,19 @@ function (_Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Items in your cart: "), orders.map(function (item) {
           var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: item.id
+            key: idx
           }, idx + 1, ". ", item.car.brand, " ", item.car.name, " (Qty:", ' ', item.quantity, ")", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             onClick: function onClick() {
-              return _this2.handleQuantity(item.car.id, true);
+              return _this2.handleQuantity(item, true, idx);
             }
           }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             onClick: function onClick() {
-              return _this2.handleQuantity(item.car.id, false);
+              return _this2.handleQuantity(item, false, idx);
             }
           }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            key: idx,
+            // key={idx}
             type: "button",
             onClick: function onClick() {
               return _this2.handleRemove(item);
@@ -1522,9 +1529,8 @@ var mapDispatch = function mapDispatch(dispatch) {
     tossCartItem: function tossCartItem(item) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["tossCartItem"])(item));
     },
-    getincreaseQuantityCart: function getincreaseQuantityCart(carId, value, userId) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(carId, value, userId));
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["gotCartItems"])(userId));
+    getincreaseQuantityCart: function getincreaseQuantityCart(item, value, userId, idx) {
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx));
     }
   };
 };
@@ -2882,17 +2888,17 @@ var emptyItem = function emptyItem() {
   };
 };
 
-var increaseQuantity = function increaseQuantity(carId) {
+var increaseQuantity = function increaseQuantity(item) {
   return {
     type: INCREASE_QUANTITY,
-    carId: carId
+    item: item
   };
 };
 
-var decreaseQuantity = function decreaseQuantity(carId) {
+var decreaseQuantity = function decreaseQuantity(item) {
   return {
     type: DECREASE_QUANTITY,
-    carId: carId
+    item: item
   };
 }; // thunk creator
 
@@ -3064,7 +3070,7 @@ var emptyCartItem = function emptyCartItem() {
     dispatch(emptyItem());
   };
 };
-var increaseQuantityCart = function increaseQuantityCart(carId, value, userId) {
+var increaseQuantityCart = function increaseQuantityCart(item, value, userId, idx) {
   return (
     /*#__PURE__*/
     function () {
@@ -3077,9 +3083,9 @@ var increaseQuantityCart = function increaseQuantityCart(carId, value, userId) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 if (value === true) {
-                  dispatch(increaseQuantity(carId));
+                  dispatch(increaseQuantity(item, idx));
                 } else {
-                  dispatch(decreaseQuantity(carId));
+                  dispatch(decreaseQuantity(item, idx));
                 }
 
                 if (!userId) {
@@ -3088,7 +3094,7 @@ var increaseQuantityCart = function increaseQuantityCart(carId, value, userId) {
                 }
 
                 cartObj = {
-                  carId: carId,
+                  carId: item.car.id,
                   userId: userId,
                   handle: value
                 };
@@ -3144,18 +3150,18 @@ var cartItems = function cartItems() {
       });
 
     case INCREASE_QUANTITY:
-      var incrementingItem = state.orders.filter(function (order) {
-        return order.carId === +action.carId;
-      })[0];
-      incrementingItem.quantity++;
-      return _objectSpread({}, state);
+      action.item.quantity = action.item.quantity + 1;
+      state.orders[action.idx] = action.item;
+      return _objectSpread({}, state, {
+        orders: state.orders
+      });
 
     case DECREASE_QUANTITY:
-      var decrementingItem = state.orders.filter(function (order) {
-        return order.carId === +action.carId;
-      })[0];
-      decrementingItem.quantity--;
-      return _objectSpread({}, state);
+      action.item.quantity = action.item.quantity - 1;
+      state.orders[action.idx] = action.item;
+      return _objectSpread({}, state, {
+        orders: state.orders
+      });
 
     default:
       return state;
