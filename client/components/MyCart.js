@@ -31,8 +31,8 @@ class MyCart extends Component {
   handleQuantity(carId, value) {
     const userId = this.props.match.params.userID
     this.props.getincreaseQuantityCart(carId, value, userId)
-    const userID = userId
-    this.props.getCartItems(userID)
+    // const userID = userId
+    // this.props.getCartItems(userID)
   }
 
   render() {

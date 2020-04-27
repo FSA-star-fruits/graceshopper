@@ -1460,9 +1460,8 @@ function (_Component) {
     key: "handleQuantity",
     value: function handleQuantity(carId, value) {
       var userId = this.props.match.params.userID;
-      this.props.getincreaseQuantityCart(carId, value, userId);
-      var userID = userId;
-      this.props.getCartItems(userID);
+      this.props.getincreaseQuantityCart(carId, value, userId); // const userID = userId
+      // this.props.getCartItems(userID)
     }
   }, {
     key: "render",
