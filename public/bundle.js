@@ -1321,12 +1321,8 @@ function (_Component) {
         this.props.getincreaseQuantityCart(item, value, null, idx);
       } else {
         this.props.tossCartItem(item);
-      } // this.props.getincreaseQuantityCart(value, userId, item, idx)
-
-    } // handleQuantity(carId, value) {
-    //   this.props.getincreaseQuantityCart(carId, value, null)
-    // }
-
+      }
+    }
   }, {
     key: "render",
     value: function render() {
@@ -1368,51 +1364,7 @@ function (_Component) {
   }]);
 
   return GuestCart;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); //     return (
-//       <div>
-//         <h2>Items in your cart: </h2>
-//         {orders.map((item, idx = 0) => {
-//           return (
-//             <div key={idx}>
-//               {idx}. {item.car.brand} {item.car.name}
-//               {item.quantity}
-//               <button
-//                 className="ui basic button"
-//                 type="button"
-//                 onClick={() => this.handleQuantity(true, item, idx)}
-//               >
-//                 +
-//               </button>
-//               <button
-//                 className="ui basic button"
-//                 type="button"
-//                 onClick={() => this.handleQuantity(false, item, idx)}
-//               >
-//                 -
-//               </button>
-//               <button
-//                 key={idx}
-//                 className="ui basic button"
-//                 type="button"
-//                 onClick={() => this.handleRemove(item)}
-//               >
-//                 {' '}
-//                 REMOVE
-//               </button>
-//             </div>
-//           )
-//         })}
-//         <Link to="/signup">
-//           <button className="ui primary button" type="button">
-//             {' '}
-//             Check Out!
-//           </button>
-//         </Link>
-//       </div>
-//     )
-//   }
-// }
-
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapState = function mapState(state) {
   return {
@@ -1429,8 +1381,7 @@ var mapDispatch = function mapDispatch(dispatch) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["tossCartItem"])(item));
     },
     getincreaseQuantityCart: function getincreaseQuantityCart(item, value, userId, idx) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx)); // getincreaseQuantityCart: (value, userId, item, idx) => {
-      //   dispatch(increaseQuantityCart(value, userId, item, idx))
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx));
     }
   };
 };
@@ -1496,9 +1447,8 @@ function (_Component) {
   _createClass(MyCart, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var userID = this.props.match.params.userID; // if (userID) {
-
-      this.props.getCartItems(userID); // }
+      var userID = this.props.match.params.userID;
+      this.props.getCartItems(userID);
     }
   }, {
     key: "handleRemove",
@@ -1516,19 +1466,8 @@ function (_Component) {
         this.props.getincreaseQuantityCart(item, value, userId, idx);
       } else {
         this.props.tossCartItem(item);
-      } // const userID = userId
-      // this.props.getCartItems(userID)
-      // handleQuantity(value, item, idx) {
-      //   const userId = this.props.match.params.userID
-      //   this.props.getincreaseQuantityCart(value, userId, item, idx)
-
-    } // handleQuantity(carId, value) {
-    //   const userId = this.props.match.params.userID
-    //   this.props.getincreaseQuantityCart(carId, value, userId)
-    //   const userID = userId
-    //   this.props.getCartItems(userID)
-    // }
-
+      }
+    }
   }, {
     key: "render",
     value: function render() {
@@ -1541,43 +1480,6 @@ function (_Component) {
       if (orders.length === 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Your cart is currently empty. "));
       } else {
-        //   return (
-        //     <div>
-        //       <h2>Items in your cart: </h2>
-        //       {orders.map((item, idx = 0) => {
-        //         return (
-        //           <div key={item.id}>
-        //             {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
-        //             {item.quantity})
-        //             <button
-        //               type="button"
-        //               onClick={() => this.handleQuantity(item.car.id, true)}
-        //             >
-        //               +
-        //             </button>
-        //             <button
-        //               type="button"
-        //               onClick={() => this.handleQuantity(item.car.id, false)}
-        //             >
-        //               -
-        //             </button>
-        //             <button
-        //               key={idx}
-        //               type="button"
-        //               onClick={() => this.handleRemove(item)}
-        //             >
-        //               {' '}
-        //               REMOVE
-        //             </button>
-        //           </div>
-        //         )
-        //       })}
-        //       <Link to={`/users/${userID}/checkout`}>
-        //         <button type="button"> Check Out!</button>
-        //       </Link>
-        //     </div>
-        //   )
-        // }
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Items in your cart: "), orders.map(function (item) {
           var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1587,18 +1489,14 @@ function (_Component) {
             type: "button",
             onClick: function onClick() {
               return _this2.handleQuantity(item, true, idx);
-            } // onClick={() => this.handleQuantity(true, item, idx)}
-
+            }
           }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "ui basic button",
             type: "button",
             onClick: function onClick() {
               return _this2.handleQuantity(item, false, idx);
-            } // onClick={() => this.handleQuantity(false, item, idx)}
-
+            }
           }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            // key={idx}
-            // key={idx}
             className: "ui basic button",
             type: "button",
             onClick: function onClick() {
@@ -1633,8 +1531,7 @@ var mapDispatch = function mapDispatch(dispatch) {
       dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["tossCartItem"])(item));
     },
     getincreaseQuantityCart: function getincreaseQuantityCart(item, value, userId, idx) {
-      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx)); // getincreaseQuantityCart: (value, userId, item, idx) => {
-      //   dispatch(increaseQuantityCart(value, userId, item, idx))
+      dispatch(Object(_store_cartItems__WEBPACK_IMPORTED_MODULE_3__["increaseQuantityCart"])(item, value, userId, idx));
     }
   };
 };
@@ -141764,7 +141661,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
