@@ -85,12 +85,10 @@ export const buildPostCartThunk = (
         quantity: quantity,
         handle: true
       }
-      if (quantity <= 1) {
-        console.log('bailey')
+      if (quantity === 1) {
         const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       } else {
-        console.log('sleifhsli')
         const res = await axios.put(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       }

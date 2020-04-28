@@ -38,7 +38,7 @@ class Navbar extends Component {
                           0
                         )
                       : 0
-                  })`}
+                  }`}
                   as={Link}
                   to={`/users/${userID}/mycart`}
                 />
@@ -69,14 +69,14 @@ class Navbar extends Component {
                   onClick={this.props.handleCart}
                 />
                 <Menu.Item
-                  name={`Cart${
+                  name={`"CAR-t"${
                     cartItems.orders[0]
                       ? cartItems.orders.reduce(
                           (accumulator, order) => accumulator + order.quantity,
                           0
                         )
                       : 0
-                  })`}
+                  }`}
                   as={Link}
                   to="/guestcart"
                 />
