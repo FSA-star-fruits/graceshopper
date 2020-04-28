@@ -21,7 +21,7 @@ async function seed() {
     Car.create({
       brand: 'Toyota',
       name: 'Sequoia',
-      image: 'http://dummyimage.com/223x165.bmp/dddddd/000000',
+      image: 'https://i.imgur.com/dKJsSUL.png',
       price: 10000,
       year: 2012,
       color: 'Indigo',
@@ -31,7 +31,7 @@ async function seed() {
     Car.create({
       brand: 'Honda',
       name: 'Civic',
-      image: 'http://dummyimage.com/223x165.bmp/dddddd/000000',
+      image: 'https://i.imgur.com/ootxfW2.png',
       price: 12000,
       year: 2013,
       color: 'black',
@@ -41,9 +41,19 @@ async function seed() {
     Car.create({
       brand: 'Mini',
       name: 'Cooper',
-      image: 'http://dummyimage.com/223x165.bmp/dddddd/000000',
+      image: 'https://i.imgur.com/8tckLWS.png',
       price: 13000,
       year: 2014,
+      color: 'white',
+      isSold: true,
+      inventory: 7
+    }),
+    Car.create({
+      brand: 'Dodge',
+      name: 'Dodger',
+      image: 'https://i.imgur.com/DjX30Ef.png',
+      price: 14000,
+      year: 1931,
       color: 'white',
       isSold: true,
       inventory: 7

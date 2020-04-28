@@ -2,11 +2,13 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import AllCars from './AllCars'
+import {Link} from 'react-router-dom'
 import {gotCartItems} from '../store/cartItems'
 /**
  * COMPONENT
  */
 
+import './user-home.css'
 class UserHome extends Component {
   componentDidMount() {
     const {id} = this.props
@@ -19,12 +21,12 @@ class UserHome extends Component {
       <div className="home">
         <div className="home_text">
           {email ? <h3>Welcome, {email}</h3> : <h3>Welcome!</h3>}
-          <h3>2020 Jaguar E-pace</h3>
-          <p>Starting at $39,950</p>
-          <p>MPG: Up to 21 city/ 28 Highway</p>
-          <p>Horsepower: 246 to 296 hp</p>
+          <div className="home_image">
+            <Link to="/cars">
+              <img src="https://i.imgur.com/m2KqrJg.png" />
+            </Link>
+          </div>
         </div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQ57PaEpZbPxFjGe-3y2T-LevyR3AAfBab55eGD6ld7QlMHfd_&usqp=CAU" />
       </div>
     )
   }

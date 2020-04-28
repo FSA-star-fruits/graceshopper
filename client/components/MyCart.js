@@ -7,6 +7,7 @@ import {
   increaseQuantityCart
 } from '../store/cartItems'
 
+import './MyCart.css'
 class MyCart extends Component {
   constructor() {
     super()
@@ -32,12 +33,6 @@ class MyCart extends Component {
 
     this.props.getincreaseQuantityCart(value, userId, item, idx)
   }
-  // handleQuantity(carId, value) {
-  //   const userId = this.props.match.params.userID
-  //   this.props.getincreaseQuantityCart(carId, value, userId)
-  //   const userID = userId
-  //   this.props.getCartItems(userID)
-  // }
 
   render() {
     const {cartItems} = this.props
@@ -50,83 +45,58 @@ class MyCart extends Component {
         </div>
       )
     } else {
-      //   return (
-      //     <div>
-      //       <h2>Items in your cart: </h2>
-      //       {orders.map((item, idx = 0) => {
-      //         return (
-      //           <div key={item.id}>
-      //             {idx + 1}. {item.car.brand} {item.car.name} (Qty:{' '}
-      //             {item.quantity})
-      //             <button
-      //               type="button"
-      //               onClick={() => this.handleQuantity(item.car.id, true)}
-      //             >
-      //               +
-      //             </button>
-      //             <button
-      //               type="button"
-      //               onClick={() => this.handleQuantity(item.car.id, false)}
-      //             >
-      //               -
-      //             </button>
-      //             <button
-      //               key={idx}
-      //               type="button"
-      //               onClick={() => this.handleRemove(item)}
-      //             >
-      //               {' '}
-      //               REMOVE
-      //             </button>
-      //           </div>
-      //         )
-      //       })}
-      //       <Link to={`/users/${userID}/checkout`}>
-      //         <button type="button"> Check Out!</button>
-      //       </Link>
-      //     </div>
-      //   )
-      // }
       return (
         <div>
           <h2>Items in your cart: </h2>
           {orders.map((item, idx = 0) => {
             return (
-              <div key={idx}>
-                {idx}. {item.car.brand} {item.car.name}
-                {item.quantity}
-                <button
-                  className="ui basic button"
-                  type="button"
-                  onClick={() => this.handleQuantity(true, item, idx)}
-                >
-                  +
-                </button>
-                <button
-                  className="ui basic button"
-                  type="button"
-                  onClick={() => this.handleQuantity(false, item, idx)}
-                >
-                  -
-                </button>
-                <button
-                  key={idx}
-                  className="ui basic button"
-                  type="button"
-                  onClick={() => this.handleRemove(item)}
-                >
-                  {' '}
-                  REMOVE
-                </button>
+              <div id="cart_item" key={idx}>
+                <img id="cart_image" src={item.car.image} />
+                <h4>
+                  {item.car.brand} {item.car.name}
+                </h4>
+
+                <div id="cart_quantity">
+                  <button
+                    className="mini ui basic button"
+                    type="button"
+                    onClick={() => this.handleQuantity(false, item, idx)}
+                  >
+                    -
+                  </button>
+                  <div id="quantity_num">
+                    <strong>{item.quantity}</strong>
+                  </div>
+                  <button
+                    className="mini ui basic button"
+                    type="button"
+                    onClick={() => this.handleQuantity(true, item, idx)}
+                  >
+                    +
+                  </button>
+                </div>
+                <div>
+                  <button
+                    key={idx}
+                    className="mini ui basic button"
+                    type="button"
+                    onClick={() => this.handleRemove(item)}
+                  >
+                    {' '}
+                    X
+                  </button>
+                </div>
               </div>
             )
           })}
-          <Link to={`/users/${userID}/checkout`}>
-            <button className="ui primary button" type="button">
-              {' '}
-              Check Out!
-            </button>
-          </Link>
+          <div id="checkout_button">
+            <Link to={`/users/${userID}/checkout`}>
+              <button className="ui primary button" type="button">
+                {' '}
+                Check Out!
+              </button>
+            </Link>
+          </div>
         </div>
       )
     }

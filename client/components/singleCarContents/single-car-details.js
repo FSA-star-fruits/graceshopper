@@ -3,11 +3,12 @@ import React from 'react'
 /**
  * COMPONENT
  */
+
 export const SingleCarDetails = props => {
   const singleCar = props.singleCar
 
   return (
-    <div id="single-car-details">
+    <div>
       <table>
         <tbody>
           <tr>
@@ -24,7 +25,7 @@ export const SingleCarDetails = props => {
           </tr>
           <tr>
             <th>Exterior Color</th>
-            <td>BLUE</td>
+            <td>{singleCar.color}</td>
           </tr>
           <tr>
             <th>Transmission</th>

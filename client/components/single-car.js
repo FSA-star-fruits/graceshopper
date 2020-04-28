@@ -5,11 +5,12 @@ import {buildfetchSingleCarThunk, buildPostCartThunk} from '../store'
 import {SingleCarHeader} from './singleCarContents/single-car-header'
 import {SingleCarMainView} from './singleCarContents/single-car-main-view'
 import {SingleCarDetails} from './singleCarContents/single-car-details'
-import {SingleCarSecondaryImage} from './singleCarContents/single-car-secondary-images'
+import {Gallery} from './singleCarContents/single-car-secondary-images'
 
 /**
  * COMPONENT
  */
+import './single-car.css'
 export class SingleCar extends Component {
   constructor(props) {
     super(props)
@@ -50,10 +51,14 @@ export class SingleCar extends Component {
         >
           ADD TO CART
         </button>
-        <SingleCarHeader {...this.props} />
+        <div id="single_car_header">
+          <SingleCarHeader {...this.props} />
+        </div>
         <SingleCarMainView {...this.props} />
-        <SingleCarSecondaryImage {...this.props} />
-        <SingleCarDetails {...this.props} />
+        <Gallery {...this.props} />
+        <div id="single_car_details">
+          <SingleCarDetails {...this.props} />
+        </div>
       </div>
     )
   }
