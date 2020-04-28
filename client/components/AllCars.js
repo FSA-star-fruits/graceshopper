@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {fetchCars, gotCartItems} from '../store'
 import {Link} from 'react-router-dom'
 
+import './AllCars.css'
 export class AllCars extends React.Component {
   constructor() {
     super()
@@ -20,18 +21,36 @@ export class AllCars extends React.Component {
       return <p>No Cars</p>
     }
     return (
-      <div>
-        <h2>Cars that Exist</h2>
-        {cars.map(car => {
-          return (
-            <div key={car.id}>
-              <Link to={`/cars/${car.id}`}>
-                <img src={car.image} />
-                <p>{car.name}</p>
-              </Link>
-            </div>
-          )
-        })}
+      <div className="ui two column grid">
+        <h2>Cars Instock</h2>
+        <div className="two column row">
+          {cars.map(car => {
+            return (
+              <div className="column" key={car.id}>
+                <div className="ui segment" key={car.id}>
+                  <Link to={`/cars/${car.id}`}>
+                    <div id="car_badge">
+                      <img src="https://i.imgur.com/f5Fidzs.png" />
+                    </div>
+                    <div className="car_image">
+                      <img src={car.image} />
+                    </div>
+                    <div id="car_footer">
+                      <div id="car_details">
+                        <p>
+                          {car.brand} {car.name} {car.year}
+                        </p>
+                      </div>
+                      <div id="car_price">
+                        <p>${car.price}</p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }

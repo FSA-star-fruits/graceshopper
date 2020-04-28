@@ -3,15 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, emptyCartItem, gotCartItems} from '../store'
+import {Menu} from 'semantic-ui-react'
 
-// const Navbar = ({
-//   handleClick,
-//   isLoggedIn,
-//   userID,
-//   cartItems,
-//   isAdmin,
-//   handleCart,
-// }) =>
 class Navbar extends Component {
   compoentDidMount() {
     const {userID} = this.props
@@ -26,48 +19,67 @@ class Navbar extends Component {
         <nav>
           {isLoggedIn ? (
             <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <Link to="/cars">Cars</Link>
-              <a href="#" onClick={this.props.handleClick}>
-                Logout
-              </a>
-              <Link to={`/users/${userID}/mycart`}>
-                My Cart (
-                {cartItems.orders[0]
-                  ? cartItems.orders.reduce(
-                      (accumulator, order) => accumulator + order.quantity,
-                      0
-                    )
-                  : 0}
-                )
-              </Link>
-              {isAdmin ? <Link to="/admin">Admin</Link> : ''}
+              <Menu>
+                <Menu.Item name="Home" as={Link} to="/home" />
+
+                <Menu.Item name="Cars" as={Link} to="/cars" />
+                <Menu.Item
+                  name="Logout"
+                  as={Link}
+                  onClick={this.props.handleClick}
+                />
+
+                <Menu.Item
+                  name={`Cart${
+                    cartItems.orders[0]
+                      ? cartItems.orders.reduce(
+                          (accumulator, order) => accumulator + order.quantity,
+                          0
+                        )
+                      : 0
+                  })`}
+                  as={Link}
+                  to={`/users/${userID}/mycart`}
+                />
+
+                {isAdmin ? (
+                  <Menu.Item name="Admin" as={Link} to="/admin" />
+                ) : (
+                  ''
+                )}
+              </Menu>
             </div>
           ) : (
             <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/">Home</Link>
-              <Link to="/cars">Cars</Link>
-              <Link to="/login">
-                {/* JO: why include handleCart here??? */}
-                {/* <Link to="/login" onClick={handleCart}> */}
-                Login
-              </Link>
-              <Link to="/signup">
-                {/* <Link to="/signup" onClick={handleCart}> */}
-                Sign Up
-              </Link>
-              <Link to="/guestcart">
-                My Cart (
-                {cartItems.orders.length
-                  ? cartItems.orders.reduce(
-                      (accumulator, order) => accumulator + order.quantity,
-                      0
-                    )
-                  : 0}
-                )
-              </Link>
+              <Menu>
+                <Menu.Item name="Home" as={Link} to="/" />
+                <Menu.Item name="Cars" as={Link} to="/cars" />
+                <Menu.Item
+                  name="Login"
+                  as={Link}
+                  to="/login"
+                  onClick={this.props.handleCart}
+                />
+
+                <Menu.Item
+                  name="Sign Up"
+                  as={Link}
+                  to="/signup"
+                  onClick={this.props.handleCart}
+                />
+                <Menu.Item
+                  name={`Cart${
+                    cartItems.orders[0]
+                      ? cartItems.orders.reduce(
+                          (accumulator, order) => accumulator + order.quantity,
+                          0
+                        )
+                      : 0
+                  })`}
+                  as={Link}
+                  to="/guestcart"
+                />
+              </Menu>
             </div>
           )}
         </nav>
