@@ -24,8 +24,8 @@ class MyCart extends Component {
 
   handleRemove(item) {
     this.props.tossCartItem(item)
-    const userID = this.props.match.params.userID
-    this.props.getCartItems(userID)
+    // const userID = this.props.match.params.userID
+    // this.props.getCartItems(userID)
   }
 
   handleQuantity(item, value, idx) {
