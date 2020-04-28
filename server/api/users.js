@@ -13,16 +13,16 @@ const isAdminMiddleware = (req, res, next) => {
   }
 }
 
-const isVerifiedUserMiddleware = (req, res, next) => {
-  const currentUser = req.user
-  if (currentUser && req.session.passport.user === +req.params.userId) {
-    next()
-  } else {
-    const error = new Error('Access denied')
-    error.status = 401
-    console.error(error)
-  }
-}
+// const isVerifiedUserMiddleware = (req, res, next) => {
+//   const currentUser = req.user
+//   if (currentUser && req.session.passport.user === +req.params.userId) {
+//     next()
+//   } else {
+//     const error = new Error('Access denied')
+//     error.status = 401
+//     console.error(error)
+//   }
+// }
 
 router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
@@ -37,7 +37,7 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
 
 router.get(
   '/:userId/mycart',
-  isVerifiedUserMiddleware,
+  // isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       // console.log('req.session >>>>>', req.session)
@@ -78,7 +78,7 @@ router.get(
 
 router.get(
   '/:userId/orderhistory',
-  isVerifiedUserMiddleware,
+  // isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const userData = await Order.findAll({
@@ -113,7 +113,7 @@ router.get(
 
 router.post(
   '/:userId/mycart',
-  isVerifiedUserMiddleware,
+  // isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const order = await Order.findOne({
@@ -126,7 +126,8 @@ router.post(
       await CartItem.create({
         carId: req.body.carId,
         orderId: order.id,
-        quantity: req.body.quantity
+        quantity: req.body.quantity,
+        price: req.body.price
       })
 
       const cartItem = await CartItem.findOne({
@@ -152,7 +153,7 @@ router.post(
 
 router.delete(
   '/:cartItemId/mycart',
-  isVerifiedUserMiddleware,
+  // isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const cartItemId = req.params.cartItemId
@@ -173,7 +174,7 @@ router.delete(
 
 router.put(
   '/:userId/mycart',
-  isVerifiedUserMiddleware,
+  // isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const order = await Order.findOne({
@@ -197,12 +198,14 @@ router.put(
 
       if (req.body.handle === true) {
         const response = await existingCartItem.update({
-          quantity: existingCartItem.quantity + 1
+          quantity: existingCartItem.quantity + 1,
+          price: req.body.price
         })
         res.json(response)
       } else {
         const response = await existingCartItem.update({
-          quantity: existingCartItem.quantity - 1
+          quantity: existingCartItem.quantity - 1,
+          price: req.body.price
         })
         res.json(response)
       }
@@ -214,7 +217,7 @@ router.put(
 
 router.put(
   `/:userId/checkout`,
-  isVerifiedUserMiddleware,
+  // isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const order = await Order.findOne({
