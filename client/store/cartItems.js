@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {array} from 'prop-types'
 
 // initial state
 const initialState = {orders: [], pastorders: []}
@@ -77,7 +78,6 @@ export const buildPostCartThunk = (
   quantity
 ) => async dispatch => {
   try {
-    console.log(quantity)
     if (userId) {
       const cartObj = {
         carId: +carId,
@@ -153,7 +153,7 @@ const cartItems = (state = initialState, action) => {
       return {...state, orders: [...action.items]}
 
     case GET_PAST:
-      return {...state, pastorders: [...action.items]}
+      return {...state, pastorders: [...state.pastorders, ...action.items]}
 
     case ADD_ITEM:
       const noChangeItems = [

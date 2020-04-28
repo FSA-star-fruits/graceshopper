@@ -98,7 +98,7 @@ router.get(
           ]
         })
 
-        return items[0]
+        return items
       }
 
       const allPastItems = await Promise.all(
@@ -106,45 +106,10 @@ router.get(
           return getItems(currentOrder)
         })
       )
-
+      console.log(allPastItems)
       res.json(allPastItems)
     } catch (err) {
-      next(err)
-    }
-  }
-)
-
-router.get(
-  '/:userId/orderhistory',
-  isVerifiedUserMiddleware,
-  async (req, res, next) => {
-    try {
-      const userData = await Order.findAll({
-        where: {
-          userId: req.params.userId,
-          isCheckedOut: true
-        }
-      })
-
-      const orderId = userData[0].dataValues.id
-
-      const items = await CartItem.findAll({
-        where: {
-          orderId: orderId
-        },
-        include: [
-          {
-            model: Order
-          },
-          {
-            model: Car
-          }
-        ]
-      })
-
-      res.json(items)
-    } catch (err) {
-      next(err)
+      console.log(err)
     }
   }
 )
