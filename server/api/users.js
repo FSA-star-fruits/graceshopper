@@ -13,6 +13,17 @@ const isAdminMiddleware = (req, res, next) => {
   }
 }
 
+const isVerifiedUserMiddleware = (req, res, next) => {
+  const currentUser = req.user
+  if (currentUser && req.session.passport.user === +req.params.userId) {
+    next()
+  } else {
+    const error = new Error('Access denied')
+    error.status = 401
+    console.error(error)
+  }
+}
+
 router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -24,51 +35,22 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
-router.get('/:userId/mycart', async (req, res, next) => {
-  try {
-    const userData = await Order.findOne({
-      where: {
-        userId: req.params.userId,
-        isCheckedOut: false
-      }
-    })
-    const orderId = userData.id
-
-    const items = await CartItem.findAll({
-      where: {
-        orderId: orderId
-      },
-      include: [
-        {
-          model: Order
-        },
-        {
-          model: Car
+router.get(
+  '/:userId/mycart',
+  isVerifiedUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const userData = await Order.findOne({
+        where: {
+          userId: req.params.userId,
+          isCheckedOut: false
         }
-      ]
-    })
+      })
+      const orderId = userData.id
 
-    res.json(items)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get('/:userId/orderhistory', async (req, res, next) => {
-  try {
-    const userData = await Order.findAll({
-      where: {
-        userId: req.params.userId,
-        isCheckedOut: true
-      }
-    })
-
-    const orderId = userData
-
-    const getItems = async currentOrder => {
       const items = await CartItem.findAll({
         where: {
-          orderId: currentOrder.dataValues.id
+          orderId: orderId
         },
         include: [
           {
@@ -80,130 +62,218 @@ router.get('/:userId/orderhistory', async (req, res, next) => {
         ]
       })
 
-      return items[0]
+      res.json(items)
+    } catch (err) {
+      next(err)
     }
-
-    const allPastItems = await Promise.all(
-      orderId.map(currentOrder => {
-        return getItems(currentOrder)
-      })
-    )
-
-    res.json(allPastItems)
-  } catch (err) {
-    next(err)
   }
-})
+)
 
-router.post('/:userId/mycart', async (req, res, next) => {
-  try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.params.userId,
-        isCheckedOut: false
-      }
-    })
-
-    await CartItem.create({
-      carId: req.body.carId,
-      orderId: order.id,
-      quantity: req.body.quantity
-    })
-
-    const cartItem = await CartItem.findOne({
-      where: {
-        carId: req.body.carId,
-        orderId: order.id
-      },
-      include: [
-        {
-          model: Car
-        },
-        {
-          model: Order
-        }
-      ]
-    })
-    res.json(cartItem)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.delete('/:cartItemId/mycart', async (req, res, next) => {
-  try {
-    const cartItemId = req.params.cartItemId
-
-    if (cartItemId !== 'undefined') {
-      const response = await CartItem.destroy({
+router.get(
+  '/:userId/orderhistory',
+  isVerifiedUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const userData = await Order.findAll({
         where: {
-          id: cartItemId
+          userId: req.params.userId,
+          isCheckedOut: true
         }
       })
-      res.json(response)
-    }
-  } catch (error) {
-    next(error)
-  }
-})
 
-router.put('/:userId/mycart', async (req, res, next) => {
-  try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.params.userId,
-        isCheckedOut: false
+      const orderId = userData
+
+      const getItems = async currentOrder => {
+        const items = await CartItem.findAll({
+          where: {
+            orderId: currentOrder.dataValues.id
+          },
+          include: [
+            {
+              model: Order
+            },
+            {
+              model: Car
+            }
+          ]
+        })
+
+        return items[0]
       }
-    })
 
-    const existingCartItem = await CartItem.findOne({
-      where: {carId: req.body.carId, orderId: order.id},
-      include: [
-        {
-          model: Car
+      const allPastItems = await Promise.all(
+        orderId.map(currentOrder => {
+          return getItems(currentOrder)
+        })
+      )
+
+      res.json(allPastItems)
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
+router.get(
+  '/:userId/orderhistory',
+  isVerifiedUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const userData = await Order.findAll({
+        where: {
+          userId: req.params.userId,
+          isCheckedOut: true
+        }
+      })
+
+      const orderId = userData[0].dataValues.id
+
+      const items = await CartItem.findAll({
+        where: {
+          orderId: orderId
         },
-        {
-          model: Order
-        }
-      ]
-    })
+        include: [
+          {
+            model: Order
+          },
+          {
+            model: Car
+          }
+        ]
+      })
 
-    if (req.body.handle === true) {
-      const response = await existingCartItem.update({
-        quantity: existingCartItem.quantity + 1
-      })
-      res.json(response)
-    } else {
-      const response = await existingCartItem.update({
-        quantity: existingCartItem.quantity - 1
-      })
-      res.json(response)
+      res.json(items)
+    } catch (err) {
+      next(err)
     }
-  } catch (err) {
-    next(err)
   }
-})
+)
 
-router.put(`/:userId/checkout`, async (req, res, next) => {
-  try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.params.userId,
-        isCheckedOut: false
+router.post(
+  '/:userId/mycart',
+  isVerifiedUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const order = await Order.findOne({
+        where: {
+          userId: req.params.userId,
+          isCheckedOut: false
+        }
+      })
+
+      await CartItem.create({
+        carId: req.body.carId,
+        orderId: order.id,
+        quantity: req.body.quantity
+      })
+
+      const cartItem = await CartItem.findOne({
+        where: {
+          carId: req.body.carId,
+          orderId: order.id
+        },
+        include: [
+          {
+            model: Car
+          },
+          {
+            model: Order
+          }
+        ]
+      })
+      res.json(cartItem)
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
+router.delete(
+  '/:cartItemId/mycart',
+  isVerifiedUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const cartItemId = req.params.cartItemId
+
+      if (cartItemId !== 'undefined') {
+        const response = await CartItem.destroy({
+          where: {
+            id: cartItemId
+          }
+        })
+        res.json(response)
       }
-    })
-
-    await order.update({
-      isCheckedOut: true,
-      purchaseDate: new Date().toISOString()
-    })
-    const newOrder = await Order.create({
-      purchaseDate: null,
-      isCheckedOut: false,
-      userId: req.params.userId
-    })
-    res.json(newOrder)
-  } catch (err) {
-    next(err)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
+
+router.put(
+  '/:userId/mycart',
+  isVerifiedUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const order = await Order.findOne({
+        where: {
+          userId: req.params.userId,
+          isCheckedOut: false
+        }
+      })
+
+      const existingCartItem = await CartItem.findOne({
+        where: {carId: req.body.carId, orderId: order.id},
+        include: [
+          {
+            model: Car
+          },
+          {
+            model: Order
+          }
+        ]
+      })
+
+      if (req.body.handle === true) {
+        const response = await existingCartItem.update({
+          quantity: existingCartItem.quantity + 1
+        })
+        res.json(response)
+      } else {
+        const response = await existingCartItem.update({
+          quantity: existingCartItem.quantity - 1
+        })
+        res.json(response)
+      }
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
+router.put(
+  `/:userId/checkout`,
+  isVerifiedUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const order = await Order.findOne({
+        where: {
+          userId: req.params.userId,
+          isCheckedOut: false
+        }
+      })
+
+      await order.update({
+        isCheckedOut: true,
+        purchaseDate: new Date().toISOString()
+      })
+      const newOrder = await Order.create({
+        purchaseDate: null,
+        isCheckedOut: false,
+        userId: req.params.userId
+      })
+      res.json(newOrder)
+    } catch (err) {
+      next(err)
+    }
+  }
+)
