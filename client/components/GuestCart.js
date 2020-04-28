@@ -24,17 +24,12 @@ class GuestCart extends Component {
     this.props.tossCartItem(item)
   }
 
-  //   this.props.getincreaseQuantityCart(value, userId, item, idx)
-  // }
-  // // handleQuantity(value, item, idx) {
-  // //   const userId = this.props.match.params.userID
-  // // }
-
   handleQuantity(item, value, idx) {
-    if (item.quantity > 1) {
-      this.props.getincreaseQuantityCart(item, value, null, idx)
-    } else {
+    const userId = this.props.match.params.userID
+    if (item.quantity <= 1 && value === false) {
       this.props.tossCartItem(item)
+    } else {
+      this.props.getincreaseQuantityCart(item, value, userId, idx)
     }
   }
 

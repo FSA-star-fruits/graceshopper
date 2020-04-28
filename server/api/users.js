@@ -17,7 +17,8 @@ router.get('/:userId/mycart', async (req, res, next) => {
   try {
     const userData = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCheckedOut: false
       }
     })
     const orderId = userData.id
@@ -35,6 +36,7 @@ router.get('/:userId/mycart', async (req, res, next) => {
         }
       ]
     })
+    console.log(items)
     res.json(items)
   } catch (err) {
     next(err)
@@ -45,7 +47,8 @@ router.post('/:userId/mycart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCheckedOut: false
       }
     })
 
@@ -96,7 +99,8 @@ router.put('/:userId/mycart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCheckedOut: false
       }
     })
 
@@ -123,6 +127,30 @@ router.put('/:userId/mycart', async (req, res, next) => {
       })
       res.json(response)
     }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put(`/:userId/checkout`, async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCheckedOut: false
+      }
+    })
+
+    await order.update({
+      isCheckedOut: true,
+      purchaseDate: new Date().toISOString()
+    })
+    const newOrder = await Order.create({
+      purchaseDate: null,
+      isCheckedOut: false,
+      userId: req.params.userId
+    })
+    res.json(newOrder)
   } catch (err) {
     next(err)
   }

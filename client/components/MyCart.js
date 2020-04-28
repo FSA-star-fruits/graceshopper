@@ -4,7 +4,8 @@ import {Link} from 'react-router-dom'
 import {
   gotCartItems,
   tossCartItem,
-  increaseQuantityCart
+  increaseQuantityCart,
+  checkoutUserCartOrder
 } from '../store/cartItems'
 
 import './MyCart.css'
@@ -29,11 +30,15 @@ class MyCart extends Component {
 
   handleQuantity(item, value, idx) {
     const userId = this.props.match.params.userID
-    if (item.quantity > 1) {
-      this.props.getincreaseQuantityCart(item, value, userId, idx)
-    } else {
+    if (item.quantity <= 1 && value === false) {
       this.props.tossCartItem(item)
+    } else {
+      this.props.getincreaseQuantityCart(item, value, userId, idx)
     }
+  }
+  handleCheckOut(orders) {
+    const userId = this.props.match.params.userID
+    this.props.postCheckoutUserCartOrder(userId, orders)
   }
 
   render() {
@@ -93,7 +98,11 @@ class MyCart extends Component {
           })}
           <div id="checkout_button">
             <Link to={`/users/${userID}/checkout`}>
-              <button className="ui primary button" type="button">
+              <button
+                className="ui primary button"
+                type="button"
+                onClick={() => this.handleCheckOut(orders)}
+              >
                 {' '}
                 Check Out!
               </button>
@@ -119,6 +128,9 @@ const mapDispatch = dispatch => ({
   },
   getincreaseQuantityCart: (item, value, userId, idx) => {
     dispatch(increaseQuantityCart(item, value, userId, idx))
+  },
+  postCheckoutUserCartOrder: (userId, orders) => {
+    dispatch(checkoutUserCartOrder(userId, orders))
   }
 })
 

@@ -4,7 +4,8 @@ import {Link} from 'react-router-dom'
 import {
   gotCartItems,
   tossCartItem,
-  increaseQuantityCart
+  increaseQuantityCart,
+  emptyCartItem
 } from '../store/cartItems'
 
 class CheckOut extends Component {
@@ -17,6 +18,9 @@ class CheckOut extends Component {
     const userID = this.props.match.params.userID
     this.props.getCartItems(userID)
   }
+  componentWillUnmount() {
+    this.props.emptyCartItem()
+  }
 
   render() {
     const {cartItems} = this.props
@@ -27,9 +31,15 @@ class CheckOut extends Component {
         <h2>Thanks for purchasing the following items!: </h2>
         {orders.map((item, idx = 0) => {
           return (
-            <div key={true}>
-              {idx}. {item.car.brand} {item.car.name}
-              {item.quantity}
+            <div id="cart_item" key={idx}>
+              <img id="cart_image" src={item.car.image} />
+              <h2>
+                {item.car.brand} {item.car.name}
+              </h2>
+
+              <div id="cart_quantity">
+                <div id="quantity_num">Quantity: {item.quantity}</div>
+              </div>
             </div>
           )
         })}
@@ -61,6 +71,9 @@ const mapDispatch = dispatch => ({
   getincreaseQuantityCart: (carId, value, userId) => {
     dispatch(increaseQuantityCart(carId, value, userId))
     dispatch(gotCartItems(userId))
+  },
+  emptyCartItem: () => {
+    dispatch(emptyCartItem())
   }
 })
 
