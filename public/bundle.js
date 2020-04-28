@@ -1460,7 +1460,7 @@ function (_Component) {
     value: function handleQuantity(item, value, idx) {
       var userId = this.props.match.params.userID;
 
-      if (item.quantity > 1) {
+      if (item.quantity > 0) {
         this.props.getincreaseQuantityCart(item, value, userId, idx);
       } else {
         this.props.tossCartItem(item);
@@ -141664,7 +141664,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

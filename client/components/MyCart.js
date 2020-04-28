@@ -28,7 +28,7 @@ class MyCart extends Component {
 
   handleQuantity(item, value, idx) {
     const userId = this.props.match.params.userID
-    if (item.quantity > 1) {
+    if (item.quantity > 0) {
       this.props.getincreaseQuantityCart(item, value, userId, idx)
     } else {
       this.props.tossCartItem(item)
