@@ -27,19 +27,8 @@ class UserHome extends Component {
         'this is the logged in users cartItems: ',
         userCartItems.data
       )
-      cartItems.orders.map(async ord => {
-        if (userCartItems.data.find(logItem => logItem.carId === ord.carId)) {
-          // this.props.getincreaseQuantityCart(ord,true, id, 0, ord.quantity)
-          const cartObj = {
-            carId: ord.carId,
-            userId: id,
-            handle: true,
-            quantity: ord.quantity
-          }
-          await axios.put(`/api/users/${id}/mycart`, cartObj)
-        } else {
-          this.props.postAddToCart(ord.carId, ord.car, id, ord.quantity)
-        }
+      cartItems.orders.map(ord => {
+        this.props.postAddToCart(ord.carId, ord.car, id, ord.quantity)
       })
     }
     this.props.getCartItems(id)

@@ -128,13 +128,7 @@ export const emptyCartItem = () => {
   }
 }
 
-export const increaseQuantityCart = (
-  item,
-  value,
-  userId,
-  idx,
-  quantity = 1
-) => {
+export const increaseQuantityCart = (item, value, userId, idx) => {
   return async dispatch => {
     if (value === true) {
       dispatch(increaseQuantity(item, idx))
@@ -145,8 +139,6 @@ export const increaseQuantityCart = (
       const cartObj = {
         carId: item.car.id,
         userId: userId,
-        quantity: quantity,
-        price: item.price,
         handle: value
       }
       await axios.put(`/api/users/${userId}/mycart`, cartObj)
