@@ -63,6 +63,17 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
+  const isAdminMiddleware = (req, res, next) => {
+    const currentUser = req.user
+    if (currentUser && currentUser.isAdmin) {
+      next()
+    } else {
+      const error = new Error('Access denied')
+      error.status = 401
+      next(error)
+    }
+  }
+
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
