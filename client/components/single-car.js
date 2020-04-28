@@ -36,13 +36,12 @@ export class SingleCar extends Component {
       itemClicked = orders.filter(order => order.carId === +carId)
     }
     if (itemClicked.length) {
+      price = itemClicked[0].price
       quantity = itemClicked[0].quantity + 1
-      price = itemClicked[0].price * quantity
+    } else {
+      price = quantity * carItem.price
     }
 
-    price = quantity * carItem.price
-    // console.log('quantity >>>>>>>>>', quantity)
-    console.log('price >>>>>>>', price)
     this.props.postAddToCart(carId, carItem, userId, quantity, price)
   }
 

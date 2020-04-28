@@ -59,8 +59,7 @@ class GuestCart extends Component {
               <div id="cart_item" key={idx}>
                 <img id="cart_image" src={item.car.image} />
                 <h4>
-                  {item.car.brand} {item.car.name} Price:{' '}
-                  {+item.quantity * +item.price}
+                  {item.car.brand} {item.car.name} Price: {item.price}
                 </h4>
                 <div id="cart_quantity">
                   <button

@@ -13,16 +13,16 @@ const isAdminMiddleware = (req, res, next) => {
   }
 }
 
-// const isVerifiedUserMiddleware = (req, res, next) => {
-//   const currentUser = req.user
-//   if (currentUser && req.session.passport.user === +req.params.userId) {
-//     next()
-//   } else {
-//     const error = new Error('Access denied')
-//     error.status = 401
-//     console.error(error)
-//   }
-// }
+const isVerifiedUserMiddleware = (req, res, next) => {
+  const currentUser = req.user
+  if (currentUser && req.session.passport.user === +req.params.userId) {
+    next()
+  } else {
+    const error = new Error('Access denied')
+    error.status = 401
+    console.error(error)
+  }
+}
 
 router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
@@ -37,16 +37,9 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
 
 router.get(
   '/:userId/mycart',
-  // isVerifiedUserMiddleware,
+  isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
-      // console.log('req.session >>>>>', req.session)
-      // console.log('req.params.userId >>>>>', typeof req.params.userId)
-      // console.log(
-      //   'req.params.userId >>>>>',
-      //   +req.params.userId === req.session.passport.user
-      // )
-
       const userData = await Order.findOne({
         where: {
           userId: req.params.userId,
@@ -78,7 +71,7 @@ router.get(
 
 router.get(
   '/:userId/orderhistory',
-  // isVerifiedUserMiddleware,
+  isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const userData = await Order.findAll({
@@ -113,7 +106,7 @@ router.get(
 
 router.post(
   '/:userId/mycart',
-  // isVerifiedUserMiddleware,
+  isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const order = await Order.findOne({
@@ -153,7 +146,7 @@ router.post(
 
 router.delete(
   '/:cartItemId/mycart',
-  // isVerifiedUserMiddleware,
+  isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const cartItemId = req.params.cartItemId
@@ -174,7 +167,7 @@ router.delete(
 
 router.put(
   '/:userId/mycart',
-  // isVerifiedUserMiddleware,
+  isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const order = await Order.findOne({
@@ -217,7 +210,7 @@ router.put(
 
 router.put(
   `/:userId/checkout`,
-  // isVerifiedUserMiddleware,
+  isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
       const order = await Order.findOne({
