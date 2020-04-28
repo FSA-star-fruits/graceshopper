@@ -27,6 +27,7 @@ class Navbar extends Component {
                 <Menu.Item
                   name="Logout"
                   as={Link}
+                  to="/login"
                   onClick={this.props.handleClick}
                 />
 
