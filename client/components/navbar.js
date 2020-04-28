@@ -64,7 +64,7 @@ class Navbar extends Component {
                 <Menu.Item
                   name="Sign Up"
                   as={Link}
-                  to="/login"
+                  to="/signup"
                   onClick={this.props.handleCart}
                 />
                 <Menu.Item
