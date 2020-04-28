@@ -91,17 +91,20 @@ async function seed() {
     CartItem.create({
       quantity: 1,
       orderId: 1,
-      carId: 1
+      carId: 1,
+      price: 1000000
     }),
     CartItem.create({
-      quantity: 2,
+      quantity: 1,
       orderId: 1,
-      carId: 2
+      carId: 2,
+      price: 1100000
     }),
     CartItem.create({
-      quantity: 3,
+      quantity: 1,
       orderId: 2,
-      carId: 3
+      carId: 3,
+      price: 1200000
     })
   ])
 

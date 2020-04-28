@@ -40,13 +40,6 @@ router.get(
   isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
-      // console.log('req.session >>>>>', req.session)
-      // console.log('req.params.userId >>>>>', typeof req.params.userId)
-      // console.log(
-      //   'req.params.userId >>>>>',
-      //   +req.params.userId === req.session.passport.user
-      // )
-
       const userData = await Order.findOne({
         where: {
           userId: req.params.userId,
@@ -126,7 +119,8 @@ router.post(
       await CartItem.create({
         carId: req.body.carId,
         orderId: order.id,
-        quantity: req.body.quantity
+        quantity: req.body.quantity,
+        price: req.body.price
       })
 
       const cartItem = await CartItem.findOne({
@@ -197,12 +191,14 @@ router.put(
 
       if (req.body.handle === true) {
         const response = await existingCartItem.update({
-          quantity: existingCartItem.quantity + 1
+          quantity: existingCartItem.quantity + 1,
+          price: req.body.price
         })
         res.json(response)
       } else {
         const response = await existingCartItem.update({
-          quantity: existingCartItem.quantity - 1
+          quantity: existingCartItem.quantity - 1,
+          price: req.body.price
         })
         res.json(response)
       }

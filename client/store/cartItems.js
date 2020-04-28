@@ -34,13 +34,15 @@ const removeItem = item => ({
 const emptyItem = () => ({
   type: EMPTY_ITEM
 })
-const increaseQuantity = item => ({
+const increaseQuantity = (item, idx) => ({
   type: INCREASE_QUANTITY,
-  item
+  item,
+  idx
 })
-const decreaseQuantity = item => ({
+const decreaseQuantity = (item, idx) => ({
   type: DECREASE_QUANTITY,
-  item
+  item,
+  idx
 })
 
 const checkout = () => ({
@@ -74,29 +76,37 @@ export const buildPostCartThunk = (
   carId,
   carItem,
   userId,
-  quantity
+  quantity,
+  price
 ) => async dispatch => {
   try {
-    console.log(quantity)
+    // console.log(quantity)
     if (userId) {
       const cartObj = {
         carId: +carId,
         userId: userId,
         quantity: quantity,
+        price: price,
         handle: true
       }
       if (quantity <= 1) {
-        console.log('bailey')
+        // console.log('bailey')
         const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       } else {
-        console.log('sleifhsli')
+        // console.log('sleifhsli')
         const res = await axios.put(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       }
     } else {
       dispatch(
-        addItem({carId: +carId, userId: null, quantity: quantity, car: carItem})
+        addItem({
+          carId: +carId,
+          userId: null,
+          quantity: quantity,
+          price: price,
+          car: carItem
+        })
       )
     }
   } catch (err) {
@@ -129,6 +139,8 @@ export const increaseQuantityCart = (item, value, userId, idx) => {
       const cartObj = {
         carId: item.car.id,
         userId: userId,
+        quantity: item.quantity,
+        price: item.price,
         handle: value
       }
       await axios.put(`/api/users/${userId}/mycart`, cartObj)

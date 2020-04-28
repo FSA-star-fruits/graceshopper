@@ -46,14 +46,21 @@ class GuestCart extends Component {
       return (
         <div>
           <h2>Items in your cart: </h2>
+          <h2>
+            Total Price: $
+            {orders.reduce(
+              (accumulator, currentValue) =>
+                currentValue.price * currentValue.quantity + accumulator,
+              0
+            )}
+          </h2>
           {orders.map((item, idx = 0) => {
             return (
               <div id="cart_item" key={idx}>
                 <img id="cart_image" src={item.car.image} />
                 <h4>
-                  {item.car.brand} {item.car.name}
+                  {item.car.brand} {item.car.name} Price: {item.price}
                 </h4>
-
                 <div id="cart_quantity">
                   <button
                     className="mini ui basic button"
