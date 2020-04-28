@@ -3,6 +3,7 @@ import React from 'react'
 /**
  * COMPONENT
  */
+import './single-car-header.css'
 export const SingleCarHeader = props => {
   const singleCar = props.singleCar
   return (
@@ -11,8 +12,9 @@ export const SingleCarHeader = props => {
         <h1>
           {singleCar.brand} {singleCar.name} {singleCar.year}
         </h1>
-        <p>miles driven</p>
-        <h3>{singleCar.price}</h3>
+        <div id="single-car-header-price">
+          <h3>${singleCar.price}</h3>
+        </div>
       </span>
     </div>
   )
