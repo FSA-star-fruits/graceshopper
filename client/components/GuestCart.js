@@ -23,10 +23,13 @@ class GuestCart extends Component {
   handleRemove(item) {
     this.props.tossCartItem(item)
   }
-  handleQuantity(value, item, idx) {
-    const userId = this.props.match.params.userID
 
-    this.props.getincreaseQuantityCart(value, userId, item, idx)
+  handleQuantity(item, value, idx) {
+    if (item.quantity > 1) {
+      this.props.getincreaseQuantityCart(item, value, null, idx)
+    } else {
+      this.props.tossCartItem(item)
+    }
   }
 
   render() {
@@ -54,7 +57,7 @@ class GuestCart extends Component {
                   <button
                     className="mini ui basic button"
                     type="button"
-                    onClick={() => this.handleQuantity(false, item, idx)}
+                    onClick={() => this.handleQuantity(item, false, idx)}
                   >
                     -
                   </button>
@@ -64,7 +67,7 @@ class GuestCart extends Component {
                   <button
                     className="mini ui basic button"
                     type="button"
-                    onClick={() => this.handleQuantity(true, item, idx)}
+                    onClick={() => this.handleQuantity(item, true, idx)}
                   >
                     +
                   </button>
@@ -107,8 +110,8 @@ const mapDispatch = dispatch => ({
   tossCartItem: item => {
     dispatch(tossCartItem(item))
   },
-  getincreaseQuantityCart: (value, userId, item, idx) => {
-    dispatch(increaseQuantityCart(value, userId, item, idx))
+  getincreaseQuantityCart: (item, value, userId, idx) => {
+    dispatch(increaseQuantityCart(item, value, userId, idx))
   }
 })
 

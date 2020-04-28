@@ -2,6 +2,17 @@ const router = require('express').Router()
 const {Car} = require('../db/models')
 module.exports = router
 
+const isAdminMiddleware = (req, res, next) => {
+  const currentUser = req.user
+  if (currentUser && currentUser.isAdmin) {
+    next()
+  } else {
+    const error = new Error('Access denied')
+    error.status = 401
+    next(error)
+  }
+}
+
 router.get('/', async (req, res, next) => {
   try {
     const users = await Car.findAll()
@@ -25,7 +36,7 @@ router.get('/:carId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const {
       brand,
@@ -67,7 +78,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:carId', async (req, res, next) => {
+router.delete('/:carId', isAdminMiddleware, async (req, res, next) => {
   try {
     const removeCar = await Car.destroy({
       where: {id: req.params.carId}
@@ -78,7 +89,7 @@ router.delete('/:carId', async (req, res, next) => {
   }
 })
 
-router.put('/:carId', async (req, res, next) => {
+router.put('/:carId', isAdminMiddleware, async (req, res, next) => {
   try {
     const {
       brand,
