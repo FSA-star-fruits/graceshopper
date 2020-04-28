@@ -49,6 +49,18 @@ class MyCart extends Component {
       return (
         <div>
           <h2>Your cart is currently empty. </h2>
+          <div id="order_history">
+            <Link to={`/users/${userID}/orderhistory`}>
+              <button
+                className="ui primary button"
+                type="button"
+                // onClick={() => this.handleCheckOut(orders)}
+              >
+                {' '}
+                Order History
+              </button>
+            </Link>
+          </div>
         </div>
       )
     } else {
@@ -105,6 +117,18 @@ class MyCart extends Component {
               >
                 {' '}
                 Check Out!
+              </button>
+            </Link>
+          </div>
+          <div id="order_history">
+            <Link to={`/users/${userID}/orderhistory`}>
+              <button
+                className="ui primary button"
+                type="button"
+                // onClick={() => this.handleCheckOut(orders)}
+              >
+                {' '}
+                Order History
               </button>
             </Link>
           </div>

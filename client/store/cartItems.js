@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // initial state
-const initialState = {orders: [], client: []}
+const initialState = {orders: [], pastorders: []}
 // const initialState = []
 
 // action types
@@ -12,10 +12,15 @@ const EMPTY_ITEM = 'EMPTY_ITEM'
 const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
 const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
 const CHECKOUT = 'CHECKOUT'
+const GET_PAST = 'GET_PAST'
 
 // action creator
 const fetchCartItems = items => ({
   type: FETCH_ITEMS,
+  items
+})
+const fetchOrderHistory = items => ({
+  type: GET_PAST,
   items
 })
 const addItem = car => ({
@@ -48,6 +53,17 @@ export const gotCartItems = userId => async dispatch => {
     if (userId) {
       const res = await axios.get(`/api/users/${userId}/mycart`)
       dispatch(fetchCartItems(res.data))
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const gotBoughtCartItems = userId => async dispatch => {
+  try {
+    if (userId) {
+      const res = await axios.get(`/api/users/${userId}/orderhistory`)
+      dispatch(fetchOrderHistory(res.data))
     }
   } catch (err) {
     console.error(err)
@@ -138,6 +154,9 @@ const cartItems = (state = initialState, action) => {
     case FETCH_ITEMS:
       return {...state, orders: [...action.items]}
 
+    case GET_PAST:
+      return {...state, pastorders: [...action.items]}
+
     case ADD_ITEM:
       const noChangeItems = [
         ...state.orders.filter(order => order.carId !== action.car.carId)
@@ -154,7 +173,7 @@ const cartItems = (state = initialState, action) => {
       return {...state, orders: newCart}
 
     case EMPTY_ITEM:
-      return {...state, orders: [], client: []}
+      return {...state, orders: []}
 
     case INCREASE_QUANTITY:
       action.item.quantity = action.item.quantity + 1

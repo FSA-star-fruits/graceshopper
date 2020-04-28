@@ -36,7 +36,38 @@ router.get('/:userId/mycart', async (req, res, next) => {
         }
       ]
     })
-    console.log(items)
+
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:userId/orderhistory', async (req, res, next) => {
+  try {
+    const userData = await Order.findAll({
+      where: {
+        userId: req.params.userId,
+        isCheckedOut: true
+      }
+    })
+
+    const orderId = userData[0].dataValues.id
+
+    const items = await CartItem.findAll({
+      where: {
+        orderId: orderId
+      },
+      include: [
+        {
+          model: Order
+        },
+        {
+          model: Car
+        }
+      ]
+    })
+
     res.json(items)
   } catch (err) {
     next(err)
