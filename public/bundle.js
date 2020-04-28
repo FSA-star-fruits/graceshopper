@@ -1624,6 +1624,7 @@ var mapDispatch = function mapDispatch(dispatch) {
       var formName = evt.target.name;
       var email = evt.target.email.value;
       var password = evt.target.password.value;
+      console.log('user.email >>>>>>', email);
       dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_3__["auth"])(email, password, formName, isAdmin));
     }
   };
