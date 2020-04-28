@@ -160,7 +160,7 @@ router.put('/:userId/mycart', async (req, res, next) => {
 
     if (req.body.handle === true) {
       const response = await existingCartItem.update({
-        quantity: existingCartItem.quantity + 1
+        quantity: existingCartItem.quantity + req.body.quantity
       })
       res.json(response)
     } else {
