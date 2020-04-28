@@ -17,26 +17,33 @@ class OrderHistory extends Component {
   render() {
     const {cartItems} = this.props
     const orders = cartItems.pastorders
+    if (orders.length <= 0) {
+      return (
+        <div>
+          <h2>You have not bought anything.....yet</h2>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h2>Order History </h2>
+          {orders.map((item, idx = 0) => {
+            return (
+              <div id="cart_item" key={idx}>
+                <img id="cart_image" src={item.car.image} />
+                <h2>
+                  {item.car.brand} {item.car.name}
+                </h2>
 
-    return (
-      <div>
-        <h2>Order History </h2>
-        {orders.map((item, idx = 0) => {
-          return (
-            <div id="cart_item" key={idx}>
-              <img id="cart_image" src={item.car.image} />
-              <h2>
-                {item.car.brand} {item.car.name}
-              </h2>
-
-              <div id="cart_quantity">
-                <div id="quantity_num">Quantity: {item.quantity}</div>
+                <div id="cart_quantity">
+                  <div id="quantity_num">Quantity: {item.quantity}</div>
+                </div>
               </div>
-            </div>
-          )
-        })}
-      </div>
-    )
+            )
+          })}
+        </div>
+      )
+    }
   }
 }
 

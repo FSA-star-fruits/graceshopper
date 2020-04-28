@@ -63,23 +63,33 @@ router.get('/:userId/orderhistory', async (req, res, next) => {
       }
     })
 
-    const orderId = userData[0].dataValues.id
+    const orderId = userData
 
-    const items = await CartItem.findAll({
-      where: {
-        orderId: orderId
-      },
-      include: [
-        {
-          model: Order
+    const getItems = async currentOrder => {
+      const items = await CartItem.findAll({
+        where: {
+          orderId: currentOrder.dataValues.id
         },
-        {
-          model: Car
-        }
-      ]
-    })
+        include: [
+          {
+            model: Order
+          },
+          {
+            model: Car
+          }
+        ]
+      })
 
-    res.json(items)
+      return items[0]
+    }
+
+    const allPastItems = await Promise.all(
+      orderId.map(currentOrder => {
+        return getItems(currentOrder)
+      })
+    )
+
+    res.json(allPastItems)
   } catch (err) {
     next(err)
   }
