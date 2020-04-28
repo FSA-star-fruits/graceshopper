@@ -97,7 +97,8 @@ router.post('/:userId/mycart', async (req, res, next) => {
     await CartItem.create({
       carId: req.body.carId,
       orderId: order.id,
-      quantity: req.body.quantity
+      quantity: req.body.quantity,
+      price: req.body.price
     })
 
     const cartItem = await CartItem.findOne({
@@ -160,12 +161,14 @@ router.put('/:userId/mycart', async (req, res, next) => {
 
     if (req.body.handle === true) {
       const response = await existingCartItem.update({
-        quantity: existingCartItem.quantity + 1
+        quantity: existingCartItem.quantity + req.body.quantity,
+        price: req.body.price
       })
       res.json(response)
     } else {
       const response = await existingCartItem.update({
-        quantity: existingCartItem.quantity - 1
+        quantity: existingCartItem.quantity - 1,
+        price: req.body.price
       })
       res.json(response)
     }

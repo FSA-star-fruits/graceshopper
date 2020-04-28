@@ -139,7 +139,8 @@ export const increaseQuantityCart = (item, value, userId, idx) => {
       const cartObj = {
         carId: item.car.id,
         userId: userId,
-        handle: value
+        handle: value,
+        price: item.price
       }
       await axios.put(`/api/users/${userId}/mycart`, cartObj)
     }
