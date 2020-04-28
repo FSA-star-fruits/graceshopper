@@ -15,7 +15,7 @@ class Navbar extends Component {
     const {isLoggedIn, cartItems, isAdmin, userID} = this.props
     return (
       <div>
-        <h1>Grace Shopper</h1>
+        <h1>Grace Car Shopper</h1>
         <nav>
           {isLoggedIn ? (
             <div>
