@@ -19,9 +19,9 @@ import {
   GuestCart,
   Admin,
   AdminAddCar,
-  AdminEditCar,
-  getCartItems
+  AdminEditCar
 } from './components'
+import OrderHistory from './components/OrderHistory'
 import store, {me, gotCartItems} from './store'
 import CheckOut from './components/CheckOut'
 
@@ -61,6 +61,13 @@ class Routes extends Component {
         )}
         {isLoggedIn && (
           <Route exact path="/users/:userID/checkout" component={CheckOut} />
+        )}
+        {isLoggedIn && (
+          <Route
+            exact
+            path="/users/:userID/orderhistory"
+            component={OrderHistory}
+          />
         )}
         {isAdmin && (
           <Switch>

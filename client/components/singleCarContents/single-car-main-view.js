@@ -10,7 +10,7 @@ export const SingleCarMainView = props => {
   return (
     <div id="single-car-main">
       <div id="single-car-main-image">
-        <img src="https://i.imgur.com/rQhOLsc.png" />
+        <img src={singleCar.image} />
       </div>
     </div>
   )

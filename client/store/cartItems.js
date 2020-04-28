@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // initial state
-const initialState = {orders: [], client: []}
+const initialState = {orders: [], pastorders: []}
 // const initialState = []
 
 // action types
@@ -11,10 +11,16 @@ const REMOVE_ITEM = 'REMOVE_ITEM'
 const EMPTY_ITEM = 'EMPTY_ITEM'
 const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
 const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
+const CHECKOUT = 'CHECKOUT'
+const GET_PAST = 'GET_PAST'
 
 // action creator
 const fetchCartItems = items => ({
   type: FETCH_ITEMS,
+  items
+})
+const fetchOrderHistory = items => ({
+  type: GET_PAST,
   items
 })
 const addItem = car => ({
@@ -37,12 +43,27 @@ const decreaseQuantity = item => ({
   item
 })
 
+const checkout = () => ({
+  type: CHECKOUT
+})
+
 // thunk creator
 export const gotCartItems = userId => async dispatch => {
   try {
     if (userId) {
       const res = await axios.get(`/api/users/${userId}/mycart`)
       dispatch(fetchCartItems(res.data))
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const gotBoughtCartItems = userId => async dispatch => {
+  try {
+    if (userId) {
+      const res = await axios.get(`/api/users/${userId}/orderhistory`)
+      dispatch(fetchOrderHistory(res.data))
     }
   } catch (err) {
     console.error(err)
@@ -56,6 +77,7 @@ export const buildPostCartThunk = (
   quantity
 ) => async dispatch => {
   try {
+    console.log(quantity)
     if (userId) {
       const cartObj = {
         carId: +carId,
@@ -63,10 +85,12 @@ export const buildPostCartThunk = (
         quantity: quantity,
         handle: true
       }
-      if (quantity === 1) {
+      if (quantity <= 1) {
+        console.log('bailey')
         const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       } else {
+        console.log('sleifhsli')
         const res = await axios.put(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       }
@@ -112,11 +136,26 @@ export const increaseQuantityCart = (item, value, userId, idx) => {
   }
 }
 
+export const checkoutUserCartOrder = (userId, orders) => {
+  return async dispatch => {
+    dispatch(checkout())
+    const checkoutObj = {
+      userId: userId,
+      orders: orders
+    }
+
+    await axios.put(`/api/users/${userId}/checkout`, checkoutObj)
+  }
+}
+
 // reducer
 const cartItems = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ITEMS:
       return {...state, orders: [...action.items]}
+
+    case GET_PAST:
+      return {...state, pastorders: [...action.items]}
 
     case ADD_ITEM:
       const noChangeItems = [
@@ -134,7 +173,7 @@ const cartItems = (state = initialState, action) => {
       return {...state, orders: newCart}
 
     case EMPTY_ITEM:
-      return {...state, orders: [], client: []}
+      return {...state, orders: []}
 
     case INCREASE_QUANTITY:
       action.item.quantity = action.item.quantity + 1
@@ -151,6 +190,8 @@ const cartItems = (state = initialState, action) => {
         ...state,
         orders: state.orders
       }
+    case CHECKOUT:
+      return initialState
     default:
       return state
   }

@@ -1,0 +1,20 @@
+#car_price {
+  text-align: justify;
+  text-align-last: right;
+  font-size: 150%;
+}
+#car_details {
+  font-size: 120%;
+}
+#car_badge {
+  height: 40%;
+  width: 40%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 2;
+}
+
+.car_image {
+  position: relative;
+}

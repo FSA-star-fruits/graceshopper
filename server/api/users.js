@@ -28,7 +28,8 @@ router.get('/:userId/mycart', async (req, res, next) => {
   try {
     const userData = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCheckedOut: false
       }
     })
     const orderId = userData.id
@@ -46,6 +47,38 @@ router.get('/:userId/mycart', async (req, res, next) => {
         }
       ]
     })
+
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:userId/orderhistory', async (req, res, next) => {
+  try {
+    const userData = await Order.findAll({
+      where: {
+        userId: req.params.userId,
+        isCheckedOut: true
+      }
+    })
+
+    const orderId = userData[0].dataValues.id
+
+    const items = await CartItem.findAll({
+      where: {
+        orderId: orderId
+      },
+      include: [
+        {
+          model: Order
+        },
+        {
+          model: Car
+        }
+      ]
+    })
+
     res.json(items)
   } catch (err) {
     next(err)
@@ -56,7 +89,8 @@ router.post('/:userId/mycart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCheckedOut: false
       }
     })
 
@@ -107,7 +141,8 @@ router.put('/:userId/mycart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCheckedOut: false
       }
     })
 
@@ -134,6 +169,30 @@ router.put('/:userId/mycart', async (req, res, next) => {
       })
       res.json(response)
     }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put(`/:userId/checkout`, async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCheckedOut: false
+      }
+    })
+
+    await order.update({
+      isCheckedOut: true,
+      purchaseDate: new Date().toISOString()
+    })
+    const newOrder = await Order.create({
+      purchaseDate: null,
+      isCheckedOut: false,
+      userId: req.params.userId
+    })
+    res.json(newOrder)
   } catch (err) {
     next(err)
   }

@@ -30,7 +30,7 @@ export class Admin extends Component {
                   <Link to={`/cars/${car.id}`}>
                     <img
                       src={car.image}
-                      style={{width: '150px', height: '150px'}}
+                      style={{width: '20%', height: '20%'}}
                     />
                     <p>{car.brand}</p>
                     <p>{car.price}</p>
