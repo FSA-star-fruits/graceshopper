@@ -33,7 +33,6 @@ export const fetchUsers = () => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case ALL_USERS:
-      console.log('action: ', action.users)
       return action.users
     default:
       return state

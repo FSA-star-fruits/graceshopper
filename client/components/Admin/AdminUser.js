@@ -1,7 +1,6 @@
 import React from 'react'
 
 const AdminUser = props => {
-  console.log('props: ', props)
   return (
     <div>
       <h1>All Users</h1>
