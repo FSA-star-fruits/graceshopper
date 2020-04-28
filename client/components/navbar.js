@@ -8,6 +8,7 @@ import {Menu} from 'semantic-ui-react'
 class Navbar extends Component {
   compoentDidMount() {
     const {userID} = this.props
+    console.log('logged in now and will get cart items')
     this.props.getCartItems(userID)
   }
 
@@ -107,7 +108,7 @@ const mapDispatch = dispatch => {
       dispatch(logout())
     },
     handleCart() {
-      dispatch(emptyCartItem())
+      // dispatch(emptyCartItem())
     },
     getCartItems(userID) {
       dispatch(gotCartItems(userID))
