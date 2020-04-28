@@ -30,15 +30,19 @@ export class SingleCar extends Component {
     const {orders} = this.props.cartItems
     let quantity = 1
     let itemClicked = []
+    let price
 
     if (orders.length) {
       itemClicked = orders.filter(order => order.carId === +carId)
     }
     if (itemClicked.length) {
+      price = itemClicked[0].price
       quantity = itemClicked[0].quantity + 1
+    } else {
+      price = quantity * carItem.price
     }
 
-    this.props.postAddToCart(carId, carItem, userId, quantity)
+    this.props.postAddToCart(carId, carItem, userId, quantity, price)
   }
 
   render() {
@@ -78,8 +82,8 @@ const mapDispatch = dispatch => ({
   fetchSingleCar: carId => {
     dispatch(buildfetchSingleCarThunk(carId))
   },
-  postAddToCart: (carId, carItem, userId, quantity) => {
-    dispatch(buildPostCartThunk(carId, carItem, userId, quantity))
+  postAddToCart: (carId, carItem, userId, quantity, price) => {
+    dispatch(buildPostCartThunk(carId, carItem, userId, quantity, price))
   }
 })
 
