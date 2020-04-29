@@ -14,6 +14,9 @@ const Car = db.define('car', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  secondaryImage: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
+  },
   price: {
     type: Sequelize.INTEGER,
     allowNull: false

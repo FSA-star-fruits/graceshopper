@@ -9,15 +9,17 @@ const AdminUser = props => {
       </button>
 
       {props.users.length > 0 ? (
-        <ul>
-          {props.users.map(user => {
-            return (
-              <li key={user.id}>
-                user id: {user.id}, email: {user.email}
-              </li>
-            )
-          })}
-        </ul>
+        <div>
+          <ul>
+            {props.users.map(user => {
+              return (
+                <li key={user.id} className="ui segment">
+                  user id: {user.id}, email: {user.email}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       ) : (
         <div>
           <h2>There are no User</h2>

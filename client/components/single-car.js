@@ -5,7 +5,7 @@ import {buildfetchSingleCarThunk, buildPostCartThunk} from '../store'
 import {SingleCarHeader} from './singleCarContents/single-car-header'
 import {SingleCarMainView} from './singleCarContents/single-car-main-view'
 import {SingleCarDetails} from './singleCarContents/single-car-details'
-import {Gallery} from './singleCarContents/single-car-secondary-images'
+import Gallery from './singleCarContents/single-car-secondary-images'
 
 /**
  * COMPONENT
@@ -41,8 +41,11 @@ export class SingleCar extends Component {
     } else {
       price = quantity * carItem.price
     }
-
-    this.props.postAddToCart(carId, carItem, userId, quantity, price)
+    if (quantity > carItem.inventory) {
+      alert('Inventory limit has been reached!')
+    } else {
+      this.props.postAddToCart(carId, carItem, userId, quantity, price)
+    }
   }
 
   render() {
@@ -58,7 +61,9 @@ export class SingleCar extends Component {
         <div id="single_car_header">
           <SingleCarHeader {...this.props} />
         </div>
+        <hr />
         <SingleCarMainView {...this.props} />
+        <hr />
         <Gallery {...this.props} />
         <div id="single_car_details">
           <SingleCarDetails {...this.props} />

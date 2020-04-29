@@ -19,45 +19,85 @@ async function seed() {
 
   // const cars = await Promise.all([
   await Car.create({
-    brand: 'Toyota',
-    name: 'Sequoia',
+    brand: 'Hummer',
+    name: 'H3',
     image: 'https://i.imgur.com/dKJsSUL.png',
+    secondaryImage: [
+      'https://i.imgur.com/tAtovX9.jpg',
+      'https://i.imgur.com/16Q8Stj.jpg',
+      'https://i.imgur.com/u7fhthH.jpg',
+      'https://i.imgur.com/UQj9SDp.jpg',
+      'https://i.imgur.com/lbpM1Ep.jpg'
+    ],
     price: 1100000,
     year: 2012,
-    color: 'Indigo',
+    color: 'Black',
     isSold: true,
-    inventory: 3
+    inventory: 3,
+    engineType: '5-Cyl, 3.7 Liter',
+    interiorColor: 'Black',
+    transmission: 'Automatic, 4-Spd W/Overdrive'
   })
   await Car.create({
-    brand: 'Honda',
-    name: 'Civic',
+    brand: 'BMW',
+    name: '3 Series',
     image: 'https://i.imgur.com/ootxfW2.png',
+    secondaryImage: [
+      'https://i.imgur.com/tAtovX9.jpg',
+      'https://i.imgur.com/16Q8Stj.jpg',
+      'https://i.imgur.com/u7fhthH.jpg',
+      'https://i.imgur.com/UQj9SDp.jpg',
+      'https://i.imgur.com/lbpM1Ep.jpg'
+    ],
     price: 1200000,
     year: 2013,
     color: 'black',
     isSold: true,
-    inventory: 5
+    inventory: 5,
+    engineType: '5-Cyl, 3.7 Liter',
+    interiorColor: 'Black',
+    transmission: 'Automatic, 4-Spd W/Overdrive'
   })
 
   await Car.create({
     brand: 'Mini',
     name: 'Cooper',
     image: 'https://i.imgur.com/8tckLWS.png',
+    secondaryImage: [
+      'https://i.imgur.com/tAtovX9.jpg',
+      'https://i.imgur.com/16Q8Stj.jpg',
+      'https://i.imgur.com/u7fhthH.jpg',
+      'https://i.imgur.com/UQj9SDp.jpg',
+      'https://i.imgur.com/lbpM1Ep.jpg'
+    ],
     price: 1300000,
     year: 2014,
     color: 'white',
     isSold: true,
-    inventory: 7
+    inventory: 7,
+    engineType: '5-Cyl, 3.7 Liter',
+    interiorColor: 'Black',
+    transmission: 'Automatic, 4-Spd W/Overdrive'
   })
   await Car.create({
-    brand: 'Dodge',
-    name: 'Dodger',
+    brand: 'Tesla',
+    name: 'Model S',
     image: 'https://i.imgur.com/DjX30Ef.png',
+    secondaryImage: [
+      'https://i.imgur.com/tAtovX9.jpg',
+      'https://i.imgur.com/16Q8Stj.jpg',
+      'https://i.imgur.com/u7fhthH.jpg',
+      'https://i.imgur.com/UQj9SDp.jpg',
+      'https://i.imgur.com/lbpM1Ep.jpg'
+    ],
     price: 1400000,
-    year: 1931,
+    year: 2019,
     color: 'white',
     isSold: true,
-    inventory: 7
+    inventory: 7,
+    engineType: '5-Cyl, 3.7 Liter',
+    interiorColor: 'Black',
+    transmission: 'Automatic, 4-Spd W/Overdrive'
   })
   // ])
 

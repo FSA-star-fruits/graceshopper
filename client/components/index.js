@@ -20,7 +20,7 @@ export {
   default as SingleCarDetails
 } from './singleCarContents/single-car-details'
 export {
-  default as SingleCarSecondaryImage
+  default as Gallery
 } from './singleCarContents/single-car-secondary-images'
 export {Login, Signup} from './auth-form'
 export {default as AllCars} from './AllCars'

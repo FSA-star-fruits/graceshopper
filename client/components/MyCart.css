@@ -35,3 +35,15 @@
 #checkout_button {
   margin-bottom: 35px;
 }
+
+#checkout_cart_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* #order_history {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-content: flex-start;
+} */
