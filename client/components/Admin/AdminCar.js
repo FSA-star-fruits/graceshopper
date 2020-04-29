@@ -8,7 +8,7 @@ const AdminCar = props => {
       <button type="button" className="ui basic button" onClick={props.toggle}>
         View Users
       </button>
-
+      <hr />
       <Link to="/admin/add">
         <button type="button" className="ui basic button">
           Add Car
