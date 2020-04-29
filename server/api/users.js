@@ -153,26 +153,22 @@ router.post(
   }
 )
 
-router.delete(
-  '/:cartItemId/mycart',
-  isVerifiedUserMiddleware,
-  async (req, res, next) => {
-    try {
-      const cartItemId = req.params.cartItemId
+router.delete('/:cartItemId/mycart', async (req, res, next) => {
+  try {
+    const cartItemId = req.params.cartItemId
 
-      if (cartItemId !== 'undefined') {
-        const response = await CartItem.destroy({
-          where: {
-            id: cartItemId
-          }
-        })
-        res.json(response)
-      }
-    } catch (error) {
-      next(error)
+    if (cartItemId !== 'undefined') {
+      const response = await CartItem.destroy({
+        where: {
+          id: cartItemId
+        }
+      })
+      res.json(response)
     }
+  } catch (error) {
+    next(error)
   }
-)
+})
 
 router.put(
   '/:userId/mycart',
@@ -219,7 +215,22 @@ router.put(
   `/:userId/checkout`,
   isVerifiedUserMiddleware,
   async (req, res, next) => {
+    console.log(req.body.orders)
     try {
+      const carOrders = req.body.orders
+      carOrders.map(async currentCar => {
+        const currentId = currentCar.car.id
+        const boughtQuantity = currentCar.quantity
+        const newCar = await Car.findOne({
+          where: {
+            id: currentId
+          }
+        })
+        await newCar.update({
+          inventory: newCar.inventory - boughtQuantity
+        })
+      })
+
       const order = await Order.findOne({
         where: {
           userId: req.params.userId,

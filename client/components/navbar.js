@@ -69,7 +69,7 @@ class Navbar extends Component {
                   onClick={this.props.handleCart}
                 />
                 <Menu.Item
-                  name={`"CAR-t"${
+                  name={`Cart ${
                     cartItems.orders[0]
                       ? cartItems.orders.reduce(
                           (accumulator, order) => accumulator + order.quantity,

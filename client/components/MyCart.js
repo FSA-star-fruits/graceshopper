@@ -9,6 +9,7 @@ import {
 } from '../store/cartItems'
 
 import './MyCart.css'
+import {IgnorePlugin} from 'webpack'
 class MyCart extends Component {
   constructor() {
     super()
@@ -30,9 +31,11 @@ class MyCart extends Component {
     const userId = this.props.match.params.userID
     if (item.quantity <= 1 && value === false) {
       this.props.tossCartItem(item)
-    } else {
-      this.props.getincreaseQuantityCart(item, value, userId, idx)
-    }
+    } else if (value === true && item.quantity > 2) {
+        alert('Inventory limit has been reached!')
+      } else {
+        this.props.getincreaseQuantityCart(item, value, userId, idx)
+      }
   }
   handleCheckOut(orders) {
     const userId = this.props.match.params.userID
@@ -129,7 +132,8 @@ class MyCart extends Component {
 }
 const mapState = state => {
   return {
-    cartItems: state.cartItems
+    cartItems: state.cartItems,
+    cars: state.cars
   }
 }
 

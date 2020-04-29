@@ -57,7 +57,8 @@ const Car = db.define('car', {
   inventory: {
     type: Sequelize.INTEGER,
     validate: {
-      notEmpty: true
+      notEmpty: true,
+      min: 0
     }
   }
 })

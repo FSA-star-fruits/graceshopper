@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+
 import {buildfetchSingleCarThunk, buildPostCartThunk} from '../store'
 
 import {SingleCarHeader} from './singleCarContents/single-car-header'
@@ -23,7 +24,6 @@ export class SingleCar extends Component {
   }
 
   handleAddToCart() {
-    // JO: clean up vars, if time permits
     const carId = this.props.match.params.carID
     const carItem = this.props.singleCar
     const userId = this.props.user.id
@@ -37,8 +37,11 @@ export class SingleCar extends Component {
     if (itemClicked.length) {
       quantity = itemClicked[0].quantity + 1
     }
-
-    this.props.postAddToCart(carId, carItem, userId, quantity)
+    if (quantity > carItem.inventory) {
+      alert('Inventory limit has been reached!')
+    } else {
+      this.props.postAddToCart(carId, carItem, userId, quantity)
+    }
   }
 
   render() {
