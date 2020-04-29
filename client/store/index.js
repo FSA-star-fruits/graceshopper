@@ -6,8 +6,10 @@ import user from './user'
 import cars from './cars'
 import cartItems from './cartItems'
 import singleCarReducer from './singleCar'
+import userInfo from './userInfo'
 
 const reducer = combineReducers({
+  userInfo: userInfo,
   user: user,
   cars: cars,
   cartItems: cartItems,
@@ -24,3 +26,4 @@ export * from './user'
 export * from './singleCar'
 export * from './cars'
 export * from './cartItems'
+export * from './userInfo'

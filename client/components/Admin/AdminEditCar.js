@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateCar} from '../store/cars'
-import {buildfetchSingleCarThunk} from '../store/singleCar'
+import {updateCar} from '../../store/cars'
+import {buildfetchSingleCarThunk} from '../../store/singleCar'
 
 class AdminEditCar extends Component {
   constructor() {
