@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {addCar} from '../store/cars'
+import {addCar} from '../../store/cars'
 
 export class AdminAddCar extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ export class AdminAddCar extends Component {
   }
 
   handleSubmit(event) {
+    console.log('hi')
     event.preventDefault()
     const state = this.state
     const newCar = {
@@ -190,10 +191,10 @@ export class AdminAddCar extends Component {
           </div>
 
           <br />
+          <button className="ui primary button" type="submit">
+            Add Car
+          </button>
         </form>
-        <button className="ui primary button" type="submit">
-          Add Car
-        </button>
       </div>
     )
   }
