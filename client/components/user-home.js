@@ -3,15 +3,52 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import AllCars from './AllCars'
 import {Link} from 'react-router-dom'
-import {gotCartItems} from '../store/cartItems'
+import {
+  gotCartItems,
+  buildPostCartThunk,
+  increaseQuantityCart
+} from '../store/cartItems'
+import axios from 'axios'
 /**
  * COMPONENT
  */
 
 import './user-home.css'
 class UserHome extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     const {id} = this.props
+    console.log('logged in and about to fetch cartItems')
+    const {cartItems} = this.props
+
+    const userCartItems = await axios.get(`/api/users/${id}/mycart`)
+    if (cartItems.orders.length > 0) {
+      console.log(
+        'going to map to add now',
+        'this is the logged in users cartItems: ',
+        userCartItems.data
+      )
+      cartItems.orders.map(async ord => {
+        if (userCartItems.data.find(logItem => logItem.carId === ord.carId)) {
+          // this.props.getincreaseQuantityCart(ord,true, id, 0, ord.quantity)
+          const cartObj = {
+            carId: ord.carId,
+            userId: id,
+            handle: true,
+            quantity: ord.quantity,
+            price: ord.price
+          }
+          await axios.put(`/api/users/${id}/mycart`, cartObj)
+        } else {
+          this.props.postAddToCart(
+            ord.carId,
+            ord.car,
+            id,
+            ord.quantity,
+            ord.price
+          )
+        }
+      })
+    }
     this.props.getCartItems(id)
   }
 
@@ -37,13 +74,20 @@ class UserHome extends Component {
 const mapState = state => {
   return {
     email: state.user.email,
-    id: state.user.id
+    id: state.user.id,
+    cartItems: state.cartItems
   }
 }
 const mapDispatch = dispatch => {
   return {
     getCartItems: id => {
       dispatch(gotCartItems(id))
+    },
+    postAddToCart: (carId, carItem, userId, quantity, price) => {
+      dispatch(buildPostCartThunk(carId, carItem, userId, quantity, price))
+    },
+    getincreaseQuantityCart: (item, value, userId, idx) => {
+      dispatch(increaseQuantityCart(item, value, userId, idx))
     }
   }
 }
