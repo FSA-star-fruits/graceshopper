@@ -60,7 +60,7 @@ class UserHome extends Component {
           {email ? <h3>Welcome, {email}</h3> : <h3>Welcome!</h3>}
           <div className="home_image">
             <Link to="/cars">
-              <img src="https://i.imgur.com/m2KqrJg.png" />
+              <img src="https://i.imgur.com/hjt8eZ2.png" />
             </Link>
           </div>
         </div>

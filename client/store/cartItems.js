@@ -80,7 +80,6 @@ export const buildPostCartThunk = (
   price
 ) => async dispatch => {
   try {
-    // console.log(quantity)
     if (userId) {
       const cartObj = {
         carId: +carId,
@@ -90,11 +89,9 @@ export const buildPostCartThunk = (
         handle: true
       }
       if (quantity <= 1) {
-        // console.log('bailey')
         const res = await axios.post(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       } else {
-        // console.log('sleifhsli')
         const res = await axios.put(`/api/users/${userId}/mycart`, cartObj)
         dispatch(addItem(res.data))
       }
@@ -168,7 +165,7 @@ const cartItems = (state = initialState, action) => {
       return {...state, orders: [...action.items]}
 
     case GET_PAST:
-      return {...state, pastorders: [...action.items]}
+      return {...state, pastorders: [...state.pastorders, ...action.items]}
 
     case ADD_ITEM:
       const noChangeItems = [

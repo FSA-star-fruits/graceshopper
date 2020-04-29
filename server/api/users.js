@@ -81,25 +81,35 @@ router.get(
         }
       })
 
-      const orderId = userData[0].dataValues.id
+      const orderId = userData
 
-      const items = await CartItem.findAll({
-        where: {
-          orderId: orderId
-        },
-        include: [
-          {
-            model: Order
+      const getItems = async currentOrder => {
+        const items = await CartItem.findAll({
+          where: {
+            orderId: currentOrder.dataValues.id
           },
-          {
-            model: Car
-          }
-        ]
-      })
+          include: [
+            {
+              model: Order
+            },
+            {
+              model: Car
+            }
+          ]
+        })
 
-      res.json(items)
+        return items
+      }
+
+      const allPastItems = await Promise.all(
+        orderId.map(currentOrder => {
+          return getItems(currentOrder)
+        })
+      )
+      console.log(allPastItems)
+      res.json(allPastItems)
     } catch (err) {
-      next(err)
+      console.log(err)
     }
   }
 )
@@ -214,6 +224,20 @@ router.put(
   isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
+      const carOrders = req.body.orders
+      carOrders.map(async currentCar => {
+        const currentId = currentCar.car.id
+        const boughtQuantity = currentCar.quantity
+        const newCar = await Car.findOne({
+          where: {
+            id: currentId
+          }
+        })
+        await newCar.update({
+          inventory: newCar.inventory - boughtQuantity
+        })
+      })
+
       const order = await Order.findOne({
         where: {
           userId: req.params.userId,

@@ -34,6 +34,8 @@ class MyCart extends Component {
     const userId = this.props.match.params.userID
     if (item.quantity <= 1 && value === false) {
       this.props.tossCartItem(item, userId)
+    } else if (value === true && item.quantity > 2) {
+      alert('Inventory limit has been reached!')
     } else {
       this.props.getincreaseQuantityCart(item, value, userId, idx)
     }
@@ -115,25 +117,27 @@ class MyCart extends Component {
               </div>
             )
           })}
-          <div id="checkout_button">
-            <Link to={`/users/${userID}/checkout`}>
-              <button
-                className="ui primary button"
-                type="button"
-                onClick={() => this.handleCheckOut(orders)}
-              >
-                {' '}
-                Check Out!
-              </button>
-            </Link>
-          </div>
-          <div id="order_history">
-            <Link to={`/users/${userID}/orderhistory`}>
-              <button className="ui primary button" type="button">
-                {' '}
-                Order History
-              </button>
-            </Link>
+          <div id="checkout_cart_buttons">
+            <div id="checkout_button">
+              <Link to={`/users/${userID}/checkout`}>
+                <button
+                  className="ui primary button"
+                  type="button"
+                  onClick={() => this.handleCheckOut(orders)}
+                >
+                  {' '}
+                  Check Out!
+                </button>
+              </Link>
+            </div>
+            <div id="order_history">
+              <Link to={`/users/${userID}/orderhistory`}>
+                <button className="ui button" type="button">
+                  {' '}
+                  Order History
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       )

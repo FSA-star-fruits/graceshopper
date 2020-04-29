@@ -4,8 +4,8 @@
  * having to figure out which file they belong to!
  */
 export {default as Admin} from './Admin'
-export {default as AdminAddCar} from './AdminAddCar'
-export {default as AdminEditCar} from './AdminEditCar'
+export {default as AdminAddCar} from './Admin/AdminAddCar'
+export {default as AdminEditCar} from './Admin/AdminEditCar'
 export {default as Faker} from './Faker'
 export {default as MyCart} from './MyCart'
 export {default as GuestCart} from './GuestCart'
@@ -20,7 +20,7 @@ export {
   default as SingleCarDetails
 } from './singleCarContents/single-car-details'
 export {
-  default as SingleCarSecondaryImage
+  default as Gallery
 } from './singleCarContents/single-car-secondary-images'
 export {Login, Signup} from './auth-form'
 export {default as AllCars} from './AllCars'

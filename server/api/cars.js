@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const {Car} = require('../db/models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 module.exports = router
 
 const isAdminMiddleware = (req, res, next) => {
@@ -15,7 +17,7 @@ const isAdminMiddleware = (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await Car.findAll()
+    const users = await Car.findAll({where: {inventory: {[Op.gt]: 0}}})
     res.json(users)
   } catch (err) {
     next(err)
