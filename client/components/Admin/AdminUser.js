@@ -13,7 +13,7 @@ const AdminUser = props => {
           <ul>
             {props.users.map(user => {
               return (
-                <li key={user.id}>
+                <li key={user.id} className="ui segment">
                   user id: {user.id}, email: {user.email}
                 </li>
               )

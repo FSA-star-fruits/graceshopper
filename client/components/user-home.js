@@ -37,6 +37,7 @@ class UserHome extends Component {
             quantity: ord.quantity,
             price: ord.price
           }
+
           await axios.put(`/api/users/${id}/mycart`, cartObj)
         } else {
           this.props.postAddToCart(
