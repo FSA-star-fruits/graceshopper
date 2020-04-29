@@ -13,7 +13,7 @@ export const SingleCarHeader = props => {
           {singleCar.brand} {singleCar.name} {singleCar.year}
         </h1>
         <div id="single-car-header-price">
-          <h3>${singleCar.price}</h3>
+          <h3>${singleCar.price / 100}</h3>
         </div>
       </span>
     </div>

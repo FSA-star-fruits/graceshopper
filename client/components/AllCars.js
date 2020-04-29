@@ -42,7 +42,7 @@ export class AllCars extends React.Component {
                         </p>
                       </div>
                       <div id="car_price">
-                        <p>${car.price}</p>
+                        <p>${car.price / 100}</p>
                       </div>
                     </div>
                   </Link>

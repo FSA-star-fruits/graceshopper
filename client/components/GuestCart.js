@@ -20,8 +20,10 @@ class GuestCart extends Component {
     this.props.getCartItems(userID)
   }
 
+  // JO made a change on April 29
   handleRemove(item) {
-    this.props.tossCartItem(item)
+    // const userId = this.props.match.params.userID
+    this.props.tossCartItem(item, null)
   }
 
   handleQuantity(item, value, idx) {
@@ -52,14 +54,14 @@ class GuestCart extends Component {
               (accumulator, currentValue) =>
                 currentValue.price * currentValue.quantity + accumulator,
               0
-            )}
+            ) / 100}
           </h2>
           {orders.map((item, idx = 0) => {
             return (
               <div id="cart_item" key={idx}>
                 <img id="cart_image" src={item.car.image} />
                 <h4>
-                  {item.car.brand} {item.car.name} Price: {item.price}
+                  {item.car.brand} {item.car.name} Price: {item.price / 100}
                 </h4>
                 <div id="cart_quantity">
                   <button

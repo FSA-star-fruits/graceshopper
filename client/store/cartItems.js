@@ -114,11 +114,12 @@ export const buildPostCartThunk = (
   }
 }
 
-export const tossCartItem = item => {
+// JO made a change on April 29
+export const tossCartItem = (item, userId) => {
   return async dispatch => {
     dispatch(removeItem(item))
 
-    await axios.delete(`/api/users/${item.id}/mycart`)
+    await axios.delete(`/api/users/${userId}/mycart/${item.id}`)
   }
 }
 
