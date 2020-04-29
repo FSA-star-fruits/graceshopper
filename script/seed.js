@@ -17,50 +17,52 @@ async function seed() {
 
   console.log(`seeded ${users.length} users`)
 
-  const cars = await Promise.all([
-    Car.create({
-      brand: 'Toyota',
-      name: 'Sequoia',
-      image: 'https://i.imgur.com/dKJsSUL.png',
-      price: 10000,
-      year: 2012,
-      color: 'Indigo',
-      isSold: true,
-      inventory: 3
-    }),
-    Car.create({
-      brand: 'Honda',
-      name: 'Civic',
-      image: 'https://i.imgur.com/ootxfW2.png',
-      price: 12000,
-      year: 2013,
-      color: 'black',
-      isSold: true,
-      inventory: 5
-    }),
-    Car.create({
-      brand: 'Mini',
-      name: 'Cooper',
-      image: 'https://i.imgur.com/8tckLWS.png',
-      price: 13000,
-      year: 2014,
-      color: 'white',
-      isSold: true,
-      inventory: 7
-    }),
-    Car.create({
-      brand: 'Dodge',
-      name: 'Dodger',
-      image: 'https://i.imgur.com/DjX30Ef.png',
-      price: 14000,
-      year: 1931,
-      color: 'white',
-      isSold: true,
-      inventory: 7
-    })
-  ])
+  // const cars = await Promise.all([
+  await Car.create({
+    brand: 'Toyota',
+    name: 'Sequoia',
+    image: 'https://i.imgur.com/dKJsSUL.png',
+    price: 1100000,
+    year: 2012,
+    color: 'Indigo',
+    isSold: true,
+    inventory: 3
+  })
+  await Car.create({
+    brand: 'Honda',
+    name: 'Civic',
+    image: 'https://i.imgur.com/ootxfW2.png',
+    price: 1200000,
+    year: 2013,
+    color: 'black',
+    isSold: true,
+    inventory: 5
+  })
 
-  console.log(`seeded ${cars.length} cars`)
+  await Car.create({
+    brand: 'Mini',
+    name: 'Cooper',
+    image: 'https://i.imgur.com/8tckLWS.png',
+    price: 1300000,
+    year: 2014,
+    color: 'white',
+    isSold: true,
+    inventory: 7
+  })
+  await Car.create({
+    brand: 'Dodge',
+    name: 'Dodger',
+    image: 'https://i.imgur.com/DjX30Ef.png',
+    price: 1400000,
+    year: 1931,
+    color: 'white',
+    isSold: true,
+    inventory: 7
+  })
+  // ])
+
+  // console.log(`seeded ${cars.length} cars`)
+  console.log(`seeded cars`)
 
   // const orders = await Promise.all([
   await Order.create({
@@ -92,19 +94,19 @@ async function seed() {
       quantity: 1,
       orderId: 1,
       carId: 1,
-      price: 1000000
+      price: 1100000
     }),
     CartItem.create({
       quantity: 1,
       orderId: 1,
       carId: 2,
-      price: 1100000
+      price: 1200000
     }),
     CartItem.create({
       quantity: 1,
       orderId: 2,
       carId: 3,
-      price: 1200000
+      price: 1300000
     })
   ])
 

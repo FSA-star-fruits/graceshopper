@@ -36,7 +36,7 @@ export class SingleCar extends Component {
       itemClicked = orders.filter(order => order.carId === +carId)
     }
     if (itemClicked.length) {
-      price = itemClicked[0].price
+      price = itemClicked[0].car.price
       quantity = itemClicked[0].quantity + 1
     } else {
       price = quantity * carItem.price

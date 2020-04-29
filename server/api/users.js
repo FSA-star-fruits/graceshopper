@@ -144,8 +144,9 @@ router.post(
   }
 )
 
+// JO made a change here on April 29
 router.delete(
-  '/:cartItemId/mycart',
+  '/:userId/mycart/:cartItemId',
   isVerifiedUserMiddleware,
   async (req, res, next) => {
     try {
