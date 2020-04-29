@@ -20,7 +20,7 @@ class Navbar extends Component {
           {isLoggedIn ? (
             <div>
               <Menu>
-                <Menu.Item name="Home" as={Link} to="/" />
+                <Menu.Item name="Home" as={Link} to="/home" />
 
                 <Menu.Item name="Cars" as={Link} to="/cars" />
                 <Menu.Item
